@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import content_blocker_service
 
 struct ContentView: View {
     @State private var isLoading: Bool = true
     @State private var statusDescription: String = ""
     @State private var elapsedConversion: String = "5.32s"
     @State private var elapsedLoad: String = "1.25s"
+    @State private var userInput: String
+    
+    init() {
+        userInput = ContentBlockerService.readDefaultFilterList()
+    }
     
     var body: some View {
         VStack {
@@ -25,32 +31,39 @@ struct ContentView: View {
                     Image(systemName: "globe")
                         .imageScale(.large)
                         .foregroundStyle(.tint)
-                    Text("The content blocker has been loaded")
+                    Text(statusDescription)
                         .padding(.top, 10)
-                        .bold()
+                        .font(.headline)
                         .multilineTextAlignment(.center)
-
+                    
                     Text("Elapsed on conversion: \(elapsedConversion)")
-                        .padding(.top, 10)
+                        .font(.footnote)
                         .multilineTextAlignment(.center)
                     Text("Elapsed on loading into Safari: \(elapsedLoad)")
+                        .font(.footnote)
                         .multilineTextAlignment(.center)
-
+                    
+                    Text("Enter user rules")
+                        .font(.caption)
+                        .padding(.top, 10)
+                    
+                    TextEditor(text: $userInput)
+                        .font(.body)
+                        .background(Color.white)
+                        .frame(height: 100)
+                        .border(Color.gray, width: 1)
+                    
                     Button(action: prepareContentBlocker) {
                         Text("Reload filter")
                     }
-                        .padding(.top, 10)
-                        .buttonStyle(.borderedProminent)
-
-                        
-                    Text("You need to enable Safari Extension now")
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 20)
-                        .italic()
-                    Text("It may be required to enable unsigned extensions in Safari Developer options")
-                        .multilineTextAlignment(.center)
-                        .italic()
+                    .padding(.top, 10)
+                    .buttonStyle(.borderedProminent)
+                    .keyboardShortcut("s", modifiers: .command)
                     
+                    Text("You need to enable Safari Extension now. It may be required to enable unsigned extensions in Safari Developer options.")
+                        .multilineTextAlignment(.center)
+                        .font(.footnote)
+                        .padding(.top, 10)
                 }
             }
         }
@@ -64,17 +77,19 @@ struct ContentView: View {
     private func prepareContentBlocker() {
         self.isLoading = true
         self.statusDescription = "Converting content blocking rules"
-
+        
         DispatchQueue.global().async {
             var elapsedConversion = "5.23s"
             var elapsedLoad = "1.52s"
+            var convertedCount = 5
+            var result: Result<Void, Error> = .success(())
             
             if ProcessInfo.processInfo.isRunningInPreview {
                 Thread.sleep(forTimeInterval: 1)
             } else {
                 let start = Date()
                 
-                ContentBlockerService.convertFilter()
+                convertedCount = ContentBlockerService.convertFilter(rules: userInput)
                 
                 let endConversion = Date()
                 elapsedConversion = String(format: "%.2fs", endConversion.timeIntervalSince(start))
@@ -82,8 +97,9 @@ struct ContentView: View {
                 DispatchQueue.main.async {
                     self.statusDescription = "Loading content blocker to Safari"
                 }
-
-                ContentBlockerService.reloadContentBlocker()
+                
+                let identifier = "dev.adguard.safari-blocker.content-blocker"
+                result = ContentBlockerService.reloadContentBlocker(withIdentifier: identifier)
                 
                 let endLoad = Date()
                 elapsedLoad = String(format: "%.2fs", endLoad.timeIntervalSince(endConversion))
@@ -92,6 +108,13 @@ struct ContentView: View {
                 self.isLoading = false
                 self.elapsedConversion = elapsedConversion
                 self.elapsedLoad = elapsedLoad
+                
+                switch result {
+                case .success:
+                    self.statusDescription = "Loaded \(convertedCount) rules to Safari"
+                case .failure(let error):
+                    self.statusDescription = "Failed to load rules due to \(error.localizedDescription)"
+                }
             }
         }
     }

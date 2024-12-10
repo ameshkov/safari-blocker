@@ -1,22 +1,13 @@
 {
-  "originHash" : "ea949947eb91c535e31ac053436f0428c3d6b8b77bfdc241f5ee71c5b00fb82b",
+  "originHash" : "e7fe0b53d1168c8b8c02be7ee02e16b9b2a50d6bcf256a3911e81c20cc5dbe49",
   "pins" : [
     {
       "identity" : "punycodeswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gumob/PunycodeSwift.git",
       "state" : {
-        "revision" : "7f2db0a965408a1bc81fb094d4a3f6680162687c",
-        "version" : "2.1.1"
-      }
-    },
-    {
-      "identity" : "safari-converter",
-      "kind" : "localSourceControl",
-      "location" : "/Users/ameshkov/Documents/Work/bit.adguard.com/safari-converter",
-      "state" : {
-        "branch" : "performance",
-        "revision" : "ae563f2a7366a3ba151a5dc739b01934af5eda4b"
+        "revision" : "30a462bdb4398ea835a3585472229e0d74b36ba5",
+        "version" : "3.0.0"
       }
     },
     {

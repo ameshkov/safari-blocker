@@ -10,6 +10,6 @@
 		<string>$(PRODUCT_MODULE_NAME).ContentBlockerRequestHandler</string>
 	</dict>
 	<key>NSHumanReadableDescription</key>
-	<string>A simple content blocking extension that's used to debug rules</string>
+	<string>Content blocker for debugging rules</string>
 </dict>
 </plist>
