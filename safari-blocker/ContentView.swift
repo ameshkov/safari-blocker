@@ -8,11 +8,19 @@
 import SwiftUI
 import content_blocker_service
 
+let CONTENT_BLOCKER_ID = "dev.adguard.safari-blocker.content-blocker"
+
+let GROUP_ID: String = {
+    let teamIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"]! as! String
+    return "\(teamIdentifierPrefix)group.dev.adguard.safari-blocker"
+}()
+
 struct ContentView: View {
     @State private var isLoading: Bool = true
     @State private var statusDescription: String = ""
     @State private var elapsedConversion: String = "5.32s"
     @State private var elapsedLoad: String = "1.25s"
+    @State private var error: Bool = false
     @State private var userInput: String
     
     init() {
@@ -26,45 +34,94 @@ struct ContentView: View {
                     .progressViewStyle(CircularProgressViewStyle())
                 Text(statusDescription)
                     .padding(.top, 10)
-            } else {
-                VStack {
-                    Image(systemName: "globe")
-                        .imageScale(.large)
-                        .foregroundStyle(.tint)
-                    Text(statusDescription)
-                        .padding(.top, 10)
+            }
+            
+            if !isLoading {
+                HStack {
+                    Image("AppIconImage")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                    
+                    Text("Safari Content Blocker")
                         .font(.headline)
-                        .multilineTextAlignment(.center)
+                        .multilineTextAlignment(.leading)
                     
-                    Text("Elapsed on conversion: \(elapsedConversion)")
-                        .font(.footnote)
-                        .multilineTextAlignment(.center)
-                    Text("Elapsed on loading into Safari: \(elapsedLoad)")
-                        .font(.footnote)
-                        .multilineTextAlignment(.center)
+                    Spacer()
+                }
+                
+                HStack {
+                    Text("Status: \(statusDescription)")
+                        .font(.subheadline)
+                        .multilineTextAlignment(.leading)
+                        .foregroundColor(error ? Color.red : Color.primary)
                     
-                    Text("Enter user rules")
+                    Spacer()
+                }.padding(.bottom, 5)
+                
+                HStack {
+                    Text("Enter rules for Safari. Accepts both AdGuard rules and Safari content blocking JSON")
+                        .multilineTextAlignment(.leading)
                         .font(.caption)
-                        .padding(.top, 10)
                     
-                    TextEditor(text: $userInput)
-                        .font(.body)
-                        .background(Color.white)
-                        .frame(height: 100)
-                        .border(Color.gray, width: 1)
+                    Spacer()
+                }
+                
+                TextEditor(text: $userInput)
+                    .font(.body)
+                    .background(Color.white)
+                    .border(Color.gray, width: 1)
+                
+                Spacer()
+                
+                HStack {
+                    let txt = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
                     
+                    if txt.hasPrefix("[") &&
+                        txt.hasSuffix("]") &&
+                        txt.contains("{") {
+                        Text("JSON detected, the rules will not be converted")
+                            .font(.footnote)
+                            .multilineTextAlignment(.leading)
+                    } else {
+                        Text("AdGuard rules detected, the rules will be converted to Safari syntax")
+                            .font(.footnote)
+                            .multilineTextAlignment(.leading)
+                    }
+                    
+                    Spacer()
+                }
+                
+                HStack {
                     Button(action: prepareContentBlocker) {
                         Text("Reload filter")
                     }
-                    .padding(.top, 10)
                     .buttonStyle(.borderedProminent)
                     .keyboardShortcut("s", modifiers: .command)
                     
-                    Text("You need to enable Safari Extension now. It may be required to enable unsigned extensions in Safari Developer options.")
-                        .multilineTextAlignment(.center)
-                        .font(.footnote)
-                        .padding(.top, 10)
+                    Spacer()
                 }
+                
+                HStack {
+                    Text("Elapsed on conversion: \(elapsedConversion)")
+                        .font(.footnote)
+                        .multilineTextAlignment(.leading)
+                    
+                    Spacer()
+                }.padding(.top, 5)
+                
+                HStack {
+                    Text("Elapsed on loading into Safari: \(elapsedLoad)")
+                        .font(.footnote)
+                        .multilineTextAlignment(.leading)
+                    
+                    Spacer()
+                }
+                
+                HStack {
+                    Text("You need to enable Safari Extension now. It may be required to enable unsigned extensions in Safari Developer options")
+                        .font(.footnote)
+                    Spacer()
+                }.padding(.top, 5)
             }
         }
         .frame(minWidth: 400, idealWidth: 400, minHeight: 300, idealHeight: 400)
@@ -89,7 +146,15 @@ struct ContentView: View {
             } else {
                 let start = Date()
                 
-                convertedCount = ContentBlockerService.convertFilter(rules: userInput)
+                let content = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
+                let json = content.hasPrefix("[") && content.hasSuffix("]") &&
+                content.contains("{")
+                
+                if json {
+                    convertedCount = ContentBlockerService.saveContentBlocker(jsonRules: content, groupIdentifier: GROUP_ID)
+                } else {
+                    convertedCount = ContentBlockerService.convertFilter(rules: userInput, groupIdentifier: GROUP_ID)
+                }
                 
                 let endConversion = Date()
                 elapsedConversion = String(format: "%.2fs", endConversion.timeIntervalSince(start))
@@ -98,8 +163,7 @@ struct ContentView: View {
                     self.statusDescription = "Loading content blocker to Safari"
                 }
                 
-                let identifier = "dev.adguard.safari-blocker.content-blocker"
-                result = ContentBlockerService.reloadContentBlocker(withIdentifier: identifier)
+                result = ContentBlockerService.reloadContentBlocker(withIdentifier: CONTENT_BLOCKER_ID)
                 
                 let endLoad = Date()
                 elapsedLoad = String(format: "%.2fs", endLoad.timeIntervalSince(endConversion))
@@ -111,9 +175,11 @@ struct ContentView: View {
                 
                 switch result {
                 case .success:
-                    self.statusDescription = "Loaded \(convertedCount) rules to Safari"
+                    self.statusDescription = "Loaded \(convertedCount) \(convertedCount == 1 ? "rule" : "rules") to Safari"
+                    self.error = false
                 case .failure(let error):
                     self.statusDescription = "Failed to load rules due to \(error.localizedDescription)"
+                    self.error = true
                 }
             }
         }

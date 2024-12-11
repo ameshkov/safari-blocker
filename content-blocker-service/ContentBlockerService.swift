@@ -46,10 +46,33 @@ public class ContentBlockerService {
         return result
     }
     
-    /// Converts filter.txt into the Safari content blocking rules syntax.
+    /// Saves the passed JSON content to the content blocker file without attempting to convert them.
+    ///
+    /// - Returns: the number of entires in the JSON array.
+    public static func saveContentBlocker(jsonRules: String, groupIdentifier: String) -> Int {
+        NSLog("Saving content blocker rules")
+        
+        do {
+            let jsonData = jsonRules.data(using: .utf8)!
+            let rules = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]]
+            
+            measure(label: "Saving file") {
+                saveBlockerListFile(contents: jsonRules, groupIdentifier: groupIdentifier)
+            }
+            
+            return rules?.count ?? 0
+        } catch {
+            NSLog("Failed to decode JSON: \(error.localizedDescription)")
+        }
+
+        return 0
+    }
+    
+    /// Converts filter.txt into the Safari content blocking rules syntax and saves to the content blocker file.
+    /// This file will later be loaded by the content blocker extension.
     ///
     /// - Returns: the number of rules converted.
-    public static func convertFilter(rules: String) -> Int {
+    public static func convertFilter(rules: String, groupIdentifier: String) -> Int {
         let lines = rules.components(separatedBy: "\n")
 
         let result = measure(label: "Conversion") {
@@ -65,7 +88,7 @@ public class ContentBlockerService {
         }
         
         measure(label: "Saving file") {
-            saveBlockerListFile(contents: result.converted)
+            saveBlockerListFile(contents: result.converted, groupIdentifier: groupIdentifier)
         }
         
         return result.convertedCount
@@ -91,9 +114,9 @@ public class ContentBlockerService {
     
     
     /// Saves the blocker list file contents to the shared directory.
-    private static func saveBlockerListFile(contents: String) {
+    private static func saveBlockerListFile(contents: String, groupIdentifier: String) {
         // Get the shared container URL.
-        guard let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.dev.adguard.safari-blocker") else {
+        guard let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier) else {
             NSLog("Failed to access App Group container.")
             return
         }
@@ -105,23 +128,6 @@ public class ContentBlockerService {
         } catch {
             NSLog("Failed to save blockerList.json: \(error.localizedDescription)")
         }
-    }
-    
-    /// Reads filtering rules from the embedded filter.txt file.
-    private static func readRules() -> [String]? {
-        let filePath = Bundle.main.url(forResource: "filter", withExtension: "txt")
-        do {
-            let rules = try String(contentsOf: filePath!, encoding: .utf8)
-            let result = rules.components(separatedBy: "\n")
-            NSLog("Loaded \(result.count) rules")
-            
-            return result
-        }
-        catch {
-            NSLog("Error reading the filter file: \(error)")
-        }
-        
-        return nil
     }
     
     /// Converts AdGuard filter rules into Safari content blocking syntax.

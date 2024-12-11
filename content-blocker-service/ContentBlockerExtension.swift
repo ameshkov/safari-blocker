@@ -9,11 +9,11 @@
 public class ContentBlockerExtension {
     
     /// Handles content blocking extension request for rules.
-    public static func handleRequest(with context: NSExtensionContext) {
+    public static func handleRequest(with context: NSExtensionContext, groupIdentifier: String) {
         NSLog("Start loading the content blocker")
         
         // Get the shared container URL.
-        guard let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.dev.adguard.safari-blocker") else {
+        guard let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier) else {
             context.cancelRequest(withError: createError(code: 1001, message: "Failed to access App Group container."))
             return
         }

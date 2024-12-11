@@ -154,6 +154,13 @@
 			);
 			target = D70B170B2D08D39A000A827C /* content-blocker */;
 		};
+		D70B172C2D08F146000A827C /* Exceptions for "safari-blocker" folder in "safari-blocker" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D768F5A62D084B7F007F39D5 /* safari-blocker */;
+		};
 		D73B13E52D08910F00939E68 /* Exceptions for "content-blocker-ios" folder in "content-blocker-ios" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -217,6 +224,9 @@
 		};
 		D768F5A92D084B7F007F39D5 /* safari-blocker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D70B172C2D08F146000A827C /* Exceptions for "safari-blocker" folder in "safari-blocker" target */,
+			);
 			path = "safari-blocker";
 			sourceTree = "<group>";
 		};
@@ -619,7 +629,7 @@
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "content-blocker/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Debug Content Blocker";
+				INFOPLIST_KEY_CFBundleDisplayName = "Content Blocker";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -645,7 +655,7 @@
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "content-blocker/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Debug Content Blocker";
+				INFOPLIST_KEY_CFBundleDisplayName = "Content Blocker";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -739,7 +749,7 @@
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "content-blocker-ios/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Debug Content Blocker";
+				INFOPLIST_KEY_CFBundleDisplayName = "Content Blocker";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -768,7 +778,7 @@
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "content-blocker-ios/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Debug Content Blocker";
+				INFOPLIST_KEY_CFBundleDisplayName = "Content Blocker";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -999,6 +1009,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "safari-blocker/safari_blocker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1007,6 +1018,7 @@
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "safari-blocker/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Content Blocker";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1027,6 +1039,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "safari-blocker/safari_blocker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1035,6 +1048,7 @@
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "safari-blocker/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Content Blocker";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
