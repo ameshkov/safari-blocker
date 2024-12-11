@@ -73,7 +73,17 @@ public class ContentBlockerService {
     ///
     /// - Returns: the number of rules converted.
     public static func convertFilter(rules: String, groupIdentifier: String) -> Int {
-        let lines = rules.components(separatedBy: "\n")
+        var filterRules = rules
+        if !filterRules.isContiguousUTF8 {
+            measure(label: "Make contigious UTF-8") {
+                // This is super important for the conversion performance.
+                // In a normal app make sure you're storing filter lists as
+                // contigious UTF-8 strings.
+                filterRules.makeContiguousUTF8()
+            }
+        }
+
+        let lines = filterRules.components(separatedBy: "\n")
 
         let result = measure(label: "Conversion") {
             ContentBlockerConverter().convertArray(
@@ -130,12 +140,6 @@ public class ContentBlockerService {
         }
     }
     
-    /// Converts AdGuard filter rules into Safari content blocking syntax.
-    private static func convertRules(rules: [String]) -> ConversionResult? {
-        let result: ConversionResult? = ContentBlockerConverter().convertArray(rules: rules, advancedBlocking: true)
-        
-        return result!
-    }
 }
 
 func measure<T>(label: String, block: () -> T) -> T {

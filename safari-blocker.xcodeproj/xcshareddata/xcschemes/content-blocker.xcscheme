@@ -16,7 +16,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D7BB67952D084C1100B8A793"
+               BlueprintIdentifier = "D70B170B2D08D39A000A827C"
                BuildableName = "content-blocker.appex"
                BlueprintName = "content-blocker"
                ReferencedContainer = "container:safari-blocker.xcodeproj">

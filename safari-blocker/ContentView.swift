@@ -35,7 +35,7 @@ struct ContentView: View {
                 Text(statusDescription)
                     .padding(.top, 10)
             }
-            
+
             if !isLoading {
                 HStack {
                     Image("AppIconImage")
@@ -65,11 +65,12 @@ struct ContentView: View {
                     
                     Spacer()
                 }
-                
+
                 TextEditor(text: $userInput)
                     .font(.body)
                     .background(Color.white)
                     .border(Color.gray, width: 1)
+                    .autocorrectionDisabled(true)
                 
                 Spacer()
                 
@@ -147,13 +148,14 @@ struct ContentView: View {
                 let start = Date()
                 
                 let content = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
+
                 let json = content.hasPrefix("[") && content.hasSuffix("]") &&
-                content.contains("{")
-                
+                    content.contains("{")
+
                 if json {
                     convertedCount = ContentBlockerService.saveContentBlocker(jsonRules: content, groupIdentifier: GROUP_ID)
                 } else {
-                    convertedCount = ContentBlockerService.convertFilter(rules: userInput, groupIdentifier: GROUP_ID)
+                    convertedCount = ContentBlockerService.convertFilter(rules: content, groupIdentifier: GROUP_ID)
                 }
                 
                 let endConversion = Date()

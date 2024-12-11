@@ -27,102 +27,109 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                Text(statusDescription)
-                    .padding(.top, 10)
+                VStack {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                    Text(statusDescription)
+                        .padding(.top, 10)
+                }
             }
             
             if !isLoading {
-                HStack {
-                    Image("AppIconImage")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                    
-                    Text("Safari Content Blocker")
-                        .font(.headline)
-                        .multilineTextAlignment(.leading)
-                    
-                    Spacer()
-                }
-                
-                HStack {
-                    Text("Status: \(statusDescription)")
-                        .font(.subheadline)
-                        .multilineTextAlignment(.leading)
-                        .foregroundColor(error ? Color.red : Color.primary)
-                    
-                    Spacer()
-                }.padding(.bottom, 5)
-                
-                HStack {
-                    Text("Enter rules for Safari. Accepts both AdGuard rules and Safari content blocking JSON")
-                        .multilineTextAlignment(.leading)
-                        .font(.caption)
-                    
-                    Spacer()
-                }
-                
-                TextEditor(text: $userInput)
-                    .font(.body)
-                    .background(Color.white)
-                    .border(Color.gray, width: 1)
-                    .frame(height:400)
-                
-                HStack {
-                    let txt = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
-                    
-                    if txt.hasPrefix("[") &&
-                        txt.hasSuffix("]") &&
-                        txt.contains("{") {
-                        Text("JSON detected, the rules will not be converted")
-                            .font(.footnote)
-                            .multilineTextAlignment(.leading)
-                    } else {
-                        Text("AdGuard rules detected, the rules will be converted to Safari syntax")
-                            .font(.footnote)
-                            .multilineTextAlignment(.leading)
+                ScrollView {
+                    VStack(alignment:.leading) {
+                        HStack {
+                            Image("AppIconImage")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                            
+                            Text("Safari Content Blocker")
+                                .font(.headline)
+                                .multilineTextAlignment(.leading)
+                            
+                            Spacer()
+                        }
+                        
+                        HStack {
+                            Text("Status: \(statusDescription)")
+                                .font(.subheadline)
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(error ? Color.red : Color.primary)
+                            
+                            Spacer()
+                        }.padding(.bottom, 5)
+                        
+                        HStack {
+                            Text("Enter rules for Safari. Accepts both AdGuard rules and Safari content blocking JSON")
+                                .multilineTextAlignment(.leading)
+                                .font(.caption)
+                            
+                            Spacer()
+                        }
+                        
+                        TextEditor(text: $userInput)
+                            .font(.body)
+                            .background(Color.white)
+                            .border(Color.gray, width: 1)
+                            .autocorrectionDisabled(true)
+                            .frame(height:250)
+                        
+                        HStack {
+                            let txt = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
+                            
+                            if txt.hasPrefix("[") &&
+                                txt.hasSuffix("]") &&
+                                txt.contains("{") {
+                                Text("JSON detected, the rules will not be converted")
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.leading)
+                            } else {
+                                Text("AdGuard rules detected, the rules will be converted to Safari syntax")
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.leading)
+                            }
+                            
+                            Spacer()
+                        }
+                        
+                        HStack {
+                            Button(action: prepareContentBlocker) {
+                                Text("Reload filter")
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .keyboardShortcut("s", modifiers: .command)
+                            
+                            Spacer()
+                        }
+                        
+                        HStack {
+                            Text("Elapsed on conversion: \(elapsedConversion)")
+                                .font(.footnote)
+                                .multilineTextAlignment(.leading)
+                            
+                            Spacer()
+                        }.padding(.top, 5)
+                        
+                        HStack {
+                            Text("Elapsed on loading into Safari: \(elapsedLoad)")
+                                .font(.footnote)
+                                .multilineTextAlignment(.leading)
+                            
+                            Spacer()
+                        }
+                        
+                        HStack {
+                            Text("You need to enable Safari Extension now")
+                                .font(.footnote)
+                            Spacer()
+                        }.padding(.top, 5)
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
+                    .padding()
                 }
-                
-                HStack {
-                    Button(action: prepareContentBlocker) {
-                        Text("Reload filter")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .keyboardShortcut("s", modifiers: .command)
-                    
-                    Spacer()
-                }
-                
-                HStack {
-                    Text("Elapsed on conversion: \(elapsedConversion)")
-                        .font(.footnote)
-                        .multilineTextAlignment(.leading)
-                    
-                    Spacer()
-                }.padding(.top, 5)
-                
-                HStack {
-                    Text("Elapsed on loading into Safari: \(elapsedLoad)")
-                        .font(.footnote)
-                        .multilineTextAlignment(.leading)
-                    
-                    Spacer()
-                }
-                
-                HStack {
-                    Text("You need to enable Safari Extension now")
-                        .font(.footnote)
-                    Spacer()
-                }.padding(.top, 5)
-                
-                Spacer()
             }
         }
-        .padding()
         .onAppear {
             prepareContentBlocker()
         }
