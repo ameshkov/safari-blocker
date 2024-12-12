@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 import content_blocker_service
 
 let CONTENT_BLOCKER_ID = "dev.adguard.safari-blocker.content-blocker"
@@ -22,6 +23,7 @@ struct ContentView: View {
     @State private var elapsedLoad: String = "1.25s"
     @State private var error: Bool = false
     @State private var userInput: String
+    @StateObject private var userInputValidation = UserInputValidationModel()
     
     init() {
         userInput = ContentBlockerService.readDefaultFilterList()
@@ -71,24 +73,17 @@ struct ContentView: View {
                     .background(Color.white)
                     .border(Color.gray, width: 1)
                     .autocorrectionDisabled(true)
+                    .onChange(of: userInput) { newValue in
+                        userInputValidation.validate(input: newValue)
+                    }
                 
                 Spacer()
                 
                 HStack {
-                    let txt = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
-                    
-                    if txt.hasPrefix("[") &&
-                        txt.hasSuffix("]") &&
-                        txt.contains("{") {
-                        Text("JSON detected, the rules will not be converted")
-                            .font(.footnote)
-                            .multilineTextAlignment(.leading)
-                    } else {
-                        Text("AdGuard rules detected, the rules will be converted to Safari syntax")
-                            .font(.footnote)
-                            .multilineTextAlignment(.leading)
-                    }
-                    
+                    Text(userInputValidation.message)
+                        .font(.footnote)
+                        .multilineTextAlignment(.leading)
+
                     Spacer()
                 }
                 
@@ -128,6 +123,7 @@ struct ContentView: View {
         .frame(minWidth: 400, idealWidth: 400, minHeight: 300, idealHeight: 400)
         .padding()
         .onAppear {
+            userInputValidation.validate(input: userInput)
             prepareContentBlocker()
         }
     }
@@ -185,6 +181,34 @@ struct ContentView: View {
                 }
             }
         }
+    }
+}
+
+class UserInputValidationModel: ObservableObject {
+    @Published var message: String = ""
+
+    private var cancellables = Set<AnyCancellable>()
+    private let inputSubject = PassthroughSubject<String, Never>()
+    
+    init() {
+        inputSubject
+            .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
+            .sink { [weak self] txt in
+                let trimmedInput = txt.trimmingCharacters(in: .whitespacesAndNewlines)
+                
+                if trimmedInput.hasPrefix("[") &&
+                    trimmedInput.hasSuffix("]") &&
+                    trimmedInput.contains("{") {
+                    self?.message = "JSON detected, the rules will not be converted"
+                } else {
+                    self?.message = "AdGuard rules detected, the rules will be converted to Safari syntax"
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    func validate(input: String) {
+        inputSubject.send(input)
     }
 }
 
