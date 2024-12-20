@@ -67,12 +67,10 @@ public class ContentBlockerService {
 
         return 0
     }
-    
-    /// Converts filter.txt into the Safari content blocking rules syntax and saves to the content blocker file.
-    /// This file will later be loaded by the content blocker extension.
-    ///
-    /// - Returns: the number of rules converted.
-    public static func convertFilter(rules: String, groupIdentifier: String) -> Int {
+
+    /// Converts AdGuard rules into the Safari content blocking rules syntax and returns
+    /// the JSON contents.
+    public static func convertRules(rules: String) -> (json: String, convertedCount: Int) {
         var filterRules = rules
         if !filterRules.isContiguousUTF8 {
             measure(label: "Make contigious UTF-8") {
@@ -88,7 +86,7 @@ public class ContentBlockerService {
         let result = measure(label: "Conversion") {
             ContentBlockerConverter().convertArray(
                 rules: lines,
-                safariVersion: .safari16_4Plus(18.1),
+                safariVersion: SafariVersion(18.1),
                 optimize: false,
                 advancedBlocking: true,
                 advancedBlockingFormat: .txt,
@@ -96,9 +94,19 @@ public class ContentBlockerService {
                 progress: nil
             )
         }
-        
+
+        return (result.converted, result.convertedCount)
+    }
+
+    /// Converts filter.txt into the Safari content blocking rules syntax and saves to the content blocker file.
+    /// This file will later be loaded by the content blocker extension.
+    ///
+    /// - Returns: the number of rules converted.
+    public static func convertFilter(rules: String, groupIdentifier: String) -> Int {
+        let result = convertRules(rules: rules)
+
         measure(label: "Saving file") {
-            saveBlockerListFile(contents: result.converted, groupIdentifier: groupIdentifier)
+            saveBlockerListFile(contents: result.json, groupIdentifier: groupIdentifier)
         }
         
         return result.convertedCount
@@ -108,7 +116,7 @@ public class ContentBlockerService {
     private static func reloadContentBlockerSynchronously(withIdentifier identifier: String) -> Result<Void, Error> {
         let semaphore = DispatchSemaphore(value: 0) // Create a semaphore with an initial count of 0
         var result: Result<Void, Error> = .success(())
-        
+
         SFContentBlockerManager.reloadContentBlocker(withIdentifier: identifier) { error in
             if let error = error {
                 result = .failure(error)

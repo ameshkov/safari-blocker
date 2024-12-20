@@ -12,6 +12,14 @@ import Combine
 let CONTENT_BLOCKER_ID = "dev.adguard.safari-blocker-ios.content-blocker-ios"
 let GROUP_ID = "group.dev.adguard.safari-blocker"
 
+enum RuleType: String, CaseIterable, Identifiable {
+    case adGuardFiltering = "AdGuard filtering rules"
+    case adGuardFilterListsURLs = "AdGuard filter lists URLs"
+    case safariContentBlocker = "Safari content blocker rules"
+    case safariContentBlockerURL = "Safari content blocker URL"
+
+    var id: String { self.rawValue }
+}
 
 struct ContentView: View {
     @State private var isLoading: Bool = true
@@ -20,8 +28,21 @@ struct ContentView: View {
     @State private var elapsedLoad: String = "1.25s"
     @State private var error: Bool = false
     @State private var userInput: String
-    @StateObject private var userInputValidation = UserInputValidationModel()
-    
+    @State private var selectedRuleType: RuleType = .adGuardFiltering
+
+    var editorLabel: String {
+        switch selectedRuleType {
+        case .adGuardFiltering:
+            return "Enter AdGuard filtering rules"
+        case .safariContentBlockerURL:
+            return "Enter Safari content blocker JSON URL"
+        case .adGuardFilterListsURLs:
+            return "Enter filter list URLs (one per line)"
+        case .safariContentBlocker:
+            return "Enter rules for Safari content blocker"
+        }
+    }
+
     init() {
         userInput = ContentBlockerService.readDefaultFilterList()
     }
@@ -36,7 +57,7 @@ struct ContentView: View {
                         .padding(.top, 10)
                 }
             }
-            
+
             if !isLoading {
                 ScrollView {
                     VStack(alignment:.leading) {
@@ -60,9 +81,20 @@ struct ContentView: View {
                             
                             Spacer()
                         }.padding(.bottom, 5)
-                        
+
                         HStack {
-                            Text("Enter rules for Safari. Accepts both AdGuard rules and Safari content blocking JSON")
+                            Picker("Select Rule Type", selection: $selectedRuleType) {
+                                ForEach(RuleType.allCases) { ruleType in
+                                    Text(ruleType.rawValue).tag(ruleType)
+                                }
+                            }
+                            .pickerStyle(DefaultPickerStyle())
+
+                            Spacer()
+                        }.padding(.bottom, 5)
+
+                        HStack {
+                            Text(editorLabel)
                                 .multilineTextAlignment(.leading)
                                 .font(.caption)
                             
@@ -75,17 +107,6 @@ struct ContentView: View {
                             .border(Color.gray, width: 1)
                             .autocorrectionDisabled(true)
                             .frame(height:250)
-                            .onChange(of: userInput) { newValue in
-                                userInputValidation.validate(input: newValue)
-                            }
-                        
-                        HStack {
-                            Text(userInputValidation.message)
-                                .font(.footnote)
-                                .multilineTextAlignment(.leading)
-
-                            Spacer()
-                        }
                         
                         HStack {
                             Button(action: prepareContentBlocker) {
@@ -126,53 +147,94 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            userInputValidation.validate(input: userInput)
             prepareContentBlocker()
         }
     }
     
+    private func getContent() -> String? {
+        let inputContent = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        switch selectedRuleType {
+        case .adGuardFiltering:
+            return inputContent
+        case .adGuardFilterListsURLs:
+            let urls = inputContent.split(separator: "\n").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+
+            var concatenatedContent = ""
+            for urlString in urls {
+                guard let url = URL(string: urlString) else {
+                    return nil
+                }
+                let content = try? downloadContent(from: url)
+                if content == nil {
+                    return nil
+                }
+
+                concatenatedContent.append(content!)
+                concatenatedContent.append("\n")
+            }
+
+            return concatenatedContent
+
+        case .safariContentBlocker:
+            return inputContent
+        case .safariContentBlockerURL:
+            guard let url = URL(string: inputContent) else {
+                return nil
+            }
+
+            return try? downloadContent(from: url)
+        }
+    }
+
+    private func downloadContent(from url: URL) throws -> String {
+        let data = try Data(contentsOf: url)
+
+        return String(data: data, encoding: .utf8)!
+    }
+
     private func prepareContentBlocker() {
         self.isLoading = true
         self.statusDescription = "Converting content blocking rules"
-        
+
         DispatchQueue.global().async {
             var elapsedConversion = "5.23s"
             var elapsedLoad = "1.52s"
             var convertedCount = 5
             var result: Result<Void, Error> = .success(())
-            
+
             if ProcessInfo.processInfo.isRunningInPreview {
                 Thread.sleep(forTimeInterval: 1)
             } else {
                 let start = Date()
-                
-                let content = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
-                let json = content.hasPrefix("[") && content.hasSuffix("]") &&
-                content.contains("{")
-                
+
+                let content = getContent() ?? ""
+                let json = selectedRuleType == .safariContentBlocker || selectedRuleType == .safariContentBlockerURL
+
                 if json {
                     convertedCount = ContentBlockerService.saveContentBlocker(jsonRules: content, groupIdentifier: GROUP_ID)
                 } else {
-                    convertedCount = ContentBlockerService.convertFilter(rules: userInput, groupIdentifier: GROUP_ID)
+                    convertedCount = ContentBlockerService.convertFilter(rules: content, groupIdentifier: GROUP_ID)
                 }
-                
+
                 let endConversion = Date()
                 elapsedConversion = String(format: "%.2fs", endConversion.timeIntervalSince(start))
-                
+
                 DispatchQueue.main.async {
                     self.statusDescription = "Loading content blocker to Safari"
                 }
-                
+
                 result = ContentBlockerService.reloadContentBlocker(withIdentifier: CONTENT_BLOCKER_ID)
-                
+
                 let endLoad = Date()
                 elapsedLoad = String(format: "%.2fs", endLoad.timeIntervalSince(endConversion))
             }
+
             DispatchQueue.main.async {
                 self.isLoading = false
                 self.elapsedConversion = elapsedConversion
                 self.elapsedLoad = elapsedLoad
-                
+
                 switch result {
                 case .success:
                     self.statusDescription = "Loaded \(convertedCount) \(convertedCount == 1 ? "rule" : "rules") to Safari"

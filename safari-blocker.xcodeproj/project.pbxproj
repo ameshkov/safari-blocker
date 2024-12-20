@@ -12,6 +12,7 @@
 		D70B17172D08D39A000A827C /* content-blocker.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D70B170C2D08D39A000A827C /* content-blocker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D70B171C2D08D3A2000A827C /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
 		D70B171D2D08D3A2000A827C /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D70B17E82D11939C000A827C /* web-extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D70B17CF2D11939C000A827C /* web-extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D73B13A72D08888C00939E68 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D73B13A62D08888900939E68 /* README.md */; };
 		D73B13E42D08910F00939E68 /* content-blocker-ios.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D73B14052D08923600939E68 /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
@@ -36,6 +37,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = D73B13EF2D08923600939E68;
 			remoteInfo = "content-blocker-service";
+		};
+		D70B17E62D11939C000A827C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D768F59F2D084B7F007F39D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D70B17CE2D11939C000A827C;
+			remoteInfo = "web-extension";
 		};
 		D73B13E22D08910F00939E68 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -130,6 +138,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				D70B17172D08D39A000A827C /* content-blocker.appex in Embed Foundation Extensions */,
+				D70B17E82D11939C000A827C /* web-extension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +147,7 @@
 
 /* Begin PBXFileReference section */
 		D70B170C2D08D39A000A827C /* content-blocker.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "content-blocker.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D70B17CF2D11939C000A827C /* web-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "web-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B13A62D08888900939E68 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D73B13AC2D08902C00939E68 /* safari-blocker-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "safari-blocker-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "content-blocker-ios.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +170,13 @@
 				Info.plist,
 			);
 			target = D768F5A62D084B7F007F39D5 /* safari-blocker */;
+		};
+		D70B17EC2D11939C000A827C /* Exceptions for "web-extension" folder in "web-extension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D70B17CE2D11939C000A827C /* web-extension */;
 		};
 		D73B13E52D08910F00939E68 /* Exceptions for "content-blocker-ios" folder in "content-blocker-ios" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -191,6 +208,18 @@
 				D70B17182D08D39A000A827C /* Exceptions for "content-blocker" folder in "content-blocker" target */,
 			);
 			path = "content-blocker";
+			sourceTree = "<group>";
+		};
+		D70B17D02D11939C000A827C /* web-extension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D70B17EC2D11939C000A827C /* Exceptions for "web-extension" folder in "web-extension" target */,
+			);
+			explicitFolders = (
+				Resources/_locales,
+				Resources/images,
+			);
+			path = "web-extension";
 			sourceTree = "<group>";
 		};
 		D73B138E2D086D1400939E68 /* filters */ = {
@@ -247,6 +276,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D70B17CC2D11939C000A827C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D73B13A92D08902C00939E68 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -293,6 +329,7 @@
 				D73B13DC2D08910F00939E68 /* content-blocker-ios */,
 				D73B13F12D08923600939E68 /* content-blocker-service */,
 				D70B170E2D08D39A000A827C /* content-blocker */,
+				D70B17D02D11939C000A827C /* web-extension */,
 				D7BB67972D084C1100B8A793 /* Frameworks */,
 				D768F5A82D084B7F007F39D5 /* Products */,
 			);
@@ -306,6 +343,7 @@
 				D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */,
 				D73B13F02D08923600939E68 /* content_blocker_service.framework */,
 				D70B170C2D08D39A000A827C /* content-blocker.appex */,
+				D70B17CF2D11939C000A827C /* web-extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -353,6 +391,28 @@
 			);
 			productName = "content-blocker";
 			productReference = D70B170C2D08D39A000A827C /* content-blocker.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		D70B17CE2D11939C000A827C /* web-extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D70B17EB2D11939C000A827C /* Build configuration list for PBXNativeTarget "web-extension" */;
+			buildPhases = (
+				D70B17CB2D11939C000A827C /* Sources */,
+				D70B17CC2D11939C000A827C /* Frameworks */,
+				D70B17CD2D11939C000A827C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D70B17D02D11939C000A827C /* web-extension */,
+			);
+			name = "web-extension";
+			packageProductDependencies = (
+			);
+			productName = "web-extension";
+			productReference = D70B17CF2D11939C000A827C /* web-extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		D73B13AB2D08902C00939E68 /* safari-blocker-ios */ = {
@@ -444,6 +504,7 @@
 			dependencies = (
 				D73B14042D08923600939E68 /* PBXTargetDependency */,
 				D70B17162D08D39A000A827C /* PBXTargetDependency */,
+				D70B17E72D11939C000A827C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				D73B138E2D086D1400939E68 /* filters */,
@@ -467,6 +528,9 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					D70B170B2D08D39A000A827C = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					D70B17CE2D11939C000A827C = {
 						CreatedOnToolsVersion = 16.0;
 					};
 					D73B13AB2D08902C00939E68 = {
@@ -504,6 +568,7 @@
 				D73B13AB2D08902C00939E68 /* safari-blocker-ios */,
 				D70B170B2D08D39A000A827C /* content-blocker */,
 				D73B13DA2D08910F00939E68 /* content-blocker-ios */,
+				D70B17CE2D11939C000A827C /* web-extension */,
 				D73B13EF2D08923600939E68 /* content-blocker-service */,
 			);
 		};
@@ -511,6 +576,13 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		D70B170A2D08D39A000A827C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D70B17CD2D11939C000A827C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -550,6 +622,13 @@
 
 /* Begin PBXSourcesBuildPhase section */
 		D70B17082D08D39A000A827C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D70B17CB2D11939C000A827C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -596,6 +675,11 @@
 			isa = PBXTargetDependency;
 			target = D73B13EF2D08923600939E68 /* content-blocker-service */;
 			targetProxy = D70B171E2D08D3A2000A827C /* PBXContainerItemProxy */;
+		};
+		D70B17E72D11939C000A827C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D70B17CE2D11939C000A827C /* web-extension */;
+			targetProxy = D70B17E62D11939C000A827C /* PBXContainerItemProxy */;
 		};
 		D73B13E32D08910F00939E68 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -665,6 +749,68 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.content-blocker";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D70B17E92D11939C000A827C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "web-extension/web_extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4EXD6AB86D;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "web-extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Web Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.web-extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		D70B17EA2D11939C000A827C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "web-extension/web_extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4EXD6AB86D;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "web-extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Web Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.web-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1072,6 +1218,15 @@
 			buildConfigurations = (
 				D70B171A2D08D39A000A827C /* Debug */,
 				D70B171B2D08D39A000A827C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D70B17EB2D11939C000A827C /* Build configuration list for PBXNativeTarget "web-extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D70B17E92D11939C000A827C /* Debug */,
+				D70B17EA2D11939C000A827C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
