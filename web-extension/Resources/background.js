@@ -19,3 +19,52 @@ async function requestRules(request) {
         })
     })
 }
+
+// Инъекция скрипта на каждую страницу
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status === 'complete' && /^https?:\/\//.test(tab.url)) {
+        browser.scripting.executeScript({
+            target: { tabId: tabId },
+            world: "MAIN",
+            func: () => {
+                console.log('Injected script');
+
+                try {
+                    eval('console.log("This is inside eval")');
+                } catch (ex) {
+                    console.log('Failed to eval: ', ex);
+                }
+            }
+        });
+    }
+});
+
+
+// Фильтр для всех запросов
+const filter = {
+    urls: ["<all_urls>"]
+};
+
+// Слушатель для всех запросов
+browser.webRequest.onBeforeRequest.addListener(
+    (details) => {
+        console.log("Запрос: ", details);
+    },
+    filter
+);
+
+// Слушатель для ошибок запросов
+browser.webRequest.onErrorOccurred.addListener(
+    (details) => {
+        console.error("Ошибка запроса: ", details);
+    },
+    filter
+);
+
+// Обработка завершения запросов (опционально)
+browser.webRequest.onCompleted.addListener(
+    (details) => {
+        console.log("Запрос завершён: ", details);
+    },
+    filter
+);

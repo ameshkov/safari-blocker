@@ -203,7 +203,6 @@ struct ContentView: View {
             self.isLoading = true
             self.statusDescription = "Converting content blocking rules"
             var elapsedConversion = "5.23s"
-            var convertedCount = 0
 
             if ProcessInfo.processInfo.isRunningInPreview {
                 Thread.sleep(forTimeInterval: 1)
@@ -211,9 +210,7 @@ struct ContentView: View {
                 let start = Date()
 
                 let content = getContent() ?? ""
-                let conversionResult = ContentBlockerService.convertRules(rules: content)
-
-                convertedCount = conversionResult.convertedCount
+                let archiveData = ContentBlockerService.exportConversionResult(rules: content)
 
                 let endConversion = Date()
                 elapsedConversion = String(format: "%.2fs", endConversion.timeIntervalSince(start))
@@ -221,12 +218,13 @@ struct ContentView: View {
                 DispatchQueue.main.async {
                     let savePanel = NSSavePanel()
                     savePanel.nameFieldStringValue = "content-blocker"
-                    savePanel.allowedContentTypes = [.json]
+                    savePanel.allowedContentTypes = [.zip]
 
                     savePanel.begin { result in
                         if result == .OK, let url = savePanel.url {
                             do {
-                                try conversionResult.json.write(to: url, atomically: true, encoding: .utf8)
+                                try archiveData?.write(to: url)
+
                                 print("File saved to \(url)")
                             } catch {
                                 print("Error saving file: \(error)")
@@ -240,7 +238,7 @@ struct ContentView: View {
                 self.isLoading = false
                 self.elapsedConversion = elapsedConversion
                 self.elapsedLoad = "0s"
-                self.statusDescription = "Exported \(convertedCount) rules"
+                self.statusDescription = "Exported rules"
             }
         }
     }

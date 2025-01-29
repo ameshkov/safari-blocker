@@ -33,6 +33,8 @@
         "<all_urls>",
         "nativeMessaging",
         "storage",
-        "unlimitedStorage"
+        "unlimitedStorage",
+        "webRequest",
+        "scripting"
     ]
 }
