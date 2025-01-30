@@ -1,0 +1,5 @@
+# JS
+.vscode
+/node_modules
+.eslintcache
+dist

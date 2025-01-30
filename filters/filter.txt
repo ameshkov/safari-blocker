@@ -1,2 +1,5 @@
 ||example.com^
 ||example.org^
+example.net#?#.banner
+example.net#$#.altbanner { display: hidden; }
+example.net#%#console.log('hello')

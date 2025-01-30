@@ -7,15 +7,21 @@
 
 import SafariServices
 import os.log
+import content_blocker_service
+
+let GROUP_ID: String = {
+    let teamIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"]! as! String
+    return "\(teamIdentifierPrefix)group.dev.adguard.safari-blocker"
+}()
+
+/// WebExtension must be declared as a static property because SafariWebExtensionHandler is created on every request.
+///
+/// TODO(ameshkov): !!! Comment
+let WEB_EXTENSION = WebExtension(groupIdentifier: GROUP_ID)
 
 class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 
-    // private let blockerList: String
-
     override init() {
-        // let blockerListFileURL = Bundle.main.url(forResource: "blockerList", withExtension: "txt")!
-        // self.blockerList = try! String(contentsOf: blockerListFileURL, encoding: .utf8)
-
         super.init()
     }
 
@@ -30,19 +36,45 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             return
         }
 
-        // let name = message?["name"] as? String
-        if var timings = message?["timings"] as? [String: Int64] {
-            timings["native"] = Int64(Date().timeIntervalSince1970 * 1000)
-            message?["timings"] = timings // Reassign the modified dictionary back
+        let nativeStart = Int64(Date().timeIntervalSince1970 * 1000)
+
+        let payload = message?["payload"] as? [String: Any] ?? [:]
+        if let urlString = payload["url"] as? String {
+            if let url = URL(string: urlString) {
+                if let configuration = WEB_EXTENSION.lookup(for: url) {
+                    message?["payload"] = convertToPayload(configuration)
+                }
+            }
         }
 
-        message!["rules"] = "b".padding(toLength: 10000, withPad: "a", startingAt: 0)
-        // let idx = blockerList.index(blockerList.startIndex, offsetBy: 10000)
-        // message!["rules"] = blockerList[..<idx]
+        if var trace = message?["trace"] as? [String: Int64] {
+            trace["nativeStart"] = nativeStart
+            trace["nativeEnd"] = Int64(Date().timeIntervalSince1970 * 1000)
+            message?["trace"] = trace // Reassign the modified dictionary back
+        }
 
         let response = createResponse(with: message!)
 
         context.completeRequest(returningItems: [ response ], completionHandler: nil)
+    }
+
+    private func convertToPayload(_ configuration: WebExtension.Configuration) -> [String: Any] {
+        var payload: [String: Any] = [:]
+        payload["css"] = configuration.css
+        payload["extendedCss"] = configuration.extendedCss
+        payload["js"] = configuration.js
+        
+        var scriptlets: [[String: Any]] = []
+        for scriptlet in configuration.scriptlets {
+            var scriptletData: [String: Any] = [:]
+            scriptletData["name"] = scriptlet.name
+            scriptletData["args"] = scriptlet.args
+            scriptlets.append(scriptletData)
+        }
+
+        payload["scriptlets"] = scriptlets
+
+        return payload
     }
 
     private func createResponse(with json: [String: Any?]) -> NSExtensionItem {

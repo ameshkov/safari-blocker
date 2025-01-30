@@ -8,6 +8,7 @@
 import Foundation
 import SafariServices
 internal import ContentBlockerConverter
+internal import FilterEngine
 internal import ZIPFoundation
 
 /// Runs the conversion logic and prepares the content blocker file.
@@ -34,9 +35,20 @@ public class ContentBlockerService {
     public static func exportConversionResult(rules: String) -> Data? {
         let result = convertRules(rules: rules)
 
-        let safariRulesJSON = result.safariRulesJSON
+        // We'll use a variable so we can modify the JSON string
+        var safariRulesJSON = result.safariRulesJSON
         let advancedRulesText = result.advancedRulesText
 
+        // Attempt to pretty-print the JSON
+        if let data = safariRulesJSON.data(using: .utf8),
+           let jsonObject = try? JSONSerialization.jsonObject(with: data),
+           let prettyData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted]),
+           let prettyString = String(data: prettyData, encoding: .utf8) {
+
+            safariRulesJSON = prettyString
+        }
+
+        // Pass the newly formatted JSON string to the ZIP creation
         return createZipArchive(safariRulesJSON: safariRulesJSON, advancedRulesText: advancedRulesText)
     }
 
@@ -101,8 +113,25 @@ public class ContentBlockerService {
     public static func convertFilter(rules: String, groupIdentifier: String) -> Int {
         let result = convertRules(rules: rules)
 
-        measure(label: "Saving file") {
+        measure(label: "Saving content blocking rules file") {
             saveBlockerListFile(contents: result.safariRulesJSON, groupIdentifier: groupIdentifier)
+        }
+
+        if result.advancedRulesText != nil {
+            measure(label: "Building and saving engine") {
+                do {
+                    try saveFilterEngine(rules: result.advancedRulesText!, groupIdentifier: groupIdentifier)
+
+                    // Store the current timestamp in UserDefaults to later read it in WebExtension.
+                    let currentTimestamp = Date().timeIntervalSince1970
+                    if let userDefaults = UserDefaults(suiteName: groupIdentifier) {
+                        userDefaults.set(currentTimestamp, forKey: Constants.ENGINE_TIMESTAMP_KEY)
+                        userDefaults.synchronize()
+                    }
+                } catch {
+                    NSLog("Failed to build and save engine: \(error.localizedDescription)")
+                }
+            }
         }
 
         return result.safariRulesCount
@@ -110,7 +139,43 @@ public class ContentBlockerService {
 
 }
 
-// MARK: - Private Helpers
+// MARK: - Filter Engine functions
+
+extension ContentBlockerService {
+
+    /// Builds `FilterEngnine` and saves it to a shared file that later can be used
+    /// by WebExtension to select the rules.
+    ///
+    /// - Parameters:
+    ///   - rules: AdGuard rules to be converted.
+    ///   - groupIdentifier: Group ID to use for the shared container where the file will be saved.
+    private static func saveFilterEngine(rules: String, groupIdentifier: String) throws {
+        // Get the shared container URL.
+        guard let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier) else {
+            NSLog("Failed to access App Group container.")
+            return
+        }
+
+        let filterRuleStorageURL = appGroupURL.appendingPathComponent(Constants.FILTER_RULE_STORAGE_FILE_NAME)
+
+        // First, prepare the filter rule storage.
+        let storage = try FilterRuleStorage(
+            from: rules.components(separatedBy: "\n"),
+            for: SafariVersion.safari16_4,
+            fileURL: filterRuleStorageURL
+        )
+
+        // Build filter engine from rules in the storage.
+        let engine = try FilterEngine(storage: storage)
+
+        let filterEngineIndexURL = appGroupURL.appendingPathComponent(Constants.FILTER_ENGINE_INDEX_FILE_NAME)
+
+        // Serialize the engine to a file.
+        try engine.write(to: filterEngineIndexURL)
+    }
+}
+
+// MARK: - Safari Content Blocker functions
 
 extension ContentBlockerService {
 
@@ -171,7 +236,7 @@ extension ContentBlockerService {
             return
         }
 
-        let sharedFileURL = appGroupURL.appendingPathComponent("blockerList.json")
+        let sharedFileURL = appGroupURL.appendingPathComponent(Constants.SAFARI_BLOCKER_FILE_NAME)
 
         do {
             try contents.data(using: .utf8)?.write(to: sharedFileURL)
@@ -230,18 +295,4 @@ extension ContentBlockerService {
 
 }
 
-func measure<T>(label: String, block: () -> T) -> T {
-    let start = DispatchTime.now() // Start the timer
 
-    let result = block() // Execute the code block
-
-    let end = DispatchTime.now() // End the timer
-    let elapsedNanoseconds = end.uptimeNanoseconds - start.uptimeNanoseconds
-    let elapsedMilliseconds = Double(elapsedNanoseconds) / 1_000_000 // Convert to milliseconds
-
-    // Pretty print elapsed time
-    let formattedTime = String(format: "%.3f", elapsedMilliseconds)
-    NSLog("[\(label)] Elapsed Time: \(formattedTime) ms")
-
-    return result
-}

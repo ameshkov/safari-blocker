@@ -18,8 +18,8 @@ public class ContentBlockerExtension {
             return
         }
         
-        let sharedFileURL = appGroupURL.appendingPathComponent("blockerList.json")
-        
+        let sharedFileURL = appGroupURL.appendingPathComponent(Constants.SAFARI_BLOCKER_FILE_NAME)
+
         var blockerListFileURL = sharedFileURL
         if !FileManager.default.fileExists(atPath: sharedFileURL.path) {
             NSLog("No blocker list file found. Using the default one.")
