@@ -2,6 +2,8 @@
  * @file Handles delaying and dispatching of DOMContentLoaded and load events.
  */
 
+import { log } from './logger';
+
 /**
  * The interceptors delay the events until either a response is received or the
  * timeout expires. If the events have already fired, no interceptors are added.
@@ -17,6 +19,7 @@ export function setupDelayedEventDispatcher(timeout = 100): () => void {
         options: EventInit;
         intercepted: boolean;
         listener: EventListener;
+        target: EventTarget;
     }
 
     const interceptors: Interceptor[] = [];
@@ -24,10 +27,12 @@ export function setupDelayedEventDispatcher(timeout = 100): () => void {
         {
             name: 'DOMContentLoaded',
             options: { bubbles: true, cancelable: false },
+            target: document,
         },
         {
             name: 'load',
             options: { bubbles: false, cancelable: false },
+            target: window,
         },
     ];
 
@@ -36,18 +41,18 @@ export function setupDelayedEventDispatcher(timeout = 100): () => void {
             name: ev.name,
             options: ev.options,
             intercepted: false,
+            target: ev.target,
             listener: (event: Event) => {
                 // Prevent immediate propagation.
                 event.stopImmediatePropagation();
                 interceptor.intercepted = true;
 
-                // TODO(ameshkov): !!! REMOVE THIS LOG
-                console.log(`${ev.name} event intercepted.`);
+                log(`${ev.name} event has been intercepted.`);
             },
         };
         interceptors.push(interceptor);
 
-        window.addEventListener(ev.name, interceptor.listener, { capture: true });
+        interceptor.target.addEventListener(ev.name, interceptor.listener, { capture: true });
     });
 
     let dispatched = false;
@@ -56,17 +61,16 @@ export function setupDelayedEventDispatcher(timeout = 100): () => void {
         dispatched = true;
         interceptors.forEach((interceptor) => {
             // Remove the interceptor listener.
-            window.removeEventListener(interceptor.name, interceptor.listener, { capture: true });
+            interceptor.target.removeEventListener(interceptor.name, interceptor.listener, { capture: true });
             if (interceptor.intercepted) {
                 // If intercepted, dispatch the event manually so downstream listeners eventually receive it.
                 const newEvent = new Event(interceptor.name, interceptor.options);
-                window.dispatchEvent(newEvent);
+                interceptor.target.dispatchEvent(newEvent);
 
-                // TODO(ameshkov): !!! REMOVE THIS LOG
-                console.log(`${interceptor.name} event re-dispatched due to ${trigger}.`);
+                const targetName = interceptor.target === document ? 'document' : 'window';
+                log(`${interceptor.name} event re-dispatched due to ${trigger} on ${targetName}.`);
             } else {
-                // TODO(ameshkov): !!! REMOVE THIS LOG
-                console.log(`Interceptor for ${interceptor.name} removed due to ${trigger}.`);
+                log(`Interceptor for ${interceptor.name} removed due to ${trigger}.`);
             }
         });
     };

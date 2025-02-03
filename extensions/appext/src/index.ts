@@ -1,50 +1,97 @@
 /**
  * @file App extension content script.
+ *
+ * The script initializes content script functionality by listening
+ * for messages from the Safari extension. It uses a delayed dispatcher
+ * to handle DOM events and sends a rule request message to the extension.
  */
 
 import { type Configuration, ContentScript } from 'safari-extension';
 
 import { setupDelayedEventDispatcher } from './delayedEventDispatcher';
+import { log, initLogger } from './logger';
 
-interface RequestRulesMessage {
-    payload: Configuration | undefined;
+/**
+ * Defines the shape of the message requesting rules from the extension backend.
+ */
+interface RequestRulesRequestMessage {
+    // The URL of the page that requested rules.
+    url: string;
+    // The timestamp of the request.
+    requestedAt: number;
 }
 
-const start = new Date().getTime();
-console.log('App-Extension content script start time:', performance.now());
+/**
+ * Defines the shape of the response message containing configuration data.
+ */
+interface RequestRulesResponseMessage {
+    // The configuration payload. If provided, it is used to initialize the content script.
+    payload: Configuration | undefined;
+    // Flag to indicate whether verbose logging should be enabled.
+    verbose: boolean | undefined;
+    // Timestamp when the request was made.
+    requestedAt: number;
+}
 
-// Initialize the delayed event dispatcher. This may intercept DOMContentLoaded and load events.
-// TODO(ameshkov): !!! EXPLAIN WHY 100ms
+log('Content script is starting...');
+
+// Initialize the delayed event dispatcher. This may intercept DOMContentLoaded
+// and load events. The delay of 100ms is used as a buffer to capture critical
+// initial events while waiting for the rules response.
 const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(100);
 
 /**
- * Handles the Safari message for "requestRules".
+ * Callback function to handle response messages from the Safari extension.
  *
- * When a response arrives, if it includes a configuration payload the ContentScript is run.
- * Regardless of message content, we immediately cancel any pending delayed dispatch logic.
+ * This function processes the rules response message:
+ * - If a configuration payload is received, it instantiates and runs the
+ *   ContentScript.
+ * - It logs the elapsed time between the request and the response for
+ *   performance monitoring.
+ * - It toggles verbose logging based on the configuration included in
+ *   the response.
+ * - It cancels any pending delayed event dispatch logic to allow the page's
+ *   natural event flow.
  *
- * If the response is received before our interceptors are triggered, this function removes the interceptors
- * so that the page's natural DOMContentLoaded/load event flow is preserved.
- *
- * @param event SafariExtensionMessageEvent
+ * @param event SafariExtensionMessageEvent - The message event from the
+ * extension.
  */
 const handleMessage = (event: SafariExtensionMessageEvent) => {
-    console.log('Elapsed on messaging App Extension:', new Date().getTime() - start);
-    console.log('Received message:', event);
+    log('Received message: ', event);
 
-    const message = event.message as RequestRulesMessage;
+    // Cast the received event message to our expected
+    // RequestRulesResponseMessage type.
+    const message = event.message as RequestRulesResponseMessage;
+
+    // If the configuration payload exists, run the ContentScript with it.
     if (message?.payload) {
         new ContentScript(message.payload).run();
     }
 
-    // Cancel delayed events interception and dispatch intercepted events if needed.
+    // Compute the elapsed time since the rules request was initiated.
+    const elapsed = new Date().getTime() - (message?.requestedAt ?? 0);
+    log('Elapsed on messaging: ', elapsed);
+
+    // Initialize the logger using the verbose flag from the response:
+    // If verbose, use a prefix; otherwise, disable logging.
+    if (message?.verbose) {
+        initLogger('log', '[AdGuard Sample App Extension]');
+    } else {
+        initLogger('discard', '');
+    }
+
+    // Cancel the pending delayed event dispatch and process any queued events.
     cancelDelayedDispatchAndDispatch();
 };
 
-// Send a message to request rules for the current page.
-safari.extension.dispatchMessage('requestRules', {
+// Prepare the message to request configuration rules for the current page.
+const message: RequestRulesRequestMessage = {
     url: window.location.href,
-});
+    requestedAt: new Date().getTime(),
+};
 
-// Listen for the response.
+// Dispatch the "requestRules" message to the Safari extension.
+safari.extension.dispatchMessage('requestRules', message);
+
+// Register the event listener for incoming messages from the extension.
 safari.self.addEventListener('message', handleMessage);
