@@ -1,5 +1,5 @@
 /*
- * WebExtension v1.0.0 (build date: Thu, 30 Jan 2025 15:54:14 GMT)
+ * WebExtension v1.0.0 (build date: Sat, 01 Feb 2025 16:09:49 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -10,17 +10,42 @@
   /**
    * @file Background script for the WebExtension.
    */
+  // TODO(ameshkov): !!! TEMPORARY !!!
+  const cache = new Map();
   const requestRules = async request => {
     const response = await browser.runtime.sendNativeMessage('application.id', request);
     const message = response;
     message.trace.backgroundEnd = new Date().getTime();
+    // TODO(ameshkov): !!! TEMPORARY !!!
+    const {
+      url
+    } = request.payload;
+    cache.set(url, message);
     return message;
   };
   browser.runtime.onMessage.addListener(async request => {
     const message = request;
+    // TODO(ameshkov): !!! TEMPORARY !!!
+    const {
+      url
+    } = message.payload;
+    if (cache.has(url)) {
+      // Trigger the request again to get the latest rules.
+      requestRules(message);
+      const cachedMessage = cache.get(url);
+      const now = new Date().getTime();
+      if (cachedMessage) {
+        cachedMessage.trace.contentStart = message.trace.contentStart;
+        cachedMessage.trace.backgroundStart = now;
+        cachedMessage.trace.backgroundEnd = now;
+        cachedMessage.trace.nativeStart = now;
+        cachedMessage.trace.nativeEnd = now;
+      }
+      return cachedMessage;
+    }
     message.trace.backgroundStart = new Date().getTime();
-    const rules = await requestRules(message);
-    return rules;
+    const responseMessage = await requestRules(message);
+    return responseMessage;
   });
   // browser.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   //     request.timings["backgroundStart"] = new Date().getTime()

@@ -2,12 +2,12 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * WebExtension v1.0.0 (build date: Sat, 01 Feb 2025 16:09:49 GMT)
+ * AppExtension v1.0.0 (build date: Mon, 03 Feb 2025 07:39:34 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
  */
-(function (browser) {
+(function () {
   'use strict';
 
   /*
@@ -25523,138 +25523,115 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   }
 
   /**
-   * @file Defines message interface.
+   * @file Handles delaying and dispatching of DOMContentLoaded and load events.
    */
   /**
-   * Represents a type of message.
+   * The interceptors delay the events until either a response is received or the
+   * timeout expires. If the events have already fired, no interceptors are added.
+   *
+   * @param timeout - Timeout in milliseconds after which the events are forced
+   *                  (if not already handled).
+   * @returns A function which, when invoked, cancels the timeout and dispatches
+   *         (or removes) the interceptors.
    */
-  var MessageType;
-  (function (MessageType) {
-    MessageType["RequestRules"] = "requestRules";
-  })(MessageType || (MessageType = {}));
+  function setupDelayedEventDispatcher() {
+    let timeout = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100;
+    const interceptors = [];
+    const events = [{
+      name: 'DOMContentLoaded',
+      options: {
+        bubbles: true,
+        cancelable: false
+      }
+    }, {
+      name: 'load',
+      options: {
+        bubbles: false,
+        cancelable: false
+      }
+    }];
+    events.forEach(ev => {
+      const interceptor = {
+        name: ev.name,
+        options: ev.options,
+        intercepted: false,
+        listener: event => {
+          // Prevent immediate propagation.
+          event.stopImmediatePropagation();
+          interceptor.intercepted = true;
+          // TODO(ameshkov): !!! REMOVE THIS LOG
+          console.log(`${ev.name} event intercepted.`);
+        }
+      };
+      interceptors.push(interceptor);
+      window.addEventListener(ev.name, interceptor.listener, {
+        capture: true
+      });
+    });
+    let dispatched = false;
+    const dispatchEvents = trigger => {
+      if (dispatched) return;
+      dispatched = true;
+      interceptors.forEach(interceptor => {
+        // Remove the interceptor listener.
+        window.removeEventListener(interceptor.name, interceptor.listener, {
+          capture: true
+        });
+        if (interceptor.intercepted) {
+          // If intercepted, dispatch the event manually so downstream listeners eventually receive it.
+          const newEvent = new Event(interceptor.name, interceptor.options);
+          window.dispatchEvent(newEvent);
+          // TODO(ameshkov): !!! REMOVE THIS LOG
+          console.log(`${interceptor.name} event re-dispatched due to ${trigger}.`);
+        } else {
+          // TODO(ameshkov): !!! REMOVE THIS LOG
+          console.log(`Interceptor for ${interceptor.name} removed due to ${trigger}.`);
+        }
+      });
+    };
+    // Set a timer to automatically dispatch the events after the timeout.
+    const timer = setTimeout(() => {
+      dispatchEvents('timeout');
+    }, timeout);
+    // Return a function to cancel the timer and dispatch events immediately.
+    return () => {
+      clearTimeout(timer);
+      dispatchEvents('response received');
+    };
+  }
 
   /**
-   * @file Content script for the WebExtension.
+   * @file App extension content script.
    */
-  const startTime = new Date().getTime();
-  console.log('Web-Extension content script start time:', performance.now());
+  const start = new Date().getTime();
+  console.log('App-Extension content script start time:', performance.now());
+  // Initialize the delayed event dispatcher. This may intercept DOMContentLoaded and load events.
+  const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(100);
   /**
-   * Creates a trace object with the current time.
+   * Handles the Safari message for "requestRules".
    *
-   * @returns The trace object.
-   */
-  const createTrace = () => {
-    return {
-      contentStart: new Date().getTime(),
-      contentEnd: 0,
-      backgroundStart: 0,
-      backgroundEnd: 0,
-      nativeStart: 0,
-      nativeEnd: 0
-    };
-  };
-  /**
-   * Prints trace information to the console.
+   * When a response arrives, if it includes a configuration payload the ContentScript is run.
+   * Regardless of message content, we immediately cancel any pending delayed dispatch logic.
    *
-   * @param {Record<TraceStage, number>} trace - The trace object.
+   * If the response is received before our interceptors are triggered, this function removes the interceptors
+   * so that the page's natural DOMContentLoaded/load event flow is preserved.
+   *
+   * @param event SafariExtensionMessageEvent
    */
-  const printTrace = trace => {
-    const elapsed = trace.contentEnd - trace.contentStart;
-    const elapsedContentToBackground = trace.backgroundStart - trace.contentStart;
-    const elapsedBackgroundToNative = trace.nativeStart - trace.backgroundStart;
-    const elapsedNative = trace.nativeEnd - trace.nativeStart;
-    const elapsedNativeToBackground = trace.nativeEnd - trace.backgroundEnd;
-    const elapsedBackgroundToContent = trace.contentEnd - trace.backgroundEnd;
-    // eslint-disable-next-line no-console
-    console.log('Elapsed total: ', elapsed);
-    // eslint-disable-next-line no-console
-    console.log('Elapsed content->background: ', elapsedContentToBackground);
-    // eslint-disable-next-line no-console
-    console.log('Elapsed background->native: ', elapsedBackgroundToNative);
-    // eslint-disable-next-line no-console
-    console.log('Elapsed inside native: ', elapsedNative);
-    // eslint-disable-next-line no-console
-    console.log('Elapsed native->background: ', elapsedNativeToBackground);
-    // eslint-disable-next-line no-console
-    console.log('Elapsed background->content: ', elapsedBackgroundToContent);
-  };
-  const requestRules = async () => {
-    // Create a message to request rules.
-    const message = {
-      type: MessageType.RequestRules,
-      trace: createTrace(),
-      payload: {
-        url: window.location.href
-      }
-    };
-    const response = await browser.runtime.sendMessage(message);
-    const responseMessage = response;
-    responseMessage.trace.contentEnd = new Date().getTime();
-    printTrace(responseMessage.trace);
-    return responseMessage;
-  };
-  /**
-   * The entry point function of the content script.
-   */
-  const main = async () => {
-    const responseMessage = await requestRules();
-    if (responseMessage) {
-      const {
-        payload
-      } = responseMessage;
-      const configuration = payload;
-      if (configuration) {
-        browser.storage.local.set({
-          cachedConfiguration: configuration
-        });
-        new ContentScript(configuration).run();
-        console.log('Elapsed before rules: ', new Date().getTime() - startTime);
-      }
+  const handleMessage = event => {
+    console.log('Elapsed on messaging App Extension:', new Date().getTime() - start);
+    console.log('Received message:', event);
+    const message = event.message;
+    if (message !== null && message !== void 0 && message.payload) {
+      new ContentScript(message.payload).run();
     }
+    // Cancel delayed events interception and dispatch intercepted events if needed.
+    cancelDelayedDispatchAndDispatch();
   };
-  main().catch(error => {
-    // eslint-disable-next-line no-console
-    console.error('Error in content script: ', error);
+  // Send a message to request rules for the current page.
+  safari.extension.dispatchMessage('requestRules', {
+    url: window.location.href
   });
-  // // Intercept DOMContentLoaded once, prevent its default behavior, then
-  // // manually re-dispatch it after a delay.
-  // window.addEventListener(
-  //     'DOMContentLoaded',
-  //     (originalEvent) => {
-  //         // Prevent other DOMContentLoaded listeners from getting this immediately.
-  //         originalEvent.stopImmediatePropagation();
-  //         console.log('DOMContentLoaded event intercepted!');
-  //         // Dispatch after 2 seconds (example) to "postpone"
-  //         setTimeout(() => {
-  //             const domEvent = new Event('DOMContentLoaded', {
-  //                 bubbles: true,
-  //                 cancelable: false,
-  //             });
-  //             window.dispatchEvent(domEvent);
-  //             console.log('DOMContentLoaded event manually re-dispatched.');
-  //         }, 2000);
-  //     },
-  //     // Use capture: true so we intercept early.
-  //     // Use once: true so our manual dispatch doesn't re-trigger this listener.
-  //     { capture: true, once: true }
-  // );
-  // // Intercept the "load" event similarly and re-dispatch.
-  // window.addEventListener(
-  //     'load',
-  //     (originalEvent) => {
-  //         // Prevent other load listeners from getting this immediately.
-  //         originalEvent.stopImmediatePropagation();
-  //         console.log('Load event intercepted!');
-  //         // Delay re-dispatch
-  //         setTimeout(() => {
-  //             const loadEvent = new Event('load', {
-  //                 bubbles: false,
-  //                 cancelable: false,
-  //             });
-  //             window.dispatchEvent(loadEvent);
-  //             console.log('Load event manually re-dispatched.');
-  //         }, 2000);
-  //     },
-  //     { capture: true, once: true }
-  // );
-})(browser);
+  // Listen for the response.
+  safari.self.addEventListener('message', handleMessage);
+})();

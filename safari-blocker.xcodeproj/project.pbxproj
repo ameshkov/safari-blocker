@@ -16,6 +16,9 @@
 		D71085832D4A7AC200F1E1CF /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D71085822D4A7AC200F1E1CF /* ZIPFoundation */; };
 		D710858A2D4A8D4700F1E1CF /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
 		D710858B2D4A8D4700F1E1CF /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D710890A2D4CBD0600F1E1CF /* app-extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D71088F82D4CBD0500F1E1CF /* app-extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D71089112D4E90D800F1E1CF /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
+		D71089122D4E90D800F1E1CF /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D73B13A72D08888C00939E68 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D73B13A62D08888900939E68 /* README.md */; };
 		D73B13E42D08910F00939E68 /* content-blocker-ios.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D73B14052D08923600939E68 /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
@@ -49,6 +52,20 @@
 			remoteInfo = "web-extension";
 		};
 		D710858C2D4A8D4700F1E1CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D768F59F2D084B7F007F39D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D73B13EF2D08923600939E68;
+			remoteInfo = "content-blocker-service";
+		};
+		D71089082D4CBD0600F1E1CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D768F59F2D084B7F007F39D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D71088F72D4CBD0500F1E1CF;
+			remoteInfo = "app-extension";
+		};
+		D71089132D4E90D800F1E1CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D768F59F2D084B7F007F39D5 /* Project object */;
 			proxyType = 1;
@@ -108,6 +125,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D71089152D4E90D800F1E1CF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D71089122D4E90D800F1E1CF /* content_blocker_service.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D73B13E92D08910F00939E68 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -159,6 +187,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				D70B17172D08D39A000A827C /* content-blocker.appex in Embed Foundation Extensions */,
+				D710890A2D4CBD0600F1E1CF /* app-extension.appex in Embed Foundation Extensions */,
 				D70B17E82D11939C000A827C /* web-extension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -169,6 +198,7 @@
 /* Begin PBXFileReference section */
 		D70B170C2D08D39A000A827C /* content-blocker.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "content-blocker.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D70B17CF2D11939C000A827C /* web-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "web-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D71088F82D4CBD0500F1E1CF /* app-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "app-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B13A62D08888900939E68 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D73B13AC2D08902C00939E68 /* safari-blocker-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "safari-blocker-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "content-blocker-ios.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,6 +228,13 @@
 				Info.plist,
 			);
 			target = D70B17CE2D11939C000A827C /* web-extension */;
+		};
+		D710890E2D4CBD0600F1E1CF /* Exceptions for "app-extension" folder in "app-extension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D71088F72D4CBD0500F1E1CF /* app-extension */;
 		};
 		D73B13E52D08910F00939E68 /* Exceptions for "content-blocker-ios" folder in "content-blocker-ios" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -238,11 +275,18 @@
 			);
 			explicitFolders = (
 				Resources/_locales,
-				Resources/images,
 				Resources/assets,
 				Resources/pages,
 			);
 			path = "web-extension";
+			sourceTree = "<group>";
+		};
+		D71088F92D4CBD0500F1E1CF /* app-extension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D710890E2D4CBD0600F1E1CF /* Exceptions for "app-extension" folder in "app-extension" target */,
+			);
+			path = "app-extension";
 			sourceTree = "<group>";
 		};
 		D73B138E2D086D1400939E68 /* filters */ = {
@@ -307,6 +351,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D71088F52D4CBD0500F1E1CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D71089112D4E90D800F1E1CF /* content_blocker_service.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D73B13A92D08902C00939E68 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -355,6 +407,7 @@
 				D73B13F12D08923600939E68 /* content-blocker-service */,
 				D70B170E2D08D39A000A827C /* content-blocker */,
 				D70B17D02D11939C000A827C /* web-extension */,
+				D71088F92D4CBD0500F1E1CF /* app-extension */,
 				D7BB67972D084C1100B8A793 /* Frameworks */,
 				D768F5A82D084B7F007F39D5 /* Products */,
 			);
@@ -369,6 +422,7 @@
 				D73B13F02D08923600939E68 /* content_blocker_service.framework */,
 				D70B170C2D08D39A000A827C /* content-blocker.appex */,
 				D70B17CF2D11939C000A827C /* web-extension.appex */,
+				D71088F82D4CBD0500F1E1CF /* app-extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -440,6 +494,30 @@
 			);
 			productName = "web-extension";
 			productReference = D70B17CF2D11939C000A827C /* web-extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		D71088F72D4CBD0500F1E1CF /* app-extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D710890D2D4CBD0600F1E1CF /* Build configuration list for PBXNativeTarget "app-extension" */;
+			buildPhases = (
+				D71088F42D4CBD0500F1E1CF /* Sources */,
+				D71088F52D4CBD0500F1E1CF /* Frameworks */,
+				D71088F62D4CBD0500F1E1CF /* Resources */,
+				D71089152D4E90D800F1E1CF /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D71089142D4E90D800F1E1CF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D71088F92D4CBD0500F1E1CF /* app-extension */,
+			);
+			name = "app-extension";
+			packageProductDependencies = (
+			);
+			productName = "app-extension";
+			productReference = D71088F82D4CBD0500F1E1CF /* app-extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		D73B13AB2D08902C00939E68 /* safari-blocker-ios */ = {
@@ -533,6 +611,7 @@
 				D73B14042D08923600939E68 /* PBXTargetDependency */,
 				D70B17162D08D39A000A827C /* PBXTargetDependency */,
 				D70B17E72D11939C000A827C /* PBXTargetDependency */,
+				D71089092D4CBD0600F1E1CF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				D73B138E2D086D1400939E68 /* filters */,
@@ -559,6 +638,9 @@
 						CreatedOnToolsVersion = 16.0;
 					};
 					D70B17CE2D11939C000A827C = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					D71088F72D4CBD0500F1E1CF = {
 						CreatedOnToolsVersion = 16.0;
 					};
 					D73B13AB2D08902C00939E68 = {
@@ -598,6 +680,7 @@
 				D70B170B2D08D39A000A827C /* content-blocker */,
 				D73B13DA2D08910F00939E68 /* content-blocker-ios */,
 				D70B17CE2D11939C000A827C /* web-extension */,
+				D71088F72D4CBD0500F1E1CF /* app-extension */,
 				D73B13EF2D08923600939E68 /* content-blocker-service */,
 			);
 		};
@@ -612,6 +695,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D70B17CD2D11939C000A827C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D71088F62D4CBD0500F1E1CF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -658,6 +748,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D70B17CB2D11939C000A827C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D71088F42D4CBD0500F1E1CF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -714,6 +811,16 @@
 			isa = PBXTargetDependency;
 			target = D73B13EF2D08923600939E68 /* content-blocker-service */;
 			targetProxy = D710858C2D4A8D4700F1E1CF /* PBXContainerItemProxy */;
+		};
+		D71089092D4CBD0600F1E1CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D71088F72D4CBD0500F1E1CF /* app-extension */;
+			targetProxy = D71089082D4CBD0600F1E1CF /* PBXContainerItemProxy */;
+		};
+		D71089142D4E90D800F1E1CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D73B13EF2D08923600939E68 /* content-blocker-service */;
+			targetProxy = D71089132D4E90D800F1E1CF /* PBXContainerItemProxy */;
 		};
 		D73B13E32D08910F00939E68 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -845,6 +952,68 @@
 					SafariServices,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.web-extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D710890B2D4CBD0600F1E1CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "app-extension/app_extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4EXD6AB86D;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "app-extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "App Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.app-extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		D710890C2D4CBD0600F1E1CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "app-extension/app_extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4EXD6AB86D;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "app-extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "App Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.app-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1261,6 +1430,15 @@
 			buildConfigurations = (
 				D70B17E92D11939C000A827C /* Debug */,
 				D70B17EA2D11939C000A827C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D710890D2D4CBD0600F1E1CF /* Build configuration list for PBXNativeTarget "app-extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D710890B2D4CBD0600F1E1CF /* Debug */,
+				D710890C2D4CBD0600F1E1CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

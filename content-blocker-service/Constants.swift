@@ -16,5 +16,7 @@ class Constants {
     static let FILTER_ENGINE_INDEX_FILE_NAME = "filterEngineIndex.bin"
 
     /// Key to use in UserDefaults to save timestamp of when the engine was last time modified.
+    ///
+    /// TODO(ameshkov): !!! Rework a little, this cannot be a final solution.
     static let ENGINE_TIMESTAMP_KEY = "engineTimestamp"
 }

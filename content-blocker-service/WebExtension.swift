@@ -50,7 +50,9 @@ public class WebExtension {
 
         let rules = engine.findAll(for: url)
 
-        return createConfiguration(rules)
+        let conf = createConfiguration(rules)
+
+        return conf
     }
 }
 

@@ -6,11 +6,18 @@ import browser from 'webextension-polyfill';
 
 import { type Message } from '../common/message';
 
+// TODO(ameshkov): !!! TEMPORARY !!!
+const cache = new Map<string, Message>();
+
 const requestRules = async (request: Message) => {
     const response = await browser.runtime.sendNativeMessage('application.id', request);
     const message = response as Message;
 
     message.trace.backgroundEnd = new Date().getTime();
+
+    // TODO(ameshkov): !!! TEMPORARY !!!
+    const { url } = request.payload as { url: string };
+    cache.set(url, message);
 
     return message;
 };
@@ -18,11 +25,31 @@ const requestRules = async (request: Message) => {
 browser.runtime.onMessage.addListener(async (request: unknown) => {
     const message = request as Message;
 
+    // TODO(ameshkov): !!! TEMPORARY !!!
+    const { url } = message.payload as { url: string };
+    if (cache.has(url)) {
+        // Trigger the request again to get the latest rules.
+        requestRules(message);
+
+        const cachedMessage = cache.get(url);
+        const now = new Date().getTime();
+
+        if (cachedMessage) {
+            cachedMessage.trace.contentStart = message.trace.contentStart;
+            cachedMessage.trace.backgroundStart = now;
+            cachedMessage.trace.backgroundEnd = now;
+            cachedMessage.trace.nativeStart = now;
+            cachedMessage.trace.nativeEnd = now;
+        }
+
+        return cachedMessage;
+    }
+
     message.trace.backgroundStart = new Date().getTime();
 
-    const rules = await requestRules(message);
+    const responseMessage = await requestRules(message);
 
-    return rules;
+    return responseMessage;
 });
 
 // browser.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
