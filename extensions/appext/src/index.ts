@@ -66,6 +66,7 @@ const handleMessage = (event: SafariExtensionMessageEvent) => {
     // If the configuration payload exists, run the ContentScript with it.
     if (message?.payload) {
         new ContentScript(message.payload).run();
+        log('ContentScript applied');
     }
 
     // Compute the elapsed time since the rules request was initiated.

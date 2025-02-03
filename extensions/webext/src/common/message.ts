@@ -35,4 +35,16 @@ interface Message {
     payload: unknown;
 }
 
-export { type Message, MessageType, type TraceStage };
+/**
+ * Represents a response message.
+ */
+interface ResponseMessage extends Message {
+    verbose: boolean | undefined;
+}
+
+export {
+    type Message,
+    type ResponseMessage,
+    MessageType,
+    type TraceStage,
+};

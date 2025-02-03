@@ -22,6 +22,7 @@ public class WebExtension {
         public let extendedCss: [String]
         public let js: [String]
         public let scriptlets: [Scriptlet]
+        public let engineTimestamp: Double
     }
 
     private let groupIdentifier: String
@@ -83,8 +84,8 @@ extension WebExtension {
             } else if rule.action == .scriptInject {
                 js.append(cosmeticContent)
             } else if rule.action == .scriptlet {
-                if let data = try? ScriptletParser.parse(data: cosmeticContent) {
-                    scriptlets.append(Scriptlet(name: data.name, args: []))
+                if let data = try? ScriptletParser.parse(cosmeticRuleContent: cosmeticContent) {
+                    scriptlets.append(Scriptlet(name: data.name, args: data.args))
                 }
             }
         }
@@ -93,7 +94,8 @@ extension WebExtension {
             css: css,
             extendedCss: extendedCss,
             js: js,
-            scriptlets: scriptlets
+            scriptlets: scriptlets,
+            engineTimestamp: engineTimestamp
         )
     }
 }

@@ -29,6 +29,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         case "requestRules":
             // Retrieve the URL string from the incoming message.
             let urlString = userInfo?["url"] as? String ?? ""
+            let requestedAt = userInfo?["requestedAt"] as? Int ?? 0
 
             // Convert the string into a URL. If valid, attempt to look up its configuration.
             if let url = URL(string: urlString) {
@@ -36,8 +37,17 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 if let conf = AppExtension.shared.webExtension.lookup(for: url) {
                     // Convert the configuration into a payload (dictionary format) consumable by the content script.
                     let payload = convertToPayload(conf)
+
                     // Dispatch the payload back to the web page under the same message name.
-                    page.dispatchMessageToScript(withName: "requestRules", userInfo: ["payload": payload])
+                    let responseUserInfo: [String: Any] = [
+                        "payload": payload,
+                        "requestedAt": requestedAt,
+                        // Enable verbose logging in the content script.
+                        // In the real app `verbose` flag should only be true for debugging purposes.
+                        "verbose": true,
+                    ]
+
+                    page.dispatchMessageToScript(withName: "requestRules", userInfo: responseUserInfo)
                 }
             }
         default:

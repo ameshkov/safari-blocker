@@ -2,7 +2,7 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * AppExtension v1.0.0 (build date: Mon, 03 Feb 2025 07:39:34 GMT)
+ * AppExtension v1.0.0 (build date: Mon, 03 Feb 2025 11:29:22 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -12975,7 +12975,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       console.log(e);
     }
   }
-  function log(source, args) {
+  function log$1(source, args) {
     var flag = "done";
     var uniqueIdentifier = source.uniqueId + source.name + "_" + (Array.isArray(args) ? args.join("_") : "");
     if (source.uniqueId) {
@@ -25071,8 +25071,8 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     "ubo-addEventListener-logger": logAddEventListener,
     "ubo-aell": logAddEventListener,
     "log-eval": logEval,
-    log: log,
-    "abp-log": log,
+    log: log$1,
+    "abp-log": log$1,
     "log-on-stack-trace": logOnStackTrace,
     "m3u-prune": m3uPrune,
     "m3u-prune.js": m3uPrune,
@@ -25522,6 +25522,78 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     }
   }
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  // currentLevel holds the active logging level.
+  // It remains null until the logger is explicitly initialized.
+  let currentLevel = null;
+  // logPrefix holds the configurable prefix for all log messages.
+  let logPrefix = '';
+  // pendingLogs stores log messages that are buffered until the logger is
+  // initialized. Each pending log is stored as an array so that it can be
+  // re-spread into `console.log`.
+  let pendingLogs = [];
+  /**
+   * Logs messages with an ISO 8601 timestamp and a configurable prefix.
+   *
+   * This function accepts a variable number of parameters to mirror the interface
+   * of `console.log`.
+   *
+   * Behavior:
+   * - If the logger is not yet initialized (currentLevel is null), the log entry
+   *   is buffered.
+   * - If the logger is initialized with the 'log' level, the message is
+   *   immediately output to the console with the configured prefix.
+   * - If the logger is initialized with the 'discard' level, the log entry is
+   *   ignored.
+   *
+   * @param args - The log message and additional parameters.
+   */
+  function log() {
+    const timestamp = `[${new Date().toISOString()}]`;
+    for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      args[_key3] = arguments[_key3];
+    }
+    if (currentLevel === null) {
+      // Buffer the message until the logger is initialized.
+      pendingLogs.push([timestamp, ...args]);
+    } else if (currentLevel === 'log') {
+      // Output the timestamp, prefix, and the log message.
+      // eslint-disable-next-line no-console
+      console.log(timestamp, logPrefix, ...args);
+    }
+    // If currentLevel is 'discard', the log entry is ignored.
+  }
+  /**
+   * Initializes the logger by setting the logging behavior and the message
+   * prefix.
+   *
+   * After initialization, future log messages behave according to the specified
+   * logging level:
+   *
+   * - 'log': Future messages are immediately output to the console with the
+   *          configured prefix, and any buffered messages are flushed.
+   * - 'discard': Both buffered and future log messages are dropped.
+   *
+   * @param level - The logging level to set:
+   *   - 'log' to output log messages.
+   *   - 'discard' to ignore log messages.
+   * @param prefix - The configurable prefix to be added to every log message.
+   */
+  function initLogger(level, prefix) {
+    logPrefix = prefix;
+    currentLevel = level;
+    if (currentLevel === 'log') {
+      // Flush all buffered log messages to the console using the configured
+      // prefix.
+      pendingLogs.forEach(entry => {
+        // eslint-disable-next-line no-console
+        console.log(entry[0], logPrefix, ...entry.slice(1));
+      });
+    }
+    // Clear the buffer regardless of the logging level.
+    pendingLogs = [];
+  }
+
   /**
    * @file Handles delaying and dispatching of DOMContentLoaded and load events.
    */
@@ -25542,29 +25614,31 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       options: {
         bubbles: true,
         cancelable: false
-      }
+      },
+      target: document
     }, {
       name: 'load',
       options: {
         bubbles: false,
         cancelable: false
-      }
+      },
+      target: window
     }];
     events.forEach(ev => {
       const interceptor = {
         name: ev.name,
         options: ev.options,
         intercepted: false,
+        target: ev.target,
         listener: event => {
           // Prevent immediate propagation.
           event.stopImmediatePropagation();
           interceptor.intercepted = true;
-          // TODO(ameshkov): !!! REMOVE THIS LOG
-          console.log(`${ev.name} event intercepted.`);
+          log(`${ev.name} event has been intercepted.`);
         }
       };
       interceptors.push(interceptor);
-      window.addEventListener(ev.name, interceptor.listener, {
+      interceptor.target.addEventListener(ev.name, interceptor.listener, {
         capture: true
       });
     });
@@ -25574,18 +25648,17 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       dispatched = true;
       interceptors.forEach(interceptor => {
         // Remove the interceptor listener.
-        window.removeEventListener(interceptor.name, interceptor.listener, {
+        interceptor.target.removeEventListener(interceptor.name, interceptor.listener, {
           capture: true
         });
         if (interceptor.intercepted) {
           // If intercepted, dispatch the event manually so downstream listeners eventually receive it.
           const newEvent = new Event(interceptor.name, interceptor.options);
-          window.dispatchEvent(newEvent);
-          // TODO(ameshkov): !!! REMOVE THIS LOG
-          console.log(`${interceptor.name} event re-dispatched due to ${trigger}.`);
+          interceptor.target.dispatchEvent(newEvent);
+          const targetName = interceptor.target === document ? 'document' : 'window';
+          log(`${interceptor.name} event re-dispatched due to ${trigger} on ${targetName}.`);
         } else {
-          // TODO(ameshkov): !!! REMOVE THIS LOG
-          console.log(`Interceptor for ${interceptor.name} removed due to ${trigger}.`);
+          log(`Interceptor for ${interceptor.name} removed due to ${trigger}.`);
         }
       });
     };
@@ -25603,9 +25676,9 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   /**
    * @file App extension content script.
    */
-  const start = new Date().getTime();
-  console.log('App-Extension content script start time:', performance.now());
+  log('Content script is starting...');
   // Initialize the delayed event dispatcher. This may intercept DOMContentLoaded and load events.
+  // TODO(ameshkov): !!! EXPLAIN WHY 100ms
   const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(100);
   /**
    * Handles the Safari message for "requestRules".
@@ -25619,19 +25692,27 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
    * @param event SafariExtensionMessageEvent
    */
   const handleMessage = event => {
-    console.log('Elapsed on messaging App Extension:', new Date().getTime() - start);
-    console.log('Received message:', event);
+    log('Received message: ', event);
     const message = event.message;
     if (message !== null && message !== void 0 && message.payload) {
       new ContentScript(message.payload).run();
+    }
+    const elapsed = new Date().getTime() - ((message === null || message === void 0 ? void 0 : message.requestedAt) ?? 0);
+    log('Elapsed on messaging: ', elapsed);
+    if (message !== null && message !== void 0 && message.verbose) {
+      initLogger('log', '[AdGuard Sample App Extension]');
+    } else {
+      initLogger('discard', '');
     }
     // Cancel delayed events interception and dispatch intercepted events if needed.
     cancelDelayedDispatchAndDispatch();
   };
   // Send a message to request rules for the current page.
-  safari.extension.dispatchMessage('requestRules', {
-    url: window.location.href
-  });
+  const message = {
+    url: window.location.href,
+    requestedAt: new Date().getTime()
+  };
+  safari.extension.dispatchMessage('requestRules', message);
   // Listen for the response.
   safari.self.addEventListener('message', handleMessage);
 })();

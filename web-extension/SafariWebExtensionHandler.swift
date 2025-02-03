@@ -53,6 +53,10 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             message?["trace"] = trace // Reassign the modified dictionary back
         }
 
+        // Enable verbose logging in the content script.
+        // In the real app `verbose` flag should only be true for debugging purposes.
+        message?["verbose"] = true
+
         let response = createResponse(with: message!)
 
         context.completeRequest(returningItems: [ response ], completionHandler: nil)
