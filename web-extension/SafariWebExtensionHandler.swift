@@ -7,18 +7,12 @@
 
 import SafariServices
 import os.log
+import FilterEngine
 import content_blocker_service
-
-let GROUP_ID: String = {
-    let teamIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"]! as! String
-    return "\(teamIdentifierPrefix)group.dev.adguard.safari-blocker"
-}()
 
 /// WebExtension must be declared as a static property because SafariWebExtensionHandler is created on every request.
 ///
 /// TODO(ameshkov): !!! Comment
-let WEB_EXTENSION = WebExtension(groupIdentifier: GROUP_ID)
-
 class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 
     override init() {
@@ -41,7 +35,9 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         let payload = message?["payload"] as? [String: Any] ?? [:]
         if let urlString = payload["url"] as? String {
             if let url = URL(string: urlString) {
-                if let configuration = WEB_EXTENSION.lookup(for: url) {
+                let webExtension = try! WebExtension.shared(groupID: GroupIdentifier.shared.value)
+                // TODO: NOT NIL
+                if let configuration = webExtension.lookup(pageUrl: url, topUrl: nil) {
                     message?["payload"] = convertToPayload(configuration)
                 }
             }

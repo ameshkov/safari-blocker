@@ -8,15 +8,10 @@
 import Foundation
 import content_blocker_service
 
-let GROUP_ID: String = {
-    let teamIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"]! as! String
-    return "\(teamIdentifierPrefix)group.dev.adguard.safari-blocker"
-}()
-
 class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
 
     func beginRequest(with context: NSExtensionContext) {
-        ContentBlockerExtension.handleRequest(with: context, groupIdentifier: GROUP_ID)
+        ContentBlockerExtension.handleRequest(with: context, groupIdentifier: GroupIdentifier.shared.value)
     }
 
 }

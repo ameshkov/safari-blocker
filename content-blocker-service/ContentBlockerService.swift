@@ -120,14 +120,10 @@ public class ContentBlockerService {
         if result.advancedRulesText != nil {
             measure(label: "Building and saving engine") {
                 do {
-                    try saveFilterEngine(rules: result.advancedRulesText!, groupIdentifier: groupIdentifier)
+                    let webExtension = try WebExtension.shared(groupID: groupIdentifier)
 
-                    // Store the current timestamp in UserDefaults to later read it in WebExtension.
-                    let currentTimestamp = Date().timeIntervalSince1970
-                    if let userDefaults = UserDefaults(suiteName: groupIdentifier) {
-                        userDefaults.set(currentTimestamp, forKey: Constants.ENGINE_TIMESTAMP_KEY)
-                        userDefaults.synchronize()
-                    }
+                    // Build the engine and serialize it.
+                    _ = try webExtension.buildFilterEngine(rules: result.advancedRulesText!)
                 } catch {
                     NSLog("Failed to build and save engine: \(error.localizedDescription)")
                 }
@@ -137,42 +133,6 @@ public class ContentBlockerService {
         return result.safariRulesCount
     }
 
-}
-
-// MARK: - Filter Engine functions
-
-extension ContentBlockerService {
-
-    /// Builds `FilterEngnine` and saves it to a shared file that later can be used
-    /// by WebExtension to select the rules.
-    ///
-    /// - Parameters:
-    ///   - rules: AdGuard rules to be converted.
-    ///   - groupIdentifier: Group ID to use for the shared container where the file will be saved.
-    private static func saveFilterEngine(rules: String, groupIdentifier: String) throws {
-        // Get the shared container URL.
-        guard let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier) else {
-            NSLog("Failed to access App Group container.")
-            return
-        }
-
-        let filterRuleStorageURL = appGroupURL.appendingPathComponent(Constants.FILTER_RULE_STORAGE_FILE_NAME)
-
-        // First, prepare the filter rule storage.
-        let storage = try FilterRuleStorage(
-            from: rules.components(separatedBy: "\n"),
-            for: SafariVersion.safari16_4,
-            fileURL: filterRuleStorageURL
-        )
-
-        // Build filter engine from rules in the storage.
-        let engine = try FilterEngine(storage: storage)
-
-        let filterEngineIndexURL = appGroupURL.appendingPathComponent(Constants.FILTER_ENGINE_INDEX_FILE_NAME)
-
-        // Serialize the engine to a file.
-        try engine.write(to: filterEngineIndexURL)
-    }
 }
 
 // MARK: - Safari Content Blocker functions

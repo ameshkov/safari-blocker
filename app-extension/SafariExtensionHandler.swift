@@ -8,6 +8,7 @@
 import SafariServices
 import os.log
 import content_blocker_service
+import FilterEngine
 
 /// SafariExtensionHandler is responsible for communicating between the Safari web page
 /// and the extension's native code. It handles incoming messages from content scripts,
@@ -34,7 +35,10 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
             // Convert the string into a URL. If valid, attempt to look up its configuration.
             if let url = URL(string: urlString) {
                 // Use the shared AppExtension instance to get the configuration for the given URL.
-                if let conf = AppExtension.shared.webExtension.lookup(for: url) {
+                let webExtension = try! WebExtension.shared(groupID: GroupIdentifier.shared.value)
+
+                // TODO: TOP URL
+                if let conf = webExtension.lookup(pageUrl: url, topUrl: nil) {
                     // Convert the configuration into a payload (dictionary format) consumable by the content script.
                     let payload = convertToPayload(conf)
 

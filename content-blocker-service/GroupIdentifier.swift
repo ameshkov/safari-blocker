@@ -14,7 +14,8 @@ public final class GroupIdentifier {
     private init() {
         let teamIdentifierPrefix: String? = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String
         if teamIdentifierPrefix == nil {
-            value = ""
+            // Means that this is iOS.
+            value = "group.dev.adguard.safari-blocker"
         } else {
             value = "\(teamIdentifierPrefix!)group.dev.adguard.safari-blocker"
         }

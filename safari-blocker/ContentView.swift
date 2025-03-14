@@ -11,11 +11,6 @@ import content_blocker_service
 
 let CONTENT_BLOCKER_ID = "dev.adguard.safari-blocker.content-blocker"
 
-let GROUP_ID: String = {
-    let teamIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"]! as! String
-    return "\(teamIdentifierPrefix)group.dev.adguard.safari-blocker"
-}()
-
 enum RuleType: String, CaseIterable, Identifiable {
     case adGuardFiltering = "AdGuard filtering rules"
     case adGuardFilterListsURLs = "AdGuard filter lists URLs"
@@ -262,9 +257,9 @@ struct ContentView: View {
                 let json = selectedRuleType == .safariContentBlocker || selectedRuleType == .safariContentBlockerURL
 
                 if json {
-                    convertedCount = ContentBlockerService.saveContentBlocker(jsonRules: content, groupIdentifier: GROUP_ID)
+                    convertedCount = ContentBlockerService.saveContentBlocker(jsonRules: content, groupIdentifier: GroupIdentifier.shared.value)
                 } else {
-                    convertedCount = ContentBlockerService.convertFilter(rules: content, groupIdentifier: GROUP_ID)
+                    convertedCount = ContentBlockerService.convertFilter(rules: content, groupIdentifier: GroupIdentifier.shared.value)
                 }
                 
                 let endConversion = Date()
