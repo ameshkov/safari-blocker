@@ -1,5 +1,5 @@
 /*
- * WebExtension v1.0.0 (build date: Mon, 03 Feb 2025 12:12:08 GMT)
+ * WebExtension v1.0.0 (build date: Thu, 10 Apr 2025 14:35:22 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -8,9 +8,8 @@
   'use strict';
 
   /**
-   * @file popup.ts
-   * @description This file contains the popup page for the extension.
+   * @file Popup script for the WebExtension.
    */
   // eslint-disable-next-line no-console
-  console.log('Hello World!');
+  console.log('No logic inside!');
 })();

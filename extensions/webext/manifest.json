@@ -30,7 +30,11 @@
     ],
     "action": {
         "default_popup": "pages/popup/popup.html",
-        "default_icon": "assets/images/toolbar-icon.svg"
+        "default_icon": {
+            "16": "assets/images/icon-16.png",
+            "48": "assets/images/icon-48.png",
+            "128": "assets/images/icon-128.png"
+        }
     },
     "permissions": [
         "<all_urls>",

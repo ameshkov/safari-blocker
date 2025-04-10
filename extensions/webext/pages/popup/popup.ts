@@ -1,7 +1,6 @@
 /**
- * @file popup.ts
- * @description This file contains the popup page for the extension.
+ * @file Popup script for the WebExtension.
  */
 
 // eslint-disable-next-line no-console
-console.log('Hello World!');
+console.log('No logic inside!');

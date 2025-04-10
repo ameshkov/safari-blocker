@@ -23,3 +23,10 @@ Very simple macOS and iOS apps for debugging Safari content blocking rules.
 ## iOS
 
 1. If you use a Simulator, it will be enought to build and run `safari-blocker-ios`.
+
+## TODO
+
+* [] Add linters (markdownlint, swiftlint, swiftformat)
+* [] Explain how to build and run the apps
+* [] Explain how to build and add extensions
+* [] Explain how extensions are added to the project

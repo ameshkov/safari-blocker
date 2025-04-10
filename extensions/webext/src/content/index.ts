@@ -91,7 +91,7 @@ const printTrace = (trace: Record<TraceStage, number>) => {
  *
  * @returns The response message containing the configuration and updated trace.
  */
-const requestRules = async (): Promise<Message> => {
+const requestRules = async (): Promise<ResponseMessage> => {
     // Create a message with the type RequestRules and attach the current URL
     // and trace info.
     const message: Message = {
@@ -140,12 +140,12 @@ const main = async () => {
 
     if (responseMessage) {
         // Extract the payload from the response, which contains the configuration.
-        const { payload } = responseMessage;
+        const { payload, verbose } = responseMessage;
         const configuration = payload as Configuration;
 
         if (configuration) {
             // Instantiate and run the content script with the provided configuration.
-            new ContentScript(configuration).run();
+            new ContentScript(configuration).run(verbose, '[AdGuard Sample Web Extension]');
             log('ContentScript applied');
         }
     }
