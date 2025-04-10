@@ -15,8 +15,22 @@ import { log, initLogger } from './logger';
  * Defines the shape of the message requesting rules from the extension backend.
  */
 interface RequestRulesRequestMessage {
+    /**
+     * A pseudo-unique request ID for properly tracing the response to the
+     * request that was sent by this instance of a SFSafariContentScript.
+     * We will only accept responses to this specific request.
+     *
+     * The problem we are solving here is that Safari propagates responses from
+     * the app extension down to subframes (and calling preventDefault and
+     * stopPropagation does not stop it). So in order to avoid processing
+     * responses from other instances of SFSafariContentScript, we use a
+     * pseudo-unique request ID.
+     */
+    requestId: string;
     // The URL of the page that requested rules.
     url: string;
+    // The top-level URL of the page that requested rules.
+    topUrl: string | null;
     // The timestamp of the request.
     requestedAt: number;
 }
@@ -25,7 +39,10 @@ interface RequestRulesRequestMessage {
  * Defines the shape of the response message containing configuration data.
  */
 interface RequestRulesResponseMessage {
-    // The configuration payload. If provided, it is used to initialize the content script.
+    // Request ID of the corresponding request.
+    requestId: string;
+    // The configuration payload. If provided, it is used to initialize the
+    // content script.
     payload: Configuration | undefined;
     // Flag to indicate whether verbose logging should be enabled.
     verbose: boolean | undefined;
@@ -39,6 +56,11 @@ log('Content script is starting...');
 // and load events. The delay of 100ms is used as a buffer to capture critical
 // initial events while waiting for the rules response.
 const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(100);
+
+// Generate a pseudo-unique request ID for properly tracing the response to the
+// request that was sent by this instance of a SFSafariContentScript.
+// We will only accept responses to this specific request.
+const requestId = Math.random().toString(36);
 
 /**
  * Callback function to handle response messages from the Safari extension.
@@ -63,9 +85,15 @@ const handleMessage = (event: SafariExtensionMessageEvent) => {
     // RequestRulesResponseMessage type.
     const message = event.message as RequestRulesResponseMessage;
 
+    if (message?.requestId !== requestId) {
+        log('Received response for a different request ID: ', message?.requestId);
+        return;
+    }
+
     // If the configuration payload exists, run the ContentScript with it.
     if (message?.payload) {
-        new ContentScript(message.payload).run();
+        const configuration = message.payload as Configuration;
+        new ContentScript(configuration).run();
         log('ContentScript applied');
     }
 
@@ -85,9 +113,39 @@ const handleMessage = (event: SafariExtensionMessageEvent) => {
     cancelDelayedDispatchAndDispatch();
 };
 
+/**
+ * Returns the top-level URL of the current page or null if we're not
+ * in an iframe.
+ *
+ * @returns {string | null} The top-level URL or null if we're not in an iframe.
+ */
+function getTopUrl(): string | null {
+    try {
+        if (window.top === window.self) {
+            return null;
+        }
+
+        if (!window.top) {
+            // window.top cannot be null under normal circumstances so assume
+            // we're in an iframe.
+            return 'https://third-party-domain.com/';
+        }
+
+        return window.top.location.href;
+    } catch (ex) {
+        log('Failed to get top URL: ', ex);
+
+        // Return a random third-party domain as this error signals us
+        // that we're in a third-party frame.
+        return 'https://third-party-domain.com/';
+    }
+}
+
 // Prepare the message to request configuration rules for the current page.
 const message: RequestRulesRequestMessage = {
+    requestId,
     url: window.location.href,
+    topUrl: getTopUrl(),
     requestedAt: new Date().getTime(),
 };
 

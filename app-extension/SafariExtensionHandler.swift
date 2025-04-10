@@ -29,7 +29,9 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         switch messageName {
         case "requestRules":
             // Retrieve the URL string from the incoming message.
+            let requestId = userInfo?["requestId"] as? String ?? ""
             let urlString = userInfo?["url"] as? String ?? ""
+            let topUrlString = userInfo?["topUrl"] as? String
             let requestedAt = userInfo?["requestedAt"] as? Int ?? 0
 
             // Convert the string into a URL. If valid, attempt to look up its configuration.
@@ -37,13 +39,18 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 // Use the shared AppExtension instance to get the configuration for the given URL.
                 let webExtension = try! WebExtension.shared(groupID: GroupIdentifier.shared.value)
 
-                // TODO: TOP URL
-                if let conf = webExtension.lookup(pageUrl: url, topUrl: nil) {
+                var topUrl: URL?
+                if let topUrlString = topUrlString {
+                    topUrl = URL(string: topUrlString)
+                }
+
+                if let conf = webExtension.lookup(pageUrl: url, topUrl: topUrl) {
                     // Convert the configuration into a payload (dictionary format) consumable by the content script.
                     let payload = convertToPayload(conf)
 
                     // Dispatch the payload back to the web page under the same message name.
                     let responseUserInfo: [String: Any] = [
+                        "requestId": requestId,
                         "payload": payload,
                         "requestedAt": requestedAt,
                         // Enable verbose logging in the content script.
