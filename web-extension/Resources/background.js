@@ -1,5 +1,5 @@
 /*
- * WebExtension v1.0.0 (build date: Thu, 10 Apr 2025 14:35:22 GMT)
+ * WebExtension v1.0.0 (build date: Thu, 10 Apr 2025 16:32:39 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -23,23 +23,28 @@
   // content script requests quickly while also updating the cache in the
   // background.
   const cache = new Map();
+  // Returns a cache key for the given URL and top-level URL.
+  const cacheKey = (url, topUrl) => `${url}#${topUrl ?? ''}`;
   /**
    * Makes a native messaging request to obtain rules for the given message.
    * Also handles cache invalidation if the engine timestamp has changed.
    *
-   * @param request - The incoming message containing the URL and trace info.
+   * @param request - Original request from the content script.
+   * @param url - Page URL for which the rules are requested.
+   * @param topUrl - Top-level page URL (to distinguish between frames)
    * @returns The response message from the native host.
    */
-  const requestRules = async request => {
+  const requestRules = async (request, url, topUrl) => {
+    // Prepare the request payload.
+    request.payload = {
+      url,
+      topUrl
+    };
     // Send the request to the native messaging host and wait for the response.
     const response = await browser.runtime.sendNativeMessage('application.id', request);
     const message = response;
     // Mark the end of background processing in the trace.
     message.trace.backgroundEnd = new Date().getTime();
-    // Extract the URL from the request payload.
-    const {
-      url
-    } = request.payload;
     // Extract the configuration from the response payload.
     const configuration = message.payload;
     // If the engine timestamp has been updated, clear the cache and update
@@ -49,7 +54,8 @@
       engineTimestamp = configuration.engineTimestamp;
     }
     // Save the new message in the cache for the given URL.
-    cache.set(url, message);
+    const key = cacheKey(url, topUrl);
+    cache.set(key, message);
     return message;
   };
   /**
@@ -57,19 +63,22 @@
    * It tries to immediately return a cached response if available while also
    * updating the cache in the background.
    */
-  browser.runtime.onMessage.addListener(async request => {
+  browser.runtime.onMessage.addListener(async (request, sender) => {
     // Cast the incoming request as a Message.
     const message = request;
-    // Extract the URL from the message payload.
+    // Extract the URL from the sender data.
+    const senderData = sender;
     const {
       url
-    } = message.payload;
+    } = senderData;
+    const topUrl = senderData.frameId === 0 ? null : senderData.tab.url;
+    const key = cacheKey(url, topUrl);
     // If there is already a cached response for this URL:
-    if (cache.has(url)) {
+    if (cache.has(key)) {
       // Fire off a new request to update the cache in the background.
-      requestRules(message);
+      requestRules(message, url, topUrl);
       // Retrieve the cached response.
-      const cachedMessage = cache.get(url);
+      const cachedMessage = cache.get(key);
       // Get the current time for updating trace values.
       const now = new Date().getTime();
       if (cachedMessage) {
@@ -88,7 +97,7 @@
     // processing.
     message.trace.backgroundStart = new Date().getTime();
     // Await the native request to get a fresh response.
-    const responseMessage = await requestRules(message);
+    const responseMessage = await requestRules(message, url, topUrl);
     // Return the new response.
     return responseMessage;
   });

@@ -97,9 +97,7 @@ const requestRules = async (): Promise<ResponseMessage> => {
     const message: Message = {
         type: MessageType.RequestRules,
         trace: createTrace(),
-        payload: {
-            url: window.location.href,
-        },
+        payload: {},
     };
 
     // Send the message to the background script and await the response.

@@ -36,8 +36,13 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         if let urlString = payload["url"] as? String {
             if let url = URL(string: urlString) {
                 let webExtension = try! WebExtension.shared(groupID: GroupIdentifier.shared.value)
-                // TODO: NOT NIL
-                if let configuration = webExtension.lookup(pageUrl: url, topUrl: nil) {
+
+                var topUrl: URL?
+                if let topUrlString = payload["topUrl"] as? String {
+                    topUrl = URL(string: topUrlString)
+                }
+
+                if let configuration = webExtension.lookup(pageUrl: url, topUrl: topUrl) {
                     message?["payload"] = convertToPayload(configuration)
                 }
             }
