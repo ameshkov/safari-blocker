@@ -23,7 +23,7 @@ jobs:
           run_install: false
 
       - name: Install markdownlint
-        run: npm install -g markdownlint
+        run: npm install -g markdownlint-cli
 
       - name: Setup Mint
         uses: irgaly/setup-mint@v1
