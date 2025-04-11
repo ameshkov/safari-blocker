@@ -4,9 +4,7 @@ excluded:
   - ${PWD}/DerivedData
   - ${PWD}/.build
   - ${PWD}/.swiftpm
-  - ${PWD}/Extension
   - ${PWD}/bamboo-specs
-  - ${PWD}/Tests
 
 disabled_rules:
   - discarded_notification_center_observer
@@ -19,7 +17,7 @@ disabled_rules:
   - function_body_length
   - type_body_length
   - trailing_comma
-  - opening_brace # handled by swift format
+  - opening_brace # handled by swift-format
 
 opt_in_rules:
   - array_init
@@ -63,6 +61,9 @@ opt_in_rules:
 
 analyzer_rules:
   - unused_import
+  - unused_declaration
+  - capture_variable
+  - typesafe_array_init
 
 custom_rules:
   array_constructor:
@@ -72,16 +73,12 @@ custom_rules:
     message: "Use explicit type annotation when initializing empty arrays and dictionaries"
     severity: warning
 
-
 attributes:
   always_on_same_line:
     - "@IBSegueAction"
     - "@IBAction"
     - "@NSManaged"
     - "@objc"
-
-force_cast: warning
-force_try: warning
 
 legacy_hashing: error
 
@@ -102,8 +99,6 @@ indentation_width:
 
 line_length:
   ignores_urls: true
-  ignores_function_declarations: true
-  ignores_comments: true
 
 multiline_arguments:
   first_argument_location: next_line
@@ -114,7 +109,7 @@ private_over_fileprivate:
 
 trailing_whitespace:
   ignores_empty_lines: false
-  ignores_comments: true
+  ignores_comments: false
 
 vertical_whitespace:
-  max_empty_lines: 2
+  max_empty_lines: 0

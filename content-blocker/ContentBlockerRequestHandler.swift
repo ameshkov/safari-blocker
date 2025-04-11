@@ -8,8 +8,8 @@
 import Foundation
 import content_blocker_service
 
-class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
-    func beginRequest(with context: NSExtensionContext) {
+public class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
+    public func beginRequest(with context: NSExtensionContext) {
         ContentBlockerExtensionRequestHandler.handleRequest(
             with: context,
             groupIdentifier: GroupIdentifier.shared.value

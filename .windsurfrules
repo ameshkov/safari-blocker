@@ -36,6 +36,14 @@
     - `make swift-macos-build` - builds macOS apps.
     - `make swift-ios-build` - builds iOS apps.
 
+- `make swiftlint-analyze` - runs SwiftLint analyze. Note, that this is a
+  heavy operation that includes building the apps.
+
+  You can also run individual commands:
+
+    - `make swiftlint-macos-analyze` - runs SwiftLint analyze for macOS app.
+    - `make swiftlint-ios-analyze` - runs SwiftLint analyze for iOS app.
+
 ## Code Organization
 
 This project is a Safari content blocking app and it contains of the following

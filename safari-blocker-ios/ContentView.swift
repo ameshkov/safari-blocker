@@ -5,7 +5,6 @@
 //  Created by Andrey Meshkov on 10/12/2024.
 //
 
-import Combine
 import SwiftUI
 import content_blocker_service
 
@@ -261,35 +260,6 @@ struct ContentView: View {
                 }
             }
         }
-    }
-}
-
-class UserInputValidationModel: ObservableObject {
-    @Published var message: String = ""
-
-    private var cancellables = Set<AnyCancellable>()
-    private let inputSubject = PassthroughSubject<String, Never>()
-
-    init() {
-        inputSubject
-            .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
-            .sink { [weak self] txt in
-                let trimmedInput = txt.trimmingCharacters(in: .whitespacesAndNewlines)
-
-                if trimmedInput.hasPrefix("[") && trimmedInput.hasSuffix("]")
-                    && trimmedInput.contains("{")
-                {
-                    self?.message = "JSON detected, the rules will not be converted"
-                } else {
-                    self?.message =
-                        "AdGuard rules detected, the rules will be converted to Safari syntax"
-                }
-            }
-            .store(in: &cancellables)
-    }
-
-    func validate(input: String) {
-        inputSubject.send(input)
     }
 }
 

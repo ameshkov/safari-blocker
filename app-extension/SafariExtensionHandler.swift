@@ -14,7 +14,7 @@ import os.log
 /// web page and the extension's native code. It handles incoming messages from
 /// content scripts, dispatches configuration rules, and manages content
 /// blocking events.
-class SafariExtensionHandler: SFSafariExtensionHandler {
+public class SafariExtensionHandler: SFSafariExtensionHandler {
     /// Handles incoming messages from a web page.
     ///
     /// This method is invoked when the content script dispatches a message.
@@ -26,7 +26,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     ///   - page: The Safari page that sent the message.
     ///   - userInfo: A dictionary with additional information associated with
     ///     the message.
-    override func messageReceived(
+    public override func messageReceived(
         withName messageName: String,
         from page: SFSafariPage,
         userInfo: [String: Any]?
@@ -131,7 +131,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     ///   - contentBlockerIdentifier: The identifier for the content blocker.
     ///   - urls: An array of URLs for the resources that were blocked.
     ///   - page: The Safari page where the blocks occurred.
-    override func contentBlocker(
+    public override func contentBlocker(
         withIdentifier contentBlockerIdentifier: String,
         blockedResourcesWith urls: [URL],
         on page: SFSafariPage
@@ -150,7 +150,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     /// - Parameters:
     ///   - page: The Safari page undergoing navigation.
     ///   - url: The destination URL (if provided).
-    override func page(_ page: SFSafariPage, willNavigateTo url: URL?) {
+    public override func page(_ page: SFSafariPage, willNavigateTo url: URL?) {
         Task {
             await ToolbarData.shared.resetBlocked(on: page)
         }
@@ -166,7 +166,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     ///   - window: The Safari window containing the toolbar item.
     ///   - validationHandler: A callback that receives a boolean (validity)
     ///     and a badge text.
-    override func validateToolbarItem(
+    public override func validateToolbarItem(
         in window: SFSafariWindow,
         validationHandler: @escaping ((Bool, String) -> Void)
     ) {
@@ -184,7 +184,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     /// The popover view controller is displayed when the extension's toolbar item is activated.
     ///
     /// - Returns: A shared instance of SafariExtensionViewController.
-    override func popoverViewController() -> SFSafariExtensionViewController {
+    public override func popoverViewController() -> SFSafariExtensionViewController {
         return SafariExtensionViewController.shared
     }
 
@@ -195,7 +195,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     ///
     /// - Parameters:
     ///   - window: The Safari window containing the toolbar item.
-    override func popoverWillShow(in window: SFSafariWindow) {
+    public override func popoverWillShow(in window: SFSafariWindow) {
         Task {
             let blockedCount = await ToolbarData.shared.getBlockedOnActiveTab(in: window)
             await SafariExtensionViewController.shared.updateBlockedCount(blockedCount)

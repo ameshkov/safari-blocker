@@ -8,6 +8,8 @@ WEBEXT_DIR = extensions/webext
 APPEXT_DIR = extensions/appext
 PNPM_WEBEXT = pnpm -C $(WEBEXT_DIR)
 PNPM_APPEXT = pnpm -C $(APPEXT_DIR)
+XCODEBUILD_ARGS_MACOS = -project safari-blocker.xcodeproj -scheme safari-blocker
+XCODEBUILD_ARGS_IOS = -project safari-blocker.xcodeproj -scheme safari-blocker-ios -sdk iphonesimulator
 
 init:
 	git config core.hooksPath ./scripts/hooks
@@ -15,10 +17,10 @@ init:
 swift-build: swift-macos-build swift-ios-build
 
 swift-macos-build:
-	xcodebuild -project safari-blocker.xcodeproj -scheme safari-blocker build | xcbeautify -q
+	xcodebuild build $(XCODEBUILD_ARGS_MACOS) | xcbeautify -q
 
 swift-ios-build:
-	xcodebuild -project safari-blocker.xcodeproj -scheme safari-blocker-ios -sdk iphonesimulator build | xcbeautify -q
+	xcodebuild build $(XCODEBUILD_ARGS_IOS) | xcbeautify -q
 
 js-build: js-build-webext js-build-appext
 
@@ -48,3 +50,15 @@ webext-lint:
 
 appext-lint:
 	$(PNPM_APPEXT) install && $(PNPM_APPEXT) run lint
+
+swiftlint-analyze: swiftlint-macos-analyze swiftlint-ios-analyze
+
+swiftlint-macos-analyze:
+	xcodebuild clean build $(XCODEBUILD_ARGS_MACOS) > compiler-macos.log
+	swiftlint analyze --strict --quiet --compiler-log-path=compiler-macos.log
+	rm compiler-macos.log
+
+swiftlint-ios-analyze:
+	xcodebuild clean build $(XCODEBUILD_ARGS_IOS) > compiler-ios.log
+	swiftlint analyze --strict --quiet --compiler-log-path=compiler-ios.log
+	rm compiler-ios.log

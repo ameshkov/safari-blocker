@@ -5,7 +5,6 @@
 //  Created by Andrey Meshkov on 10/12/2024.
 //
 
-import SafariServices
 import SwiftUI
 
 @main
