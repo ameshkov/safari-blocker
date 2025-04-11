@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: "9"
+          run_install: false
+
+      - name: Setup Mint
+        uses: irgaly/setup-mint@v1
+
+      - name: Install xcbeautify
+        run: |
+          mint install cpisciotta/xcbeautify
+
+      - name: Install SwiftLint
+        run: |
+          mint install realm/SwiftLint
+
+      - name: Lint
+        run: make lint
+
+      - name: Build JavaScript
+        run: make js-build
+
+      - name: Build Swift
+        run: make swift-build
