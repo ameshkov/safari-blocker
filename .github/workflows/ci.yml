@@ -4,6 +4,11 @@ on:
   push:
   pull_request:
 
+env:
+  SWIFT_VERSION: "6.0.3"
+  NODE_VERSION: "23"
+  PNPM_VERSION: "10"
+
 jobs:
   build:
     runs-on: macos-latest
@@ -12,18 +17,21 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
       - name: Get swift version
         run: swift --version
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "23"
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: "10"
+          version: ${{ env.PNPM_VERSION }}
           run_install: false
 
       - name: Install markdownlint
