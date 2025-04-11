@@ -271,6 +271,13 @@
 			);
 			target = D73756BB2DA8EF2E00067207 /* web-extension-ios */;
 		};
+		D7376E2D2DA9492F00067207 /* Exceptions for "safari-blocker" folder in "safari-blocker" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D768F5A62D084B7F007F39D5 /* safari-blocker */;
+		};
 		D73B13E52D08910F00939E68 /* Exceptions for "content-blocker-ios" folder in "content-blocker-ios" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -363,6 +370,9 @@
 		};
 		D768F5A92D084B7F007F39D5 /* safari-blocker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D7376E2D2DA9492F00067207 /* Exceptions for "safari-blocker" folder in "safari-blocker" target */,
+			);
 			path = "safari-blocker";
 			sourceTree = "<group>";
 		};

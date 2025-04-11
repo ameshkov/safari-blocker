@@ -29,6 +29,13 @@
     - `make js-build-webext` - builds web extension.
     - `make js-build-appext` - builds app extension.
 
+- `make swift-build` - uses `xcodebuild` to build the apps.
+
+  You can also run individual build commands:
+
+    - `make swift-macos-build` - builds macOS apps.
+    - `make swift-ios-build` - builds iOS apps.
+
 ## Code Organization
 
 This project is a Safari content blocking app and it contains of the following

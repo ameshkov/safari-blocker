@@ -31,13 +31,16 @@ a Safari content blocker.
 
 ### Prerequisites
 
-- Install [Node.js][nodejs].
-- Install [pnpm][pnpm].
-- Install [SwiftLint][swiftlint].
+- Install [Node.js][nodejs]: recommend to use [nvm][nvm] for that.
+- Install [pnpm][pnpm]: `brew install pnpm`.
+- Install [SwiftLint][swiftlint]: `brew install swiftlint`.
+- Install [xcbeautify][xcbeautify]: `brew install xcbeautify`.
 
 [nodejs]: https://nodejs.org/
+[nvm]: https://github.com/nvm-sh/nvm
 [pnpm]: https://pnpm.io/
 [swiftlint]: https://github.com/realm/SwiftLint
+[xcbeautify]: https://github.com/cpisciotta/xcbeautify
 
 Run `make init` to setup pre-commit hooks.
 

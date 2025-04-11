@@ -179,18 +179,6 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         }
     }
 
-    /// Called when the user clicks the extension's toolbar item.
-    ///
-    /// Currently, this method logs the click event.
-    ///
-    /// - Parameters:
-    ///   - window: The Safari window in which the toolbar item was clicked.
-    override func toolbarItemClicked(in window: SFSafariWindow) {
-        // TODO(ameshkov): Implement toolbar item click handler.
-
-        os_log(.default, "The extension's toolbar item was clicked")
-    }
-
     /// Returns the popover view controller for the extension.
     ///
     /// The popover view controller is displayed when the extension's toolbar item is activated.
@@ -198,5 +186,19 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     /// - Returns: A shared instance of SafariExtensionViewController.
     override func popoverViewController() -> SFSafariExtensionViewController {
         return SafariExtensionViewController.shared
+    }
+
+    /// Called when the popover is about to be shown.
+    ///
+    /// This method retrieves the blocked requests count for the active tab and
+    /// passes it to the view controller before the popover is displayed.
+    ///
+    /// - Parameters:
+    ///   - window: The Safari window containing the toolbar item.
+    override func popoverWillShow(in window: SFSafariWindow) {
+        Task {
+            let blockedCount = await ToolbarData.shared.getBlockedOnActiveTab(in: window)
+            await SafariExtensionViewController.shared.updateBlockedCount(blockedCount)
+        }
     }
 }

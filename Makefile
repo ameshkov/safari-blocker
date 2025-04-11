@@ -12,6 +12,14 @@ PNPM_APPEXT = pnpm -C $(APPEXT_DIR)
 init:
 	git config core.hooksPath ./scripts/hooks
 
+swift-build: swift-macos-build swift-ios-build
+
+swift-macos-build:
+	xcodebuild -project safari-blocker.xcodeproj -scheme safari-blocker build | xcbeautify -q
+
+swift-ios-build:
+	xcodebuild -project safari-blocker.xcodeproj -scheme safari-blocker-ios -sdk iphonesimulator build | xcbeautify -q
+
 js-build: js-build-webext js-build-appext
 
 js-build-webext:
