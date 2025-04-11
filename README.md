@@ -41,27 +41,21 @@ a Safari content blocker.
 
 Run `make init` to setup pre-commit hooks.
 
-## TODO
+### Building
 
-- [] Add linters (markdownlint, swiftlint, swiftformat)
-- [] Explain how to build and run the apps
-- [] Explain how to build and add extensions
-- [] Explain how extensions are added to the project
+Use XCode to build and run the apps.
 
-- [] Explain resources
+- `safari-blocker` - the macOS version.
+- `safari-blocker-ios` - the iOS version.
 
-```text
-  D70B17D02D11939C000A827C /* web-extension */ = {
-   isa = PBXFileSystemSynchronizedRootGroup;
-   exceptions = (
-    D70B17EC2D11939C000A827C /* Exceptions for "web-extension" folder in "web-extension" target */,
-   );
-   explicitFolders = (
-    Resources/_locales,
-    Resources/assets,
-    Resources/pages,
-   );
-   path = "web-extension";
-   sourceTree = "<group>";
-  };
-```
+To build the browser extensions code run `make js-build`.
+
+### Developer documentation
+
+Please refer to [./.windsurfrules](./.windsurfrules) for developer
+documentation and guidelines.
+
+For the browser extensions, please refer to their respective README files:
+
+- [appext/README.md](./appext/README.md)
+- [webext/README.md](./webext/README.md)

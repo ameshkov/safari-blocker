@@ -11,11 +11,12 @@ import Foundation
 import SafariServices
 internal import ZIPFoundation
 
-/// Runs the conversion logic and prepares the content blocker file.
+/// ContentBlockerService provides functionality to convert AdGuard rules to Safari content blocking format
+/// and manage content blocker extensions.
 public enum ContentBlockerService {
-    /// Reads the default filter file contents.
+    /// Reads the default filter file contents from the main bundle.
     ///
-    /// - Returns: The default filter list contents.
+    /// - Returns: The contents of the default filter list or an error message if the file cannot be read.
     public static func readDefaultFilterList() -> String {
         do {
             if let filePath = Bundle.main.url(forResource: "filter", withExtension: "txt") {
@@ -28,11 +29,12 @@ public enum ContentBlockerService {
         }
     }
 
-    /// Converts AdGuard rules and returns
+    /// Converts AdGuard rules and exports them as a ZIP archive.
     ///
     /// - Parameters:
-    ///   - rules: AdGuard rules.
-    /// - Returns: Safari rules JSON and advanced rules.
+    ///   - rules: AdGuard syntax rules to be converted.
+    /// - Returns: Data object containing a ZIP archive with Safari content blocker JSON and advanced rules,
+    ///           or nil if the archive creation fails.
     public static func exportConversionResult(rules: String) -> Data? {
         let result = convertRules(rules: rules)
 
@@ -59,10 +61,11 @@ public enum ContentBlockerService {
         )
     }
 
-    /// Reloads the content blocker.
+    /// Reloads the Safari content blocker extension with the specified identifier.
     ///
     /// - Parameters:
-    ///   - identifier: Bundle ID of the content blocker extension.
+    ///   - identifier: Bundle ID of the content blocker extension to reload.
+    /// - Returns: A Result indicating success or containing an error if the reload failed.
     public static func reloadContentBlocker(
         withIdentifier identifier: String
     ) -> Result<Void, Error> {
@@ -91,14 +94,14 @@ public enum ContentBlockerService {
         return result
     }
 
-    /// Saves the passed JSON content to the content blocker file without
-    /// attempting to convert them.
+    /// Saves the provided JSON content to the content blocker file in the shared container
+    /// without attempting to convert the rules.
     ///
     /// - Parameters:
-    ///   - jsonRules: Safari content blocker JSON contents.
+    ///   - jsonRules: Safari content blocker JSON contents in proper format.
     ///   - groupIdentifier: Group ID to use for the shared container where
     ///                      the file will be saved.
-    /// - Returns: the number of entires in the JSON array.
+    /// - Returns: The number of entries in the JSON array.
     public static func saveContentBlocker(jsonRules: String, groupIdentifier: String) -> Int {
         NSLog("Saving content blocker rules")
 
@@ -122,16 +125,13 @@ public enum ContentBlockerService {
         return 0
     }
 
-    /// Converts AdGuard rules into the Safari content blocking rules syntax and
-    /// saves to the content blocker file.
-    ///
-    /// This file will later be loaded by the content blocker extension.
+    /// Converts AdGuard rules to Safari content blocker format and saves them to the shared container.
     ///
     /// - Parameters:
     ///   - rules: AdGuard rules to be converted.
     ///   - groupIdentifier: Group ID to use for the shared container where
     ///                      the file will be saved.
-    /// - Returns: the number of rules converted.
+    /// - Returns: The number of Safari content blocker rules generated from the conversion.
     public static func convertFilter(rules: String, groupIdentifier: String) -> Int {
         let result = convertRules(rules: rules)
 
@@ -163,6 +163,8 @@ extension ContentBlockerService {
     ///
     /// - Parameters:
     ///   - rules: AdGuard rules to convert.
+    /// - Returns: A ConversionResult containing the converted Safari rules in JSON format
+    ///           and advanced rules in text format.
     private static func convertRules(rules: String) -> ConversionResult {
         var filterRules = rules
         if !filterRules.isContiguousUTF8 {
@@ -189,7 +191,11 @@ extension ContentBlockerService {
         return result
     }
 
-    /// Synchronous wrapper over SFContentBlockerManager.reloadContentBlocker.
+    /// Provides a synchronous wrapper over SFContentBlockerManager.reloadContentBlocker.
+    ///
+    /// - Parameters:
+    ///   - identifier: Bundle ID of the content blocker extension to reload.
+    /// - Returns: A Result indicating success or containing an error if the reload failed.
     private static func reloadContentBlockerSynchronously(
         withIdentifier identifier: String
     ) -> Result<Void, Error> {
@@ -212,7 +218,11 @@ extension ContentBlockerService {
         return result
     }
 
-    /// Saves the blocker list file contents to the shared directory.
+    /// Saves the blocker list file contents to the shared directory specified by the group identifier.
+    ///
+    /// - Parameters:
+    ///   - contents: String content to write to the blocker list file.
+    ///   - groupIdentifier: App group identifier for accessing the shared container.
     private static func saveBlockerListFile(contents: String, groupIdentifier: String) {
         // Get the shared container URL.
         guard
@@ -233,8 +243,15 @@ extension ContentBlockerService {
         }
     }
 
-    /// Creates a ZIP archive with two files: "content-blocker.json" and "advanced-rules.txt".
-    /// Returns Data of this file or nil if it fails to create a zip archive.
+    /// Creates a ZIP archive containing Safari content blocker rules and advanced rules.
+    ///
+    /// The archive will always include "content-blocker.json" and optionally "advanced-rules.txt"
+    /// if advanced rules are provided.
+    ///
+    /// - Parameters:
+    ///   - safariRulesJSON: JSON string containing Safari content blocker rules.
+    ///   - advancedRulesText: Optional text string containing advanced blocking rules.
+    /// - Returns: Data object representing the ZIP archive, or nil if archive creation fails.
     private static func createZipArchive(
         safariRulesJSON: String,
         advancedRulesText: String?

@@ -186,6 +186,8 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     /// - Parameters:
     ///   - window: The Safari window in which the toolbar item was clicked.
     override func toolbarItemClicked(in window: SFSafariWindow) {
+        // TODO(ameshkov): Implement toolbar item click handler.
+
         os_log(.default, "The extension's toolbar item was clicked")
     }
 

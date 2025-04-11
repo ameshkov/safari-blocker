@@ -335,11 +335,6 @@
 			path = scripts;
 			sourceTree = "<group>";
 		};
-		D73757CD2DA9278F00067207 /* extensions */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = extensions;
-			sourceTree = "<group>";
-		};
 		D73B138E2D086D1400939E68 /* filters */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = filters;
@@ -454,7 +449,6 @@
 				D70B17D02D11939C000A827C /* web-extension */,
 				D73756BD2DA8EF2E00067207 /* web-extension-ios */,
 				D73B13F12D08923600939E68 /* content-blocker-service */,
-				D73757CD2DA9278F00067207 /* extensions */,
 				D73B138E2D086D1400939E68 /* filters */,
 				D73757CC2DA9273300067207 /* scripts */,
 				D73757C92DA90DC900067207 /* .markdownlintignore */,

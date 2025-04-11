@@ -24,7 +24,7 @@
 			<key>Identifier</key>
 			<string>Button</string>
 			<key>Image</key>
-			<string>ToolbarItemIcon.pdf</string>
+			<string>ToolbarItemIcon.png</string>
 			<key>Label</key>
 			<string>Your Button</string>
 		</dict>
