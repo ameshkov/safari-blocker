@@ -14,7 +14,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: "23"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -27,6 +27,10 @@ jobs:
 
       - name: Setup Mint
         uses: irgaly/setup-mint@v1
+
+      - name: Add Mint bin to PATH
+        run: |
+          echo "$HOME/.mint/bin" >> $GITHUB_PATH
 
       - name: Install xcbeautify
         run: |

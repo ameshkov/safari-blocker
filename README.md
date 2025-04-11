@@ -35,14 +35,14 @@ a Safari content blocker.
 - Install [pnpm][pnpm]: `brew install pnpm`.
 - Install [SwiftLint][swiftlint]: `brew install swiftlint`.
 - Install [xcbeautify][xcbeautify]: `brew install xcbeautify`.
-- Install [markdownlint][markdownlint]: `npm install -g markdownlint`.
+- Install [markdownlint-cli][markdownlint]: `npm install -g markdownlint-cli`.
 
 [nodejs]: https://nodejs.org/
 [nvm]: https://github.com/nvm-sh/nvm
 [pnpm]: https://pnpm.io/
 [swiftlint]: https://github.com/realm/SwiftLint
 [xcbeautify]: https://github.com/cpisciotta/xcbeautify
-[markdownlint]: https://www.npmjs.com/package/markdownlint
+[markdownlint]: https://www.npmjs.com/package/markdownlint-cli
 
 Run `make init` to setup pre-commit hooks.
 
