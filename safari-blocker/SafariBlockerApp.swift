@@ -10,7 +10,6 @@ import SwiftUI
 
 @main
 struct SafariBlockerApp: App {
-
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -1,5 +1,5 @@
 //
-//  ContentBlockerExtension.swift
+//  ContentBlockerExtensionRequestHandler.swift
 //  safari-blocker
 //
 //  Created by Andrey Meshkov on 10/12/2024.
@@ -7,8 +7,7 @@
 
 /// Implements content blocker extension logic.
 /// TODO(ameshkov): Write better comment
-public class ContentBlockerExtensionRequestHandler {
-
+public enum ContentBlockerExtensionRequestHandler {
     /// Handles content blocking extension request for rules.
     public static func handleRequest(with context: NSExtensionContext, groupIdentifier: String) {
         NSLog("Start loading the content blocker")
@@ -31,20 +30,35 @@ public class ContentBlockerExtensionRequestHandler {
         if !FileManager.default.fileExists(atPath: sharedFileURL.path) {
             NSLog("No blocker list file found. Using the default one.")
 
-            blockerListFileURL = Bundle.main.url(forResource: "blockerList", withExtension: "json")!
+            guard
+                let defaultURL = Bundle.main.url(forResource: "blockerList", withExtension: "json")
+            else {
+                context.cancelRequest(
+                    withError: createError(
+                        code: 1002,
+                        message: "Failed to find default blocker list."
+                    )
+                )
+                return
+            }
+            blockerListFileURL = defaultURL
         }
 
-        let attachment = NSItemProvider(contentsOf: blockerListFileURL)!
+        guard let attachment = NSItemProvider(contentsOf: blockerListFileURL) else {
+            context.cancelRequest(
+                withError: createError(code: 1003, message: "Failed to create attachment.")
+            )
+            return
+        }
 
         let item = NSExtensionItem()
         item.attachments = [attachment]
 
         context.completeRequest(
-            returningItems: [item],
-            completionHandler: { _ in
-                NSLog("Finished loading the content blocker")
-            }
-        )
+            returningItems: [item]
+        ) { _ in
+            NSLog("Finished loading the content blocker")
+        }
     }
 
     private static func createError(code: Int, message: String) -> NSError {

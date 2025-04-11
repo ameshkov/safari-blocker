@@ -13,11 +13,11 @@ public final class GroupIdentifier {
 
     private init() {
         #if os(macOS)
-        let teamIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String
-        if teamIdentifierPrefix == nil {
-            fatalError("AppIdentifierPrefix is not set in Info.plist")
+        if let teamIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String
+        {
+            value = "\(teamIdentifierPrefix)group.dev.adguard.safari-blocker"
         } else {
-            value = "\(teamIdentifierPrefix!)group.dev.adguard.safari-blocker"
+            fatalError("AppIdentifierPrefix is not set in Info.plist")
         }
         #else
         value = "group.dev.adguard.safari-blocker"

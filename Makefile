@@ -12,7 +12,7 @@ md-lint:
 	npx markdownlint .
 
 swift-lint:
-	swiftlint
+	swiftlint lint --strict --quiet
 
 swiftformat-lint:
 	swift format lint --recursive --strict .

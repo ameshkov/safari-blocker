@@ -12,6 +12,13 @@
    case of code, it should be under 100.
 6. Avoid comments on the same line as the code, place it on a previous line.
 
+## Build Instructions
+
+- `make lint` - runs all linters.
+    - `make md-lint` - runs markdown linter.
+    - `make swift-lint` - runs SwiftLint.
+    - `make swiftformat-lint` - runs SwiftFormat.
+
 ## Code Organization
 
 This project is a Safari content blocking app and it contains of the following

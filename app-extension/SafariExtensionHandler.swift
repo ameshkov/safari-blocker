@@ -15,7 +15,6 @@ import os.log
 /// content scripts, dispatches configuration rules, and manages content
 /// blocking events.
 class SafariExtensionHandler: SFSafariExtensionHandler {
-
     /// Handles incoming messages from a web page.
     ///
     /// This method is invoked when the content script dispatches a message.
@@ -45,33 +44,43 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
             if let url = URL(string: urlString) {
                 // Use the shared AppExtension instance to get the configuration
                 // for the given URL.
-                let webExtension = try! WebExtension.shared(groupID: GroupIdentifier.shared.value)
+                do {
+                    let webExtension = try WebExtension.shared(
+                        groupID: GroupIdentifier.shared.value
+                    )
 
-                var topUrl: URL?
-                if let topUrlString = topUrlString {
-                    topUrl = URL(string: topUrlString)
-                }
+                    var topUrl: URL?
+                    if let topUrlString = topUrlString {
+                        topUrl = URL(string: topUrlString)
+                    }
 
-                if let conf = webExtension.lookup(pageUrl: url, topUrl: topUrl) {
-                    // Convert the configuration into a payload (dictionary
-                    // format) consumable by the content script.
-                    let payload = convertToPayload(conf)
+                    if let conf = webExtension.lookup(pageUrl: url, topUrl: topUrl) {
+                        // Convert the configuration into a payload (dictionary
+                        // format) consumable by the content script.
+                        let payload = convertToPayload(conf)
 
-                    // Dispatch the payload back to the web page under the same
-                    // message name.
-                    let responseUserInfo: [String: Any] = [
-                        "requestId": requestId,
-                        "payload": payload,
-                        "requestedAt": requestedAt,
-                        // Enable verbose logging in the content script.
-                        // In the real app `verbose` flag should only be true
-                        // for debugging purposes.
-                        "verbose": true,
-                    ]
+                        // Dispatch the payload back to the web page under the same
+                        // message name.
+                        let responseUserInfo: [String: Any] = [
+                            "requestId": requestId,
+                            "payload": payload,
+                            "requestedAt": requestedAt,
+                            // Enable verbose logging in the content script.
+                            // In the real app `verbose` flag should only be true
+                            // for debugging purposes.
+                            "verbose": true,
+                        ]
 
-                    page.dispatchMessageToScript(
-                        withName: "requestRules",
-                        userInfo: responseUserInfo
+                        page.dispatchMessageToScript(
+                            withName: "requestRules",
+                            userInfo: responseUserInfo
+                        )
+                    }
+                } catch {
+                    os_log(
+                        .error,
+                        "Failed to get WebExtension instance: %@",
+                        error.localizedDescription
                     )
                 }
             }

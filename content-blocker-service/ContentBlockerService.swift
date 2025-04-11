@@ -12,15 +12,17 @@ import SafariServices
 internal import ZIPFoundation
 
 /// Runs the conversion logic and prepares the content blocker file.
-public class ContentBlockerService {
-
+public enum ContentBlockerService {
     /// Reads the default filter file contents.
     ///
     /// - Returns: The default filter list contents.
     public static func readDefaultFilterList() -> String {
-        let filePath = Bundle.main.url(forResource: "filter", withExtension: "txt")
         do {
-            return try String(contentsOf: filePath!, encoding: .utf8)
+            if let filePath = Bundle.main.url(forResource: "filter", withExtension: "txt") {
+                return try String(contentsOf: filePath, encoding: .utf8)
+            }
+
+            return "Not found the default filter file"
         } catch {
             return "Failed to read the filter file: \(error)"
         }
@@ -47,7 +49,6 @@ public class ContentBlockerService {
             ),
             let prettyString = String(data: prettyData, encoding: .utf8)
         {
-
             safariRulesJSON = prettyString
         }
 
@@ -75,10 +76,12 @@ public class ContentBlockerService {
         case .success:
             NSLog("Content blocker reloaded successfully.")
         case .failure(let error):
-            //
+            // WKErrorDomain error 6 is a common error when the content blocker
+            // cannot access the blocker list file.
             if error.localizedDescription.contains("WKErrorDomain error 6") {
                 NSLog(
-                    "Failed to reload content blocker due to access issue to the blocker list file: \(error.localizedDescription)"
+                    "Failed to reload content blocker due to access issue "
+                        + "to the blocker list file: \(error.localizedDescription)"
                 )
             } else {
                 NSLog("Failed to reload content blocker: \(error.localizedDescription)")
@@ -100,7 +103,10 @@ public class ContentBlockerService {
         NSLog("Saving content blocker rules")
 
         do {
-            let jsonData = jsonRules.data(using: .utf8)!
+            guard let jsonData = jsonRules.data(using: .utf8) else {
+                // In theory, this cannot happen.
+                fatalError("Failed to convert string to bytes")
+            }
             let rules =
                 try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]]
 
@@ -133,13 +139,13 @@ public class ContentBlockerService {
             saveBlockerListFile(contents: result.safariRulesJSON, groupIdentifier: groupIdentifier)
         }
 
-        if result.advancedRulesText != nil {
+        if let advancedRulesText = result.advancedRulesText {
             measure(label: "Building and saving engine") {
                 do {
                     let webExtension = try WebExtension.shared(groupID: groupIdentifier)
 
                     // Build the engine and serialize it.
-                    _ = try webExtension.buildFilterEngine(rules: result.advancedRulesText!)
+                    _ = try webExtension.buildFilterEngine(rules: advancedRulesText)
                 } catch {
                     NSLog("Failed to build and save engine: \(error.localizedDescription)")
                 }
@@ -148,13 +154,11 @@ public class ContentBlockerService {
 
         return result.safariRulesCount
     }
-
 }
 
 // MARK: - Safari Content Blocker functions
 
 extension ContentBlockerService {
-
     /// Converts AdGuard rules into the Safari content blocking rules syntax.
     ///
     /// - Parameters:
@@ -236,7 +240,10 @@ extension ContentBlockerService {
         advancedRulesText: String?
     ) -> Data? {
         // 1. Prepare data from strings
-        let contentBlockerData = safariRulesJSON.data(using: .utf8)!
+        guard let contentBlockerData = safariRulesJSON.data(using: .utf8) else {
+            // In theory, this cannot happen.
+            fatalError("Failed to convert string to bytes")
+        }
         let advancedData = advancedRulesText?.data(using: .utf8)
 
         do {
@@ -248,14 +255,13 @@ extension ContentBlockerService {
                 with: "content-blocker.json",
                 type: .file,
                 uncompressedSize: Int64(contentBlockerData.count),
-                bufferSize: 4,
-                provider: { (position, size) -> Data in
-                    // This will be called until `data` is exhausted (3x in this case).
-                    return contentBlockerData.subdata(
-                        in: Data.Index(position)..<Int(position) + size
-                    )
-                }
-            )
+                bufferSize: 4
+            ) { position, size -> Data in
+                // This will be called until `data` is exhausted (3x in this case).
+                return contentBlockerData.subdata(
+                    in: Data.Index(position)..<Int(position) + size
+                )
+            }
 
             // 5. Add advanced-rules.txt if present
             if let advancedData = advancedData {
@@ -263,21 +269,18 @@ extension ContentBlockerService {
                     with: "advanced-rules.txt",
                     type: .file,
                     uncompressedSize: Int64(advancedData.count),
-                    bufferSize: 4,
-                    provider: { (position, size) -> Data in
-                        // This will be called until `data` is exhausted (3x in this case).
-                        return advancedData.subdata(in: Data.Index(position)..<Int(position) + size)
-                    }
-                )
+                    bufferSize: 4
+                ) { position, size -> Data in
+                    // This will be called until `data` is exhausted (3x in this case).
+                    return advancedData.subdata(in: Data.Index(position)..<Int(position) + size)
+                }
             }
 
             // 6. Zip creation complete
             return archive.data
-
         } catch {
             NSLog("Error while creating ZIP archive: \(error.localizedDescription)")
             return nil
         }
     }
-
 }

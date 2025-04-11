@@ -22,8 +22,6 @@
 		D73756D42DA8EF3300067207 /* web-extension-ios.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D73756BC2DA8EF2E00067207 /* web-extension-ios.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D73757482DA8F25400067207 /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
 		D73757492DA8F25400067207 /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D73757C62DA90D2D00067207 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = D73757C52DA90D2D00067207 /* Makefile */; };
-		D73B13A72D08888C00939E68 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D73B13A62D08888900939E68 /* README.md */; };
 		D73B13E42D08910F00939E68 /* content-blocker-ios.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D73B14052D08923600939E68 /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
 		D73B14062D08923600939E68 /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1080,7 +1078,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D73B13A72D08888C00939E68 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,7 +1137,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D73757C62DA90D2D00067207 /* Makefile in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

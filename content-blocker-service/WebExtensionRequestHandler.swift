@@ -10,8 +10,7 @@ import SafariServices
 import os.log
 
 /// TODO(ameshkov): Write better comment
-public class WebExtensionRequestHandler {
-
+public enum WebExtensionRequestHandler {
     /// TODO(ameshkov): Write better comment
     public static func beginRequest(with context: NSExtensionContext) {
         let request = context.inputItems.first as? NSExtensionItem
@@ -29,15 +28,25 @@ public class WebExtensionRequestHandler {
         let payload = message?["payload"] as? [String: Any] ?? [:]
         if let urlString = payload["url"] as? String {
             if let url = URL(string: urlString) {
-                let webExtension = try! WebExtension.shared(groupID: GroupIdentifier.shared.value)
+                do {
+                    let webExtension = try WebExtension.shared(
+                        groupID: GroupIdentifier.shared.value
+                    )
 
-                var topUrl: URL?
-                if let topUrlString = payload["topUrl"] as? String {
-                    topUrl = URL(string: topUrlString)
-                }
+                    var topUrl: URL?
+                    if let topUrlString = payload["topUrl"] as? String {
+                        topUrl = URL(string: topUrlString)
+                    }
 
-                if let configuration = webExtension.lookup(pageUrl: url, topUrl: topUrl) {
-                    message?["payload"] = convertToPayload(configuration)
+                    if let configuration = webExtension.lookup(pageUrl: url, topUrl: topUrl) {
+                        message?["payload"] = convertToPayload(configuration)
+                    }
+                } catch {
+                    os_log(
+                        .error,
+                        "Failed to get WebExtension instance: %@",
+                        error.localizedDescription
+                    )
                 }
             }
         }
@@ -52,9 +61,12 @@ public class WebExtensionRequestHandler {
         // In the real app `verbose` flag should only be true for debugging purposes.
         message?["verbose"] = true
 
-        let response = createResponse(with: message!)
-
-        context.completeRequest(returningItems: [response], completionHandler: nil)
+        if let safeMessage = message {
+            let response = createResponse(with: safeMessage)
+            context.completeRequest(returningItems: [response], completionHandler: nil)
+        } else {
+            context.completeRequest(returningItems: [], completionHandler: nil)
+        }
     }
 
     private static func convertToPayload(

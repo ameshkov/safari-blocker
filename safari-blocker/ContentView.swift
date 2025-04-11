@@ -141,7 +141,9 @@ struct ContentView: View {
 
                 HStack {
                     Text(
-                        "You need to enable Safari Extension now. It may be required to enable unsigned extensions in Safari Developer options"
+                        "You need to enable Safari Extension now. "
+                            + "It may be required to enable unsigned extensions "
+                            + "in Safari Developer options"
                     )
                     .font(.footnote)
                     Spacer()
@@ -171,13 +173,10 @@ struct ContentView: View {
                 guard let url = URL(string: urlString) else {
                     return nil
                 }
-                let content = try? downloadContent(from: url)
-                if content == nil {
-                    return nil
+                if let content = try? downloadContent(from: url) {
+                    concatenatedContent.append(content)
+                    concatenatedContent.append("\n")
                 }
-
-                concatenatedContent.append(content!)
-                concatenatedContent.append("\n")
             }
 
             return concatenatedContent
@@ -196,7 +195,11 @@ struct ContentView: View {
     private func downloadContent(from url: URL) throws -> String {
         let data = try Data(contentsOf: url)
 
-        return String(data: data, encoding: .utf8)!
+        if let str = String(data: data, encoding: .utf8) {
+            return str
+        }
+
+        return "Failed to download \(url)"
     }
 
     private func exportContentBlocker() {
