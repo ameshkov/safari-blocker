@@ -2,14 +2,17 @@
 
 Very simple macOS and iOS apps for debugging Safari content blocking rules.
 
+This is also a showcase of how to use [SafariConverterLib][converter] to build
+a Safari content blocker.
+
+[converter]: https://github.com/AdguardTeam/SafariConverterLib
+
 ## Prepare
 
 1. XCode is required to build it.
 1. Run `git clone https://github.com/AdguardTeam/SafariConverterLib.git safari-converter-lib` to clone the [SafariConverterLib][converter] project.
 1. Edit the file `filters/filter.txt` and put the rules you'd like to test
    there.
-
-[converter]: https://github.com/AdguardTeam/SafariConverterLib
 
 ## macOS
 
