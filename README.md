@@ -31,6 +31,7 @@ a Safari content blocker.
 
 ### Prerequisites
 
+- Swift 6 or newer.
 - Install [Node.js][nodejs]: recommend to use [nvm][nvm] for that.
 - Install [pnpm][pnpm]: `brew install pnpm`.
 - Install [SwiftLint][swiftlint]: `brew install swiftlint`.

@@ -19,7 +19,7 @@
     You can also run individual linters:
 
     - `make md-lint` - runs markdown linter.
-    - `make swift-lint` - runs swift linters (SwiftLint and SwiftFormat).
+    - `make swift-lint` - runs swift linters (SwiftLint and swift-format).
     - `make js-lint` - lints JS extensions code.
 
 - `make js-build` - builds app extension and web extension (JS code).
