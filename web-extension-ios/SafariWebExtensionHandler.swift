@@ -1,8 +1,8 @@
 //
 //  SafariWebExtensionHandler.swift
-//  web-extension
+//  web-extension-ios
 //
-//  Created by Andrey Meshkov on 17/12/2024.
+//  Created by Andrey Meshkov on 11/04/2025.
 //
 
 import SafariServices

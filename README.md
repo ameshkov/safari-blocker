@@ -30,3 +30,21 @@ Very simple macOS and iOS apps for debugging Safari content blocking rules.
 * [] Explain how to build and run the apps
 * [] Explain how to build and add extensions
 * [] Explain how extensions are added to the project
+
+* [] Explain resources
+
+```
+		D70B17D02D11939C000A827C /* web-extension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D70B17EC2D11939C000A827C /* Exceptions for "web-extension" folder in "web-extension" target */,
+			);
+			explicitFolders = (
+				Resources/_locales,
+				Resources/assets,
+				Resources/pages,
+			);
+			path = "web-extension";
+			sourceTree = "<group>";
+		};
+```

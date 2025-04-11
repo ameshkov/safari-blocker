@@ -6,7 +6,8 @@
 //
 
 /// Implements content blocker extension logic.
-public class ContentBlockerExtension {
+/// TODO(ameshkov): Write better comment
+public class ContentBlockerExtensionRequestHandler {
     
     /// Handles content blocking extension request for rules.
     public static func handleRequest(with context: NSExtensionContext, groupIdentifier: String) {

@@ -12,12 +12,15 @@ public final class GroupIdentifier {
     public let value: String
 
     private init() {
-        let teamIdentifierPrefix: String? = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String
+        #if os(macOS)
+        let teamIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String
         if teamIdentifierPrefix == nil {
-            // Means that this is iOS.
-            value = "group.dev.adguard.safari-blocker"
+            fatalError("AppIdentifierPrefix is not set in Info.plist")
         } else {
             value = "\(teamIdentifierPrefix!)group.dev.adguard.safari-blocker"
         }
+        #else
+        value = "group.dev.adguard.safari-blocker"
+        #endif
     }
 }

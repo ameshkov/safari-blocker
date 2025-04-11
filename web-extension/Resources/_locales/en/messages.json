@@ -1,10 +1,10 @@
 {
     "extension_name": {
-        "message": "web-extension",
+        "message": "Web Extension",
         "description": "The display name for the extension."
     },
     "extension_description": {
-        "message": "This is web-extension. You should tell us what your extension does here.",
+        "message": "Web extension showcases how advanced filtering rules are applied.",
         "description": "Description of what the extension does."
     }
 }

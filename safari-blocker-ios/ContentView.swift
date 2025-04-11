@@ -105,6 +105,8 @@ struct ContentView: View {
                             .background(Color.white)
                             .border(Color.gray, width: 1)
                             .autocorrectionDisabled(true)
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
                             .frame(height:250)
                         
                         HStack {

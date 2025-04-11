@@ -101,7 +101,7 @@ struct ContentView: View {
                     .background(Color.white)
                     .border(Color.gray, width: 1)
                     .autocorrectionDisabled(true)
-                
+
                 Spacer()
                 
                 HStack {

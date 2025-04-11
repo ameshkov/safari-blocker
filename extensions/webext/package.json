@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Web extension sample",
   "scripts": {
-    "build": "pnpm clean && pnpm build:rollup && pnpm build:publish",
+    "build": "pnpm clean && pnpm build:rollup && pnpm build:publish:mac && pnpm build:publish:ios",
     "build:rollup": "pnpm rollup --config rollup.config.ts  --configPlugin @rollup/plugin-json --configPlugin @rollup/plugin-typescript",
-    "build:publish": "rimraf ../../web-extension/Resources/* && cp -r dist/* ../../web-extension/Resources/",
+    "build:publish:mac": "rimraf ../../web-extension/Resources/* && cp -r dist/* ../../web-extension/Resources/",
+    "build:publish:ios": "rimraf ../../web-extension-ios/Resources/* && cp -r dist/* ../../web-extension-ios/Resources/",
     "clean": "rimraf dist",
     "lint": "eslint . --cache --ext .ts"
   },
