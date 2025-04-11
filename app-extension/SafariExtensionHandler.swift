@@ -5,27 +5,33 @@
 //  Created by Andrey Meshkov on 31/01/2025.
 //
 
-import SafariServices
-import os.log
-import content_blocker_service
 import FilterEngine
+import SafariServices
+import content_blocker_service
+import os.log
 
-/// SafariExtensionHandler is responsible for communicating between the Safari web page
-/// and the extension's native code. It handles incoming messages from content scripts,
-/// dispatches configuration rules, and manages content blocking events.
+/// SafariExtensionHandler is responsible for communicating between the Safari
+/// web page and the extension's native code. It handles incoming messages from
+/// content scripts, dispatches configuration rules, and manages content
+/// blocking events.
 class SafariExtensionHandler: SFSafariExtensionHandler {
 
     /// Handles incoming messages from a web page.
     ///
     /// This method is invoked when the content script dispatches a message.
-    /// It currently supports the "requestRules" message to supply configuration rules
-    /// (CSS, JS, and scriptlets) to the web page.
+    /// It currently supports the "requestRules" message to supply configuration
+    /// rules (CSS, JS, and scriptlets) to the web page.
     ///
     /// - Parameters:
     ///   - messageName: The name of the message (e.g., "requestRules").
     ///   - page: The Safari page that sent the message.
-    ///   - userInfo: A dictionary with additional information associated with the message.
-    override func messageReceived(withName messageName: String, from page: SFSafariPage, userInfo: [String : Any]?) {
+    ///   - userInfo: A dictionary with additional information associated with
+    ///     the message.
+    override func messageReceived(
+        withName messageName: String,
+        from page: SFSafariPage,
+        userInfo: [String: Any]?
+    ) {
         switch messageName {
         case "requestRules":
             // Retrieve the URL string from the incoming message.
@@ -34,9 +40,11 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
             let topUrlString = userInfo?["topUrl"] as? String
             let requestedAt = userInfo?["requestedAt"] as? Int ?? 0
 
-            // Convert the string into a URL. If valid, attempt to look up its configuration.
+            // Convert the string into a URL. If valid, attempt to look up its
+            // configuration.
             if let url = URL(string: urlString) {
-                // Use the shared AppExtension instance to get the configuration for the given URL.
+                // Use the shared AppExtension instance to get the configuration
+                // for the given URL.
                 let webExtension = try! WebExtension.shared(groupID: GroupIdentifier.shared.value)
 
                 var topUrl: URL?
@@ -45,20 +53,26 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
                 }
 
                 if let conf = webExtension.lookup(pageUrl: url, topUrl: topUrl) {
-                    // Convert the configuration into a payload (dictionary format) consumable by the content script.
+                    // Convert the configuration into a payload (dictionary
+                    // format) consumable by the content script.
                     let payload = convertToPayload(conf)
 
-                    // Dispatch the payload back to the web page under the same message name.
+                    // Dispatch the payload back to the web page under the same
+                    // message name.
                     let responseUserInfo: [String: Any] = [
                         "requestId": requestId,
                         "payload": payload,
                         "requestedAt": requestedAt,
                         // Enable verbose logging in the content script.
-                        // In the real app `verbose` flag should only be true for debugging purposes.
+                        // In the real app `verbose` flag should only be true
+                        // for debugging purposes.
                         "verbose": true,
                     ]
 
-                    page.dispatchMessageToScript(withName: "requestRules", userInfo: responseUserInfo)
+                    page.dispatchMessageToScript(
+                        withName: "requestRules",
+                        userInfo: responseUserInfo
+                    )
                 }
             }
         default:
@@ -69,10 +83,12 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
 
     /// Converts a WebExtension.Configuration object into a dictionary payload.
     ///
-    /// The payload includes the CSS, extended CSS, JS code, and an array of scriptlet
-    /// data (name and arguments), which is then sent to the content script.
+    /// The payload includes the CSS, extended CSS, JS code, and an array of
+    /// scriptlet data (name and arguments), which is then sent to the content
+    /// script.
     ///
-    /// - Parameter configuration: The configuration object with the rules and scriptlets.
+    /// - Parameters:
+    ///   - configuration: The configuration object with the rules and scriptlets.
     /// - Returns: A dictionary ready to be sent as the payload.
     private func convertToPayload(_ configuration: WebExtension.Configuration) -> [String: Any] {
         var payload: [String: Any] = [:]
@@ -98,8 +114,9 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
 
     /// Called when Safari's content blocker extension blocks resource requests.
     ///
-    /// This method informs the app about which resources were blocked for a particular page,
-    /// allowing the toolbar data (such as a blocked count) to be updated.
+    /// This method informs the app about which resources were blocked for
+    /// a particular page, allowing the toolbar data (such as a blocked count)
+    /// to be updated.
     ///
     /// - Parameters:
     ///   - contentBlockerIdentifier: The identifier for the content blocker.
@@ -118,8 +135,8 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
 
     /// Called when the current page is about to navigate to a new URL or reload.
     ///
-    /// Resets the blocked advertisements counter for the page, ensuring that counts
-    /// do not persist across navigations.
+    /// Resets the blocked advertisements counter for the page, ensuring that
+    /// counts do not persist across navigations.
     ///
     /// - Parameters:
     ///   - page: The Safari page undergoing navigation.
@@ -132,12 +149,14 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
 
     /// Validates and updates the toolbar item (icon) in Safari.
     ///
-    /// This is triggered when the toolbar item is refreshed. It retrieves the count of blocked
-    /// resources from the active tab and updates the badge text accordingly.
+    /// This is triggered when the toolbar item is refreshed. It retrieves the
+    /// count of blocked resources from the active tab and updates the badge
+    /// text accordingly.
     ///
     /// - Parameters:
     ///   - window: The Safari window containing the toolbar item.
-    ///   - validationHandler: A callback that receives a boolean (validity) and a badge text.
+    ///   - validationHandler: A callback that receives a boolean (validity)
+    ///     and a badge text.
     override func validateToolbarItem(
         in window: SFSafariWindow,
         validationHandler: @escaping ((Bool, String) -> Void)
@@ -155,7 +174,8 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
     ///
     /// Currently, this method logs the click event.
     ///
-    /// - Parameter window: The Safari window in which the toolbar item was clicked.
+    /// - Parameters:
+    ///   - window: The Safari window in which the toolbar item was clicked.
     override func toolbarItemClicked(in window: SFSafariWindow) {
         os_log(.default, "The extension's toolbar item was clicked")
     }

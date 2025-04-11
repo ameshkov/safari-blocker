@@ -5,9 +5,9 @@
 //  Created by Andrey Meshkov on 11/04/2025.
 //
 
+internal import FilterEngine
 import SafariServices
 import os.log
-internal import FilterEngine
 
 /// TODO(ameshkov): Write better comment
 public class WebExtensionRequestHandler {
@@ -45,7 +45,7 @@ public class WebExtensionRequestHandler {
         if var trace = message?["trace"] as? [String: Int64] {
             trace["nativeStart"] = nativeStart
             trace["nativeEnd"] = Int64(Date().timeIntervalSince1970 * 1000)
-            message?["trace"] = trace // Reassign the modified dictionary back
+            message?["trace"] = trace  // Reassign the modified dictionary back
         }
 
         // Enable verbose logging in the content script.
@@ -54,10 +54,12 @@ public class WebExtensionRequestHandler {
 
         let response = createResponse(with: message!)
 
-        context.completeRequest(returningItems: [ response ], completionHandler: nil)
+        context.completeRequest(returningItems: [response], completionHandler: nil)
     }
 
-    private static func convertToPayload(_ configuration: WebExtension.Configuration) -> [String: Any] {
+    private static func convertToPayload(
+        _ configuration: WebExtension.Configuration
+    ) -> [String: Any] {
         var payload: [String: Any] = [:]
         payload["css"] = configuration.css
         payload["extendedCss"] = configuration.extendedCss
@@ -79,9 +81,9 @@ public class WebExtensionRequestHandler {
     private static func createResponse(with json: [String: Any?]) -> NSExtensionItem {
         let response = NSExtensionItem()
         if #available(iOS 15.0, macOS 11.0, *) {
-            response.userInfo = [ SFExtensionMessageKey: json ]
+            response.userInfo = [SFExtensionMessageKey: json]
         } else {
-            response.userInfo = [ "message": json ]
+            response.userInfo = ["message": json]
         }
 
         return response
@@ -106,7 +108,12 @@ public class WebExtensionRequestHandler {
             message = request?.userInfo?["message"]
         }
 
-        os_log(.default, "Received message from browser.runtime.sendNativeMessage: %@ (profile: %@)", String(describing: message), profile?.uuidString ?? "none")
+        os_log(
+            .default,
+            "Received message from browser.runtime.sendNativeMessage: %@ (profile: %@)",
+            String(describing: message),
+            profile?.uuidString ?? "none"
+        )
 
         if message is [String: Any?] {
             return message as? [String: Any?]

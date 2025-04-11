@@ -14,7 +14,7 @@ import SafariServices
 /// Using an actor ensures that our state is safe from concurrent modifications.
 actor ToolbarData {
     // Define how long an entry stays before it's considered outdated.
-    private static let evictionDelay: Double = 24 * 60 * 60 // 24 hours
+    private static let evictionDelay: Double = 24 * 60 * 60  // 24 hours
 
     // Delay used to batch disk writes (persisting data) to avoid writing too often.
     private static let flushDelay: UInt64 = 5 * 1_000_000_000  // 5 seconds
@@ -48,7 +48,8 @@ actor ToolbarData {
     private init() {
         // Attempt to load persisted data using the predefined key.
         if let data = UserDefaults.standard.data(forKey: Self.userDefaultsKey),
-           let dictionary = try? JSONDecoder().decode([String: TabData].self, from: data) {
+            let dictionary = try? JSONDecoder().decode([String: TabData].self, from: data)
+        {
             tabBlockedRequests = dictionary
         }
     }
@@ -80,7 +81,8 @@ actor ToolbarData {
 
         // Iterating over a copy of the keys to safely remove outdated entries.
         for key in Array(tabBlockedRequests.keys) {
-            if let value = tabBlockedRequests[key], now - value.lastTimeUpdated > Self.evictionDelay {
+            if let value = tabBlockedRequests[key], now - value.lastTimeUpdated > Self.evictionDelay
+            {
                 tabBlockedRequests.removeValue(forKey: key)
             }
         }
@@ -194,7 +196,10 @@ extension SFSafariTab {
     ///
     /// - Returns: A Base64 encoded string that uniquely represents the tab.
     func tabKey() -> String {
-        if let archivedData = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: true) {
+        if let archivedData = try? NSKeyedArchiver.archivedData(
+            withRootObject: self,
+            requiringSecureCoding: true
+        ) {
             return archivedData.base64EncodedString(options: [])
         }
         return ""

@@ -5,10 +5,10 @@
 //  Created by Andrey Meshkov on 10/12/2024.
 //
 
-import Foundation
-import SafariServices
 internal import ContentBlockerConverter
 internal import FilterEngine
+import Foundation
+import SafariServices
 internal import ZIPFoundation
 
 /// Runs the conversion logic and prepares the content blocker file.
@@ -21,8 +21,7 @@ public class ContentBlockerService {
         let filePath = Bundle.main.url(forResource: "filter", withExtension: "txt")
         do {
             return try String(contentsOf: filePath!, encoding: .utf8)
-        }
-        catch {
+        } catch {
             return "Failed to read the filter file: \(error)"
         }
     }
@@ -41,22 +40,31 @@ public class ContentBlockerService {
 
         // Attempt to pretty-print the JSON
         if let data = safariRulesJSON.data(using: .utf8),
-           let jsonObject = try? JSONSerialization.jsonObject(with: data),
-           let prettyData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted]),
-           let prettyString = String(data: prettyData, encoding: .utf8) {
+            let jsonObject = try? JSONSerialization.jsonObject(with: data),
+            let prettyData = try? JSONSerialization.data(
+                withJSONObject: jsonObject,
+                options: [.prettyPrinted]
+            ),
+            let prettyString = String(data: prettyData, encoding: .utf8)
+        {
 
             safariRulesJSON = prettyString
         }
 
         // Pass the newly formatted JSON string to the ZIP creation
-        return createZipArchive(safariRulesJSON: safariRulesJSON, advancedRulesText: advancedRulesText)
+        return createZipArchive(
+            safariRulesJSON: safariRulesJSON,
+            advancedRulesText: advancedRulesText
+        )
     }
 
     /// Reloads the content blocker.
     ///
     /// - Parameters:
     ///   - identifier: Bundle ID of the content blocker extension.
-    public static func reloadContentBlocker(withIdentifier identifier: String) -> Result<Void, Error> {
+    public static func reloadContentBlocker(
+        withIdentifier identifier: String
+    ) -> Result<Void, Error> {
         NSLog("Start reloading the content blocker")
 
         let result = measure(label: "Reload safari") {
@@ -69,7 +77,9 @@ public class ContentBlockerService {
         case .failure(let error):
             //
             if error.localizedDescription.contains("WKErrorDomain error 6") {
-                NSLog("Failed to reload content blocker due to access issue to the blocker list file: \(error.localizedDescription)")
+                NSLog(
+                    "Failed to reload content blocker due to access issue to the blocker list file: \(error.localizedDescription)"
+                )
             } else {
                 NSLog("Failed to reload content blocker: \(error.localizedDescription)")
             }
@@ -78,18 +88,21 @@ public class ContentBlockerService {
         return result
     }
 
-    /// Saves the passed JSON content to the content blocker file without attempting to convert them.
+    /// Saves the passed JSON content to the content blocker file without
+    /// attempting to convert them.
     ///
     /// - Parameters:
     ///   - jsonRules: Safari content blocker JSON contents.
-    ///   - groupIdentifier: Group ID to use for the shared container where the file will be saved.
+    ///   - groupIdentifier: Group ID to use for the shared container where
+    ///                      the file will be saved.
     /// - Returns: the number of entires in the JSON array.
     public static func saveContentBlocker(jsonRules: String, groupIdentifier: String) -> Int {
         NSLog("Saving content blocker rules")
 
         do {
             let jsonData = jsonRules.data(using: .utf8)!
-            let rules = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]]
+            let rules =
+                try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]]
 
             measure(label: "Saving file") {
                 saveBlockerListFile(contents: jsonRules, groupIdentifier: groupIdentifier)
@@ -103,12 +116,15 @@ public class ContentBlockerService {
         return 0
     }
 
-    /// Converts AdGuard rules into the Safari content blocking rules syntax and saves to the content blocker file.
+    /// Converts AdGuard rules into the Safari content blocking rules syntax and
+    /// saves to the content blocker file.
+    ///
     /// This file will later be loaded by the content blocker extension.
     ///
     /// - Parameters:
     ///   - rules: AdGuard rules to be converted.
-    ///   - groupIdentifier: Group ID to use for the shared container where the file will be saved.
+    ///   - groupIdentifier: Group ID to use for the shared container where
+    ///                      the file will be saved.
     /// - Returns: the number of rules converted.
     public static func convertFilter(rules: String, groupIdentifier: String) -> Int {
         let result = convertRules(rules: rules)
@@ -170,8 +186,11 @@ extension ContentBlockerService {
     }
 
     /// Synchronous wrapper over SFContentBlockerManager.reloadContentBlocker.
-    private static func reloadContentBlockerSynchronously(withIdentifier identifier: String) -> Result<Void, Error> {
-        let semaphore = DispatchSemaphore(value: 0) // Create a semaphore with an initial count of 0
+    private static func reloadContentBlockerSynchronously(
+        withIdentifier identifier: String
+    ) -> Result<Void, Error> {
+        // Create a semaphore with an initial count of 0
+        let semaphore = DispatchSemaphore(value: 0)
         var result: Result<Void, Error> = .success(())
 
         SFContentBlockerManager.reloadContentBlocker(withIdentifier: identifier) { error in
@@ -180,18 +199,23 @@ extension ContentBlockerService {
             } else {
                 result = .success(())
             }
-            semaphore.signal() // Signal the semaphore to unblock
+            // Signal the semaphore to unblock
+            semaphore.signal()
         }
 
-        semaphore.wait() // Block the thread until the semaphore is signaled
+        // Block the thread until the semaphore is signaled
+        semaphore.wait()
         return result
     }
-
 
     /// Saves the blocker list file contents to the shared directory.
     private static func saveBlockerListFile(contents: String, groupIdentifier: String) {
         // Get the shared container URL.
-        guard let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier) else {
+        guard
+            let appGroupURL = FileManager.default.containerURL(
+                forSecurityApplicationGroupIdentifier: groupIdentifier
+            )
+        else {
             NSLog("Failed to access App Group container.")
             return
         }
@@ -207,8 +231,10 @@ extension ContentBlockerService {
 
     /// Creates a ZIP archive with two files: "content-blocker.json" and "advanced-rules.txt".
     /// Returns Data of this file or nil if it fails to create a zip archive.
-    private static func createZipArchive(safariRulesJSON: String,
-                                         advancedRulesText: String?) -> Data? {
+    private static func createZipArchive(
+        safariRulesJSON: String,
+        advancedRulesText: String?
+    ) -> Data? {
         // 1. Prepare data from strings
         let contentBlockerData = safariRulesJSON.data(using: .utf8)!
         let advancedData = advancedRulesText?.data(using: .utf8)
@@ -225,10 +251,11 @@ extension ContentBlockerService {
                 bufferSize: 4,
                 provider: { (position, size) -> Data in
                     // This will be called until `data` is exhausted (3x in this case).
-                    return contentBlockerData.subdata(in: Data.Index(position)..<Int(position)+size)
+                    return contentBlockerData.subdata(
+                        in: Data.Index(position)..<Int(position) + size
+                    )
                 }
             )
-
 
             // 5. Add advanced-rules.txt if present
             if let advancedData = advancedData {
@@ -239,7 +266,7 @@ extension ContentBlockerService {
                     bufferSize: 4,
                     provider: { (position, size) -> Data in
                         // This will be called until `data` is exhausted (3x in this case).
-                        return advancedData.subdata(in: Data.Index(position)..<Int(position)+size)
+                        return advancedData.subdata(in: Data.Index(position)..<Int(position) + size)
                     }
                 )
             }
@@ -254,5 +281,3 @@ extension ContentBlockerService {
     }
 
 }
-
-

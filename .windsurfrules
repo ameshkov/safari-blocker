@@ -8,6 +8,9 @@
 3. When writing class and function comments prefer `///` style comments. In this
    case you should use proper markdown formatting.
 4. When writing inline comments prefer `//` style comments.
+5. In the case of comments try to keep line length under 80 characters. In the
+   case of code, it should be under 100.
+6. Avoid comments on the same line as the code, place it on a previous line.
 
 ## Code Organization
 
@@ -19,16 +22,16 @@ parts.
 Located in `/content-blocker-service`. This is a framework shared by all app
 components that implements the app's business logic.
 
-* `ContentBlockerService.swift` - the API for `safari-blocker` to convert
+- `ContentBlockerService.swift` - the API for `safari-blocker` to convert
   rules to the format that extensions can understand. The rules are then saved
   to the shared location (using `GroupIdentifier` to get access to it).
-* `ContentBlockerExtensionRequestHandler.swift` - the API for Safari content
+- `ContentBlockerExtensionRequestHandler.swift` - the API for Safari content
   blocking extensions (`content-blocker` and `content-blocker-ios`) to load
   rules from the shared location (using `GroupIdentifier` to get access to it).
-* `WebExtensionRequestHandler.swift` - the API for Safari Web Extensions
+- `WebExtensionRequestHandler.swift` - the API for Safari Web Extensions
   (`web-extension` and `web-extension-ios`) to lookup "advanced rules" for a
   given URL.
-* `GroupIdentifier.swift` - shared logic for group identifiers. Basically, this
+- `GroupIdentifier.swift` - shared logic for group identifiers. Basically, this
   is a singleton that holds shared group identifier.
 
 It uses [SafariConverterLib](https://github.com/AdguardTeam/SafariConverterLib)
@@ -36,9 +39,9 @@ to convert the rules to the format that extensions can understand.
 
 There are two file formats:
 
-* Safari Content Blocker JSON. It is consumed by `content-blocker` and
+- Safari Content Blocker JSON. It is consumed by `content-blocker` and
   `content-blocker-ios`.
-* Advanced rules (text format with AdGuard rules syntax + binary format for
+- Advanced rules (text format with AdGuard rules syntax + binary format for
   serialized `WebExtension`). These rules are serialized to the shared location
   using by calling `WebExtension.buildFilterEngine`. These serialized rules are
   later consumed by `web-extension` (or `web-extension-ios`).
@@ -74,10 +77,10 @@ with the only difference is that `web-extension` is for macOS and
 
 The app is a Safari Web Extension which consists of several parts.
 
-* `SafariWebExtensionHandler.swift` - implements `NSExtensionRequestHandling`
+- `SafariWebExtensionHandler.swift` - implements `NSExtensionRequestHandling`
   and processes requests from the extension's background page. It delegates all
   the work to `content-blocker-service` (see `WebExtensionRequestHandler.swift`).
-* `Resources` contains the code of the actual browser extension. However, the
+- `Resources` contains the code of the actual browser extension. However, the
   code in this folder is generated and the actual source code is located in
   the `/extensions/webext` folder. Refer to `/extensions/webext/README.md` for
   the details on how it is structured and built.
@@ -97,9 +100,9 @@ The basic logic is the following:
 Located in `/app-extension`. This is a Safari App Extension implementation and
 it is only compatible with macOS and `safari-blocker`.
 
-* `SafariExtensionHandler.swift` - implements `SFSafariExtensionHandler` and
+- `SafariExtensionHandler.swift` - implements `SFSafariExtensionHandler` and
   handles incoming messages from a web page.
-* `Resources` contains the code of the content script (`SFSafariContentScript`).
+- `Resources` contains the code of the content script (`SFSafariContentScript`).
   However, the code there is generated and the actual source code is located in
   the `/extensions/appext` folder. Refer to `/extensions/appext/README.md` for
   the details on how it is structured and built.
@@ -118,8 +121,8 @@ The basic logic is the following:
 Located in `/extensions`. This folder contains the actual source code of the
 browser extensions.
 
-* `extensions/appext` - the source code of Safari App Extension's content
+- `extensions/appext` - the source code of Safari App Extension's content
   script. Refer to `/extensions/appext/README.md` for the details on how it is structured and built.
-* `extensions/webext` - the source code of Safari Web Extension. Refer to
+- `extensions/webext` - the source code of Safari Web Extension. Refer to
   `/extensions/webext/README.md` for the details on how it is structured and
   built.

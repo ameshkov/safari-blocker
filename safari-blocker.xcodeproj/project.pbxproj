@@ -22,6 +22,7 @@
 		D73756D42DA8EF3300067207 /* web-extension-ios.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D73756BC2DA8EF2E00067207 /* web-extension-ios.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D73757482DA8F25400067207 /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
 		D73757492DA8F25400067207 /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D73757C62DA90D2D00067207 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = D73757C52DA90D2D00067207 /* Makefile */; };
 		D73B13A72D08888C00939E68 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D73B13A62D08888900939E68 /* README.md */; };
 		D73B13E42D08910F00939E68 /* content-blocker-ios.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D73B14052D08923600939E68 /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
@@ -231,6 +232,12 @@
 		D73756B52DA7F80F00067207 /* icon-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-16.png"; sourceTree = "<group>"; };
 		D73756BC2DA8EF2E00067207 /* web-extension-ios.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "web-extension-ios.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D737574F2DA8FB7300067207 /* icon-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-32.png"; sourceTree = "<group>"; };
+		D73757C52DA90D2D00067207 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D73757C72DA90D8900067207 /* .windsurfrules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .windsurfrules; sourceTree = "<group>"; };
+		D73757C82DA90DBA00067207 /* .markdownlint.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = .markdownlint.json; sourceTree = "<group>"; };
+		D73757C92DA90DC900067207 /* .markdownlintignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .markdownlintignore; sourceTree = "<group>"; };
+		D73757CA2DA90DD500067207 /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
+		D73757CB2DA90DDE00067207 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = "safari-converter-lib/.swiftlint.yml"; sourceTree = "<group>"; };
 		D73B13A62D08888900939E68 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D73B13AC2D08902C00939E68 /* safari-blocker-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "safari-blocker-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "content-blocker-ios.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -500,6 +507,12 @@
 		D768F59E2D084B7F007F39D5 = {
 			isa = PBXGroup;
 			children = (
+				D73757C92DA90DC900067207 /* .markdownlintignore */,
+				D73757C82DA90DBA00067207 /* .markdownlint.json */,
+				D73757C72DA90D8900067207 /* .windsurfrules */,
+				D73757CB2DA90DDE00067207 /* .swiftlint.yml */,
+				D73757CA2DA90DD500067207 /* .swift-format */,
+				D73757C52DA90D2D00067207 /* Makefile */,
 				D73B13A62D08888900939E68 /* README.md */,
 				D73B138E2D086D1400939E68 /* filters */,
 				D768F5A92D084B7F007F39D5 /* safari-blocker */,
@@ -1127,6 +1140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D73757C62DA90D2D00067207 /* Makefile in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,8 +14,14 @@ public class ContentBlockerExtensionRequestHandler {
         NSLog("Start loading the content blocker")
 
         // Get the shared container URL.
-        guard let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier) else {
-            context.cancelRequest(withError: createError(code: 1001, message: "Failed to access App Group container."))
+        guard
+            let appGroupURL = FileManager.default.containerURL(
+                forSecurityApplicationGroupIdentifier: groupIdentifier
+            )
+        else {
+            context.cancelRequest(
+                withError: createError(code: 1001, message: "Failed to access App Group container.")
+            )
             return
         }
 
@@ -33,10 +39,12 @@ public class ContentBlockerExtensionRequestHandler {
         let item = NSExtensionItem()
         item.attachments = [attachment]
 
-        context.completeRequest(returningItems: [ item ],
-                                completionHandler: { _ in
-            NSLog("Finished loading the content blocker")
-        })
+        context.completeRequest(
+            returningItems: [item],
+            completionHandler: { _ in
+                NSLog("Finished loading the content blocker")
+            }
+        )
     }
 
     private static func createError(code: Int, message: String) -> NSError {

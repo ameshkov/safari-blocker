@@ -1,16 +1,16 @@
 //
-//  safari_blockerApp.swift
+//  SafariBlockerApp.swift
 //  safari-blocker
 //
 //  Created by Andrey Meshkov on 10/12/2024.
 //
 
-import SwiftUI
 import SafariServices
+import SwiftUI
 
 @main
-struct safari_blockerApp: App {
-    
+struct SafariBlockerApp: App {
+
     var body: some Scene {
         WindowGroup {
             ContentView()
