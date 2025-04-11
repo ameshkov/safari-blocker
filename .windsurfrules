@@ -15,9 +15,21 @@
 ## Build Instructions
 
 - `make lint` - runs all linters.
+
+    You can also run individual linters:
+
     - `make md-lint` - runs markdown linter.
     - `make swift-lint` - runs SwiftLint.
     - `make swiftformat-lint` - runs SwiftFormat.
+    - `make appext-lint` - lints app extension code.
+    - `make webext-lint` - lints web extension code.
+
+- `make build-js` - builds app extension and web extension (JS code).
+
+  You can also run individual build commands:
+
+    - `make build-js-webext` - builds web extension.
+    - `make build-js-appext` - builds app extension.
 
 ## Code Organization
 
