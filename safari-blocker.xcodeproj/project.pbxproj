@@ -425,11 +425,6 @@
 			path = "safari-blocker";
 			sourceTree = "<group>";
 		};
-		D7BB679A2D084C1100B8A793 /* content-blocker */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "content-blocker";
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -514,7 +509,6 @@
 				D73B13A62D08888900939E68 /* README.md */,
 				D73B138E2D086D1400939E68 /* filters */,
 				D768F5A92D084B7F007F39D5 /* safari-blocker */,
-				D7BB679A2D084C1100B8A793 /* content-blocker */,
 				D73B13AD2D08902C00939E68 /* safari-blocker-ios */,
 				D73B13DC2D08910F00939E68 /* content-blocker-ios */,
 				D73B13F12D08923600939E68 /* content-blocker-service */,
