@@ -10,6 +10,6 @@
 		<string>$(PRODUCT_MODULE_NAME).ContentBlockerRequestHandler</string>
 	</dict>
     <key>NSHumanReadableDescription</key>
-    <string>Content blocker for debugging rules</string>
+    <string>Content blocker for basic Safari rules</string>
 </dict>
 </plist>

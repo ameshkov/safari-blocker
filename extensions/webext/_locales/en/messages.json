@@ -4,7 +4,7 @@
         "description": "The display name for the extension."
     },
     "extension_description": {
-        "message": "Web extension showcases how advanced filtering rules are applied.",
+        "message": "Web extension for advanced rules",
         "description": "Description of what the extension does."
     }
 }
