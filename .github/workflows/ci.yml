@@ -5,7 +5,7 @@ on:
   pull_request:
 
 env:
-  SWIFT_VERSION: "6.0"
+  XCODE_VERSION: "latest-stable"
   NODE_VERSION: "23"
   PNPM_VERSION: "10"
 
@@ -14,12 +14,11 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      # Setup environment
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
-
-      - uses: actions/checkout@v4
+          xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Get swift version
         run: swift --version
@@ -53,11 +52,8 @@ jobs:
         run: |
           mint install realm/SwiftLint
 
-      # Set up Swift after building&installing xcbeautify and SwiftLint
-      # as xcbeautify won't build with Swift 6
-      - uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: ${{ env.SWIFT_VERSION }}
+      # Checkout and run lint&build commands
+      - uses: actions/checkout@v4
 
       - name: Lint
         run: make lint
