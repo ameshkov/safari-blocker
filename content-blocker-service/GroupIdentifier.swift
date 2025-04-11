@@ -5,7 +5,7 @@
 //  Created by Andrey Meshkov on 01/02/2025.
 //
 
-// TODO(ameshkov): Add comment
+// TODO(ameshkov): Add comment here
 public final class GroupIdentifier {
     public static let shared = GroupIdentifier()
 

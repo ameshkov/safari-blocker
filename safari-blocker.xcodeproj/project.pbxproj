@@ -227,63 +227,19 @@
 		D70B170C2D08D39A000A827C /* content-blocker.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "content-blocker.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D70B17CF2D11939C000A827C /* web-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "web-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D71088F82D4CBD0500F1E1CF /* app-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "app-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D73756B52DA7F80F00067207 /* icon-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-16.png"; sourceTree = "<group>"; };
 		D73756BC2DA8EF2E00067207 /* web-extension-ios.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "web-extension-ios.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D737574F2DA8FB7300067207 /* icon-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-32.png"; sourceTree = "<group>"; };
 		D73757C52DA90D2D00067207 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		D73757C72DA90D8900067207 /* .windsurfrules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .windsurfrules; sourceTree = "<group>"; };
 		D73757C82DA90DBA00067207 /* .markdownlint.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = .markdownlint.json; sourceTree = "<group>"; };
 		D73757C92DA90DC900067207 /* .markdownlintignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .markdownlintignore; sourceTree = "<group>"; };
 		D73757CA2DA90DD500067207 /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
-		D73757CB2DA90DDE00067207 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = "safari-converter-lib/.swiftlint.yml"; sourceTree = "<group>"; };
+		D73758082DA92AF000067207 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		D73B13A62D08888900939E68 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D73B13AC2D08902C00939E68 /* safari-blocker-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "safari-blocker-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "content-blocker-ios.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B13F02D08923600939E68 /* content_blocker_service.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = content_blocker_service.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D768F5A72D084B7F007F39D5 /* safari-blocker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "safari-blocker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7BB67982D084C1100B8A793 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		D7BC558C2D8497CE006B601A /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = popup.html; sourceTree = "<group>"; };
-		D7BC558D2D8497CE006B601A /* popup.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = popup.ts; sourceTree = "<group>"; };
-		D7BC55902D8497CE006B601A /* index.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = index.ts; sourceTree = "<group>"; };
-		D7BC55922D8497CE006B601A /* message.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = message.ts; sourceTree = "<group>"; };
-		D7BC55942D8497CE006B601A /* delayedEventDispatcher.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = delayedEventDispatcher.ts; sourceTree = "<group>"; };
-		D7BC55952D8497CE006B601A /* index.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = index.ts; sourceTree = "<group>"; };
-		D7BC55962D8497CE006B601A /* logger.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = logger.ts; sourceTree = "<group>"; };
-		D7BC55982D8497CE006B601A /* index.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = index.ts; sourceTree = "<group>"; };
-		D7BC559B2D8497CE006B601A /* .eslintcache */ = {isa = PBXFileReference; lastKnownFileType = text; path = .eslintcache; sourceTree = "<group>"; };
-		D7BC559C2D8497CE006B601A /* .eslintignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .eslintignore; sourceTree = "<group>"; };
-		D7BC559D2D8497CE006B601A /* .eslintrc.cjs */ = {isa = PBXFileReference; lastKnownFileType = text; path = .eslintrc.cjs; sourceTree = "<group>"; };
-		D7BC559E2D8497CE006B601A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		D7BC559F2D8497CE006B601A /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		D7BC55A02D8497CE006B601A /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
-		D7BC55A12D8497CE006B601A /* pnpm-lock.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "pnpm-lock.yaml"; sourceTree = "<group>"; };
-		D7BC55A22D8497CE006B601A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		D7BC55A32D8497CE006B601A /* rollup.config.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = rollup.config.ts; sourceTree = "<group>"; };
-		D7BC55A42D8497CE006B601A /* tsconfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tsconfig.json; sourceTree = "<group>"; };
-		D7BC55A52D8497CE006B601A /* tsconfig.eslint.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tsconfig.eslint.json; sourceTree = "<group>"; };
-		D7BC55A72D8497CE006B601A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		D7BCC8462D8497CC006B601A /* delayedEventDispatcher.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = delayedEventDispatcher.ts; sourceTree = "<group>"; };
-		D7BCC8472D8497CC006B601A /* index.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = index.ts; sourceTree = "<group>"; };
-		D7BCC8482D8497CC006B601A /* logger.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = logger.ts; sourceTree = "<group>"; };
-		D7BCC8492D8497CC006B601A /* safari.d.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = safari.d.ts; sourceTree = "<group>"; };
-		D7BCC84B2D8497CC006B601A /* .eslintcache */ = {isa = PBXFileReference; lastKnownFileType = text; path = .eslintcache; sourceTree = "<group>"; };
-		D7BCC84C2D8497CC006B601A /* .eslintignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .eslintignore; sourceTree = "<group>"; };
-		D7BCC84D2D8497CC006B601A /* .eslintrc.cjs */ = {isa = PBXFileReference; lastKnownFileType = text; path = .eslintrc.cjs; sourceTree = "<group>"; };
-		D7BCC84E2D8497CC006B601A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		D7BCC84F2D8497CC006B601A /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
-		D7BCC8502D8497CC006B601A /* pnpm-lock.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "pnpm-lock.yaml"; sourceTree = "<group>"; };
-		D7BCC8512D8497CC006B601A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		D7BCC8522D8497CC006B601A /* rollup.config.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = rollup.config.ts; sourceTree = "<group>"; };
-		D7BCC8532D8497CC006B601A /* tsconfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tsconfig.json; sourceTree = "<group>"; };
-		D7BCC8542D8497CC006B601A /* tsconfig.eslint.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tsconfig.eslint.json; sourceTree = "<group>"; };
-		D7BCC8562D8497CC006B601A /* messages.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = messages.json; sourceTree = "<group>"; };
-		D7BCC8592D8497CC006B601A /* popup.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = popup.css; sourceTree = "<group>"; };
-		D7BCC85B2D8497CC006B601A /* icon-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-48.png"; sourceTree = "<group>"; };
-		D7BCC85C2D8497CC006B601A /* icon-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-64.png"; sourceTree = "<group>"; };
-		D7BCC85D2D8497CC006B601A /* icon-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-96.png"; sourceTree = "<group>"; };
-		D7BCC85E2D8497CC006B601A /* icon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-128.png"; sourceTree = "<group>"; };
-		D7BCC85F2D8497CC006B601A /* icon-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-256.png"; sourceTree = "<group>"; };
-		D7BCC8602D8497CC006B601A /* icon-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-512.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -293,13 +249,6 @@
 				Info.plist,
 			);
 			target = D70B170B2D08D39A000A827C /* content-blocker */;
-		};
-		D70B172C2D08F146000A827C /* Exceptions for "safari-blocker" folder in "safari-blocker" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = D768F5A62D084B7F007F39D5 /* safari-blocker */;
 		};
 		D70B17EC2D11939C000A827C /* Exceptions for "web-extension" folder in "web-extension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -335,13 +284,6 @@
 				content_blocker_service.h,
 			);
 			target = D73B13EF2D08923600939E68 /* content-blocker-service */;
-		};
-		D73B14292D0899C700939E68 /* Exceptions for "filters" folder in "safari-blocker-ios" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				filter.txt,
-			);
-			target = D73B13AB2D08902C00939E68 /* safari-blocker-ios */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -388,11 +330,18 @@
 			path = "web-extension-ios";
 			sourceTree = "<group>";
 		};
+		D73757CC2DA9273300067207 /* scripts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		D73757CD2DA9278F00067207 /* extensions */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = extensions;
+			sourceTree = "<group>";
+		};
 		D73B138E2D086D1400939E68 /* filters */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				D73B14292D0899C700939E68 /* Exceptions for "filters" folder in "safari-blocker-ios" target */,
-			);
 			path = filters;
 			sourceTree = "<group>";
 		};
@@ -419,9 +368,6 @@
 		};
 		D768F5A92D084B7F007F39D5 /* safari-blocker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				D70B172C2D08F146000A827C /* Exceptions for "safari-blocker" folder in "safari-blocker" target */,
-			);
 			path = "safari-blocker";
 			sourceTree = "<group>";
 		};
@@ -500,25 +446,26 @@
 		D768F59E2D084B7F007F39D5 = {
 			isa = PBXGroup;
 			children = (
+				D768F5A92D084B7F007F39D5 /* safari-blocker */,
+				D73B13AD2D08902C00939E68 /* safari-blocker-ios */,
+				D70B170E2D08D39A000A827C /* content-blocker */,
+				D73B13DC2D08910F00939E68 /* content-blocker-ios */,
+				D71088F92D4CBD0500F1E1CF /* app-extension */,
+				D70B17D02D11939C000A827C /* web-extension */,
+				D73756BD2DA8EF2E00067207 /* web-extension-ios */,
+				D73B13F12D08923600939E68 /* content-blocker-service */,
+				D73757CD2DA9278F00067207 /* extensions */,
+				D73B138E2D086D1400939E68 /* filters */,
+				D73757CC2DA9273300067207 /* scripts */,
 				D73757C92DA90DC900067207 /* .markdownlintignore */,
 				D73757C82DA90DBA00067207 /* .markdownlint.json */,
 				D73757C72DA90D8900067207 /* .windsurfrules */,
-				D73757CB2DA90DDE00067207 /* .swiftlint.yml */,
 				D73757CA2DA90DD500067207 /* .swift-format */,
+				D73758082DA92AF000067207 /* .swiftlint.yml */,
 				D73757C52DA90D2D00067207 /* Makefile */,
 				D73B13A62D08888900939E68 /* README.md */,
-				D73B138E2D086D1400939E68 /* filters */,
-				D768F5A92D084B7F007F39D5 /* safari-blocker */,
-				D73B13AD2D08902C00939E68 /* safari-blocker-ios */,
-				D73B13DC2D08910F00939E68 /* content-blocker-ios */,
-				D73B13F12D08923600939E68 /* content-blocker-service */,
-				D70B170E2D08D39A000A827C /* content-blocker */,
-				D70B17D02D11939C000A827C /* web-extension */,
-				D71088F92D4CBD0500F1E1CF /* app-extension */,
-				D73756BD2DA8EF2E00067207 /* web-extension-ios */,
 				D7BB67972D084C1100B8A793 /* Frameworks */,
 				D768F5A82D084B7F007F39D5 /* Products */,
-				D7BC55A82D8497CE006B601A /* extensions */,
 			);
 			sourceTree = "<group>";
 		};
@@ -545,177 +492,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D7BC558E2D8497CE006B601A /* popup */ = {
-			isa = PBXGroup;
-			children = (
-				D7BC558C2D8497CE006B601A /* popup.html */,
-				D7BC558D2D8497CE006B601A /* popup.ts */,
-			);
-			path = popup;
-			sourceTree = "<group>";
-		};
-		D7BC558F2D8497CE006B601A /* pages */ = {
-			isa = PBXGroup;
-			children = (
-				D7BC558E2D8497CE006B601A /* popup */,
-			);
-			path = pages;
-			sourceTree = "<group>";
-		};
-		D7BC55912D8497CE006B601A /* background */ = {
-			isa = PBXGroup;
-			children = (
-				D7BC55902D8497CE006B601A /* index.ts */,
-			);
-			path = background;
-			sourceTree = "<group>";
-		};
-		D7BC55932D8497CE006B601A /* common */ = {
-			isa = PBXGroup;
-			children = (
-				D7BC55922D8497CE006B601A /* message.ts */,
-			);
-			path = common;
-			sourceTree = "<group>";
-		};
-		D7BC55972D8497CE006B601A /* content */ = {
-			isa = PBXGroup;
-			children = (
-				D7BC55942D8497CE006B601A /* delayedEventDispatcher.ts */,
-				D7BC55952D8497CE006B601A /* index.ts */,
-				D7BC55962D8497CE006B601A /* logger.ts */,
-			);
-			path = content;
-			sourceTree = "<group>";
-		};
-		D7BC55992D8497CE006B601A /* popup */ = {
-			isa = PBXGroup;
-			children = (
-				D7BC55982D8497CE006B601A /* index.ts */,
-			);
-			path = popup;
-			sourceTree = "<group>";
-		};
-		D7BC559A2D8497CE006B601A /* src */ = {
-			isa = PBXGroup;
-			children = (
-				D7BC55912D8497CE006B601A /* background */,
-				D7BC55932D8497CE006B601A /* common */,
-				D7BC55972D8497CE006B601A /* content */,
-				D7BC55992D8497CE006B601A /* popup */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		D7BC55A62D8497CE006B601A /* webext */ = {
-			isa = PBXGroup;
-			children = (
-				D7BCC8582D8497CC006B601A /* _locales */,
-				D7BCC8632D8497CC006B601A /* assets */,
-				D7BC558F2D8497CE006B601A /* pages */,
-				D7BC559A2D8497CE006B601A /* src */,
-				D7BC559B2D8497CE006B601A /* .eslintcache */,
-				D7BC559C2D8497CE006B601A /* .eslintignore */,
-				D7BC559D2D8497CE006B601A /* .eslintrc.cjs */,
-				D7BC559E2D8497CE006B601A /* .gitignore */,
-				D7BC559F2D8497CE006B601A /* manifest.json */,
-				D7BC55A02D8497CE006B601A /* package.json */,
-				D7BC55A12D8497CE006B601A /* pnpm-lock.yaml */,
-				D7BC55A22D8497CE006B601A /* README.md */,
-				D7BC55A32D8497CE006B601A /* rollup.config.ts */,
-				D7BC55A42D8497CE006B601A /* tsconfig.json */,
-				D7BC55A52D8497CE006B601A /* tsconfig.eslint.json */,
-			);
-			path = webext;
-			sourceTree = "<group>";
-		};
-		D7BC55A82D8497CE006B601A /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-				D7BCC8552D8497CC006B601A /* appext */,
-				D7BC55A62D8497CE006B601A /* webext */,
-				D7BC55A72D8497CE006B601A /* README.md */,
-			);
-			path = extensions;
-			sourceTree = "<group>";
-		};
-		D7BCC84A2D8497CC006B601A /* src */ = {
-			isa = PBXGroup;
-			children = (
-				D7BCC8462D8497CC006B601A /* delayedEventDispatcher.ts */,
-				D7BCC8472D8497CC006B601A /* index.ts */,
-				D7BCC8482D8497CC006B601A /* logger.ts */,
-				D7BCC8492D8497CC006B601A /* safari.d.ts */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		D7BCC8552D8497CC006B601A /* appext */ = {
-			isa = PBXGroup;
-			children = (
-				D7BCC84A2D8497CC006B601A /* src */,
-				D7BCC84B2D8497CC006B601A /* .eslintcache */,
-				D7BCC84C2D8497CC006B601A /* .eslintignore */,
-				D7BCC84D2D8497CC006B601A /* .eslintrc.cjs */,
-				D7BCC84E2D8497CC006B601A /* .gitignore */,
-				D7BCC84F2D8497CC006B601A /* package.json */,
-				D7BCC8502D8497CC006B601A /* pnpm-lock.yaml */,
-				D7BCC8512D8497CC006B601A /* README.md */,
-				D7BCC8522D8497CC006B601A /* rollup.config.ts */,
-				D7BCC8532D8497CC006B601A /* tsconfig.json */,
-				D7BCC8542D8497CC006B601A /* tsconfig.eslint.json */,
-			);
-			path = appext;
-			sourceTree = "<group>";
-		};
-		D7BCC8572D8497CC006B601A /* en */ = {
-			isa = PBXGroup;
-			children = (
-				D7BCC8562D8497CC006B601A /* messages.json */,
-			);
-			path = en;
-			sourceTree = "<group>";
-		};
-		D7BCC8582D8497CC006B601A /* _locales */ = {
-			isa = PBXGroup;
-			children = (
-				D7BCC8572D8497CC006B601A /* en */,
-			);
-			path = _locales;
-			sourceTree = "<group>";
-		};
-		D7BCC85A2D8497CC006B601A /* css */ = {
-			isa = PBXGroup;
-			children = (
-				D7BCC8592D8497CC006B601A /* popup.css */,
-			);
-			path = css;
-			sourceTree = "<group>";
-		};
-		D7BCC8622D8497CC006B601A /* images */ = {
-			isa = PBXGroup;
-			children = (
-				D73756B52DA7F80F00067207 /* icon-16.png */,
-				D737574F2DA8FB7300067207 /* icon-32.png */,
-				D7BCC85B2D8497CC006B601A /* icon-48.png */,
-				D7BCC85C2D8497CC006B601A /* icon-64.png */,
-				D7BCC85D2D8497CC006B601A /* icon-96.png */,
-				D7BCC85E2D8497CC006B601A /* icon-128.png */,
-				D7BCC85F2D8497CC006B601A /* icon-256.png */,
-				D7BCC8602D8497CC006B601A /* icon-512.png */,
-			);
-			path = images;
-			sourceTree = "<group>";
-		};
-		D7BCC8632D8497CC006B601A /* assets */ = {
-			isa = PBXGroup;
-			children = (
-				D7BCC85A2D8497CC006B601A /* css */,
-				D7BCC8622D8497CC006B601A /* images */,
-			);
-			path = assets;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -727,24 +503,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
-
-/* Begin PBXLegacyTarget section */
-		D7BC3FC12D8497A8006B601A /* web-extensions */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = D7BC3FC22D8497A8006B601A /* Build configuration list for PBXLegacyTarget "web-extensions" */;
-			buildPhases = (
-			);
-			buildToolPath = /usr/bin/make;
-			dependencies = (
-			);
-			name = "web-extensions";
-			packageProductDependencies = (
-			);
-			passBuildSettingsInEnvironment = 1;
-			productName = "web-extensions";
-		};
-/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		D70B170B2D08D39A000A827C /* content-blocker */ = {
@@ -861,6 +619,7 @@
 				D73756D32DA8EF3300067207 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				D73B138E2D086D1400939E68 /* filters */,
 				D73B13AD2D08902C00939E68 /* safari-blocker-ios */,
 			);
 			name = "safari-blocker-ios";
@@ -982,9 +741,6 @@
 					D768F5A62D084B7F007F39D5 = {
 						CreatedOnToolsVersion = 16.0;
 					};
-					D7BC3FC12D8497A8006B601A = {
-						CreatedOnToolsVersion = 16.0;
-					};
 				};
 			};
 			buildConfigurationList = D768F5A22D084B7F007F39D5 /* Build configuration list for PBXProject "safari-blocker" */;
@@ -1013,7 +769,6 @@
 				D73756BB2DA8EF2E00067207 /* web-extension-ios */,
 				D71088F72D4CBD0500F1E1CF /* app-extension */,
 				D73B13EF2D08923600939E68 /* content-blocker-service */,
-				D7BC3FC12D8497A8006B601A /* web-extensions */,
 			);
 		};
 /* End PBXProject section */
@@ -1845,35 +1600,6 @@
 			};
 			name = Release;
 		};
-		D7BC3FC32D8497A8006B601A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUGGING_SYMBOLS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		D7BC3FC42D8497A8006B601A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1954,15 +1680,6 @@
 			buildConfigurations = (
 				D768F5CD2D084B80007F39D5 /* Debug */,
 				D768F5CE2D084B80007F39D5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D7BC3FC22D8497A8006B601A /* Build configuration list for PBXLegacyTarget "web-extensions" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D7BC3FC32D8497A8006B601A /* Debug */,
-				D7BC3FC42D8497A8006B601A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
