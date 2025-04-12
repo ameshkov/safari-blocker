@@ -10,22 +10,22 @@ a Safari content blocker.
 ## Prepare
 
 1. XCode is required to build it.
-1. Run `git clone https://github.com/AdguardTeam/SafariConverterLib.git safari-converter-lib` to clone the [SafariConverterLib][converter] project.
-1. Edit the file `filters/filter.txt` and put the rules you'd like to test
+2. Run `git clone https://github.com/AdguardTeam/SafariConverterLib.git safari-converter-lib` to clone the [SafariConverterLib][converter] project.
+3. Edit the file `filters/filter.txt` and put the rules you'd like to test
    there.
 
 ### macOS app
 
 1. In order to use the app on macOS, enable [developer mode][safaridevelop] in
    Safari and [allow unsigned extensions][unsigned] in Developer Options.
-1. Build and run the app, target `safari-blocker`.
+2. Build and run the app, target `safari-blocker`.
 
 [safaridevelop]: https://developer.apple.com/documentation/safari-developer-tools/enabling-developer-features
 [unsigned]: https://developer.apple.com/documentation/safariservices/running-your-safari-web-extension#3744467
 
 ### iOS app
 
-1. If you use a Simulator, it will be enought to build and run `safari-blocker-ios`.
+1. If you use a Simulator, it will be enough to build and run `safari-blocker-ios`.
 
 ## Development
 
@@ -54,11 +54,11 @@ Use XCode to build and run the apps.
 - `safari-blocker` - the macOS version.
 - `safari-blocker-ios` - the iOS version.
 
-To build the browser extensions code run `make js-build`.
+To build the browser extensions code, run `make js-build`.
 
 ### Developer documentation
 
-Please refer to [./.DEVELOPMENT.md][devdoc] for developer documentation and
+Please refer to [./DEVELOPMENT.md][devdoc] for developer documentation and
 guidelines.
 
 If you're using an AI-enabled IDE (Windsurf/Cursor/Copilot/etc), use this
@@ -73,4 +73,4 @@ For the browser extensions, please refer to their respective README files:
 - [appext/README.md](./appext/README.md)
 - [webext/README.md](./webext/README.md)
 
-[devdoc]: ./.DEVELOPMENT.md
+[devdoc]: ./DEVELOPMENT.md

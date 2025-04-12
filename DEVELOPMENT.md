@@ -1,15 +1,21 @@
 # Safari Blocker
 
+Safari Blocker is a project that showcases how to use
+[SafariConverterLib][converter] to build a Safari content blocker. It provides
+macOS and iOS apps that can be used to debug AdGuard rules in Safari.
+
+[converter]: https://github.com/AdguardTeam/SafariConverterLib
+
 ## General Code Style & Formatting
 
 1. Use standard Swift formatting and style guidelines.
 2. Use 4 spaces for indentation.
-3. When writing class and function comments prefer `///` style comments. In this
-   case you should use proper markdown formatting.
-4. When writing inline comments prefer `//` style comments.
-5. In the case of comments try to keep line length under 80 characters. In the
+3. When writing class and function comments, prefer `///` style comments. In
+   this case, you should use proper markdown formatting.
+4. When writing inline comments, prefer `//` style comments.
+5. In the case of comments, try to keep line length under 80 characters. In the
    case of code, it should be under 100.
-6. Avoid comments on the same line as the code, place it on a previous line.
+6. Avoid comments on the same line as the code; place them on a previous line.
 
 ## Build Instructions
 
@@ -36,7 +42,7 @@
     - `make swift-macos-build` - builds macOS apps.
     - `make swift-ios-build` - builds iOS apps.
 
-- `make swiftlint-analyze` - runs SwiftLint analyze. Note, that this is a
+- `make swiftlint-analyze` - runs SwiftLint analyze. Note that this is a
   heavy operation that includes building the apps.
 
   You can also run individual commands:
@@ -49,7 +55,7 @@
 
 ## Code Organization
 
-This project is a Safari content blocking app and it contains of the following
+This project is a Safari content blocking app and it consists of the following
 parts.
 
 ### `content-blocker-service`
@@ -69,8 +75,8 @@ components that implements the app's business logic.
 - `GroupIdentifier.swift` - shared logic for group identifiers. Basically, this
   is a singleton that holds shared group identifier.
 
-It uses [SafariConverterLib](https://github.com/AdguardTeam/SafariConverterLib)
-to convert the rules to the format that extensions can understand.
+It uses [SafariConverterLib][converter] to convert the rules to the format that
+extensions can understand.
 
 There are two file formats:
 
@@ -78,13 +84,13 @@ There are two file formats:
   `content-blocker-ios`.
 - Advanced rules (text format with AdGuard rules syntax + binary format for
   serialized `WebExtension`). These rules are serialized to the shared location
-  using by calling `WebExtension.buildFilterEngine`. These serialized rules are
+  by calling `WebExtension.buildFilterEngine`. These serialized rules are
   later consumed by `web-extension` (or `web-extension-ios`).
 
 ### `safari-blocker` and `safari-blocker-ios`
 
 Located in `/safari-blocker` and `safari-blocker-ios`. These are similar apps
-with the only difference is that `safari-blocker` is for macOS and
+with the only difference being that `safari-blocker` is for macOS and
 `safari-blocker-ios` is for iOS.
 
 The UI is simply a `TextEditor` for user input. The user input is either text
@@ -97,7 +103,7 @@ understand (using `content-blocker-service`).
 ### `content-blocker` and `content-blocker-ios`
 
 Located in `/content-blocker` and `content-blocker-ios`. These are similar apps
-with the only difference is that `content-blocker` is for macOS and
+with the only difference being that `content-blocker` is for macOS and
 `content-blocker-ios` is for iOS.
 
 The app is a Safari content blocking extension which simply loads JSON files
@@ -107,14 +113,14 @@ with Safari rules from the shared location. All the logic is implemented in
 ### `web-extension` and `web-extension-ios`
 
 Located in `/web-extension` and `web-extension-ios`. These are similar apps
-with the only difference is that `web-extension` is for macOS and
+with the only difference being that `web-extension` is for macOS and
 `web-extension-ios` is for iOS.
 
 The app is a Safari Web Extension which consists of several parts.
 
 - `SafariWebExtensionHandler.swift` - implements `NSExtensionRequestHandling`
   and processes requests from the extension's background page. It delegates all
-  the work to `content-blocker-service` (see `WebExtensionRequestHandler.swift`).
+  that to `content-blocker-service` (see `WebExtensionRequestHandler.swift`).
 - `Resources` contains the code of the actual browser extension. However, the
   code in this folder is generated and the actual source code is located in
   the `/extensions/webext` folder. Refer to `/extensions/webext/README.md` for
@@ -123,8 +129,8 @@ The app is a Safari Web Extension which consists of several parts.
 The basic logic is the following:
 
 1. Extension's content script requests rules for the current page.
-2. Extension's background page receives the request and if no rules found in
-   the cache sends request further to `SafariWebExtensionHandler`.
+2. Extension's background page receives the request and if no rules are found in
+   the cache, sends the request further to `SafariWebExtensionHandler`.
 3. `SafariWebExtensionHandler` receives the request and delegates it to
    `content-blocker-service`.
 4. `content-blocker-service` uses `WebExtension` singleton to lookup the rules
