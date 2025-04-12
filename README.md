@@ -58,10 +58,19 @@ To build the browser extensions code run `make js-build`.
 
 ### Developer documentation
 
-Please refer to [./.windsurfrules](./.windsurfrules) for developer
-documentation and guidelines.
+Please refer to [./.DEVELOPMENT.md][devdoc] for developer documentation and
+guidelines.
+
+If you're using an AI-enabled IDE (Windsurf/Cursor/Copilot/etc), use this
+document as a rules file, for example:
+
+```sh
+ln -s ./DEVELOPMENT.md .windsurfrules
+```
 
 For the browser extensions, please refer to their respective README files:
 
 - [appext/README.md](./appext/README.md)
 - [webext/README.md](./webext/README.md)
+
+[devdoc]: ./.DEVELOPMENT.md

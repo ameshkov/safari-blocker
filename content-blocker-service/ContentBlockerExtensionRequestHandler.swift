@@ -5,6 +5,8 @@
 //  Created by Andrey Meshkov on 10/12/2024.
 //
 
+import os.log
+
 /// Implements Safari content blocker extension logic.
 /// This handler is responsible for loading content blocking rules from the
 /// shared container and providing them to Safari extensions.
@@ -22,7 +24,7 @@ public enum ContentBlockerExtensionRequestHandler {
     ///   - context: The extension context that initiated the request.
     ///   - groupIdentifier: The app group identifier used to access the shared container.
     public static func handleRequest(with context: NSExtensionContext, groupIdentifier: String) {
-        NSLog("Start loading the content blocker")
+        os_log(.info, "Start loading the content blocker")
 
         // Get the shared container URL using the provided group identifier
         guard
@@ -42,7 +44,7 @@ public enum ContentBlockerExtensionRequestHandler {
         // Determine which blocker list file to use
         var blockerListFileURL = sharedFileURL
         if !FileManager.default.fileExists(atPath: sharedFileURL.path) {
-            NSLog("No blocker list file found. Using the default one.")
+            os_log(.info, "No blocker list file found. Using the default one.")
 
             // Fall back to the default blocker list included in the bundle
             guard
@@ -74,7 +76,7 @@ public enum ContentBlockerExtensionRequestHandler {
         context.completeRequest(
             returningItems: [item]
         ) { _ in
-            NSLog("Finished loading the content blocker")
+            os_log(.info, "Finished loading the content blocker")
         }
     }
 

@@ -229,11 +229,11 @@
 		D71088F82D4CBD0500F1E1CF /* app-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "app-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73756BC2DA8EF2E00067207 /* web-extension-ios.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "web-extension-ios.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73757C52DA90D2D00067207 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		D73757C72DA90D8900067207 /* .windsurfrules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .windsurfrules; sourceTree = "<group>"; };
 		D73757C82DA90DBA00067207 /* .markdownlint.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = .markdownlint.json; sourceTree = "<group>"; };
 		D73757C92DA90DC900067207 /* .markdownlintignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .markdownlintignore; sourceTree = "<group>"; };
 		D73757CA2DA90DD500067207 /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
 		D73758082DA92AF000067207 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		D7376E2E2DAAA11100067207 /* DEVELOPMENT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPMENT.md; sourceTree = "<group>"; };
 		D73B13A62D08888900939E68 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D73B13AC2D08902C00939E68 /* safari-blocker-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "safari-blocker-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "content-blocker-ios.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -463,11 +463,11 @@
 				D73757CC2DA9273300067207 /* scripts */,
 				D73757C92DA90DC900067207 /* .markdownlintignore */,
 				D73757C82DA90DBA00067207 /* .markdownlint.json */,
-				D73757C72DA90D8900067207 /* .windsurfrules */,
 				D73757CA2DA90DD500067207 /* .swift-format */,
 				D73758082DA92AF000067207 /* .swiftlint.yml */,
 				D73757C52DA90D2D00067207 /* Makefile */,
 				D73B13A62D08888900939E68 /* README.md */,
+				D7376E2E2DAAA11100067207 /* DEVELOPMENT.md */,
 				D7BB67972D084C1100B8A793 /* Frameworks */,
 				D768F5A82D084B7F007F39D5 /* Products */,
 			);

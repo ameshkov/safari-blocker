@@ -10,6 +10,7 @@ internal import FilterEngine
 import Foundation
 import SafariServices
 internal import ZIPFoundation
+import os.log
 
 /// ContentBlockerService provides functionality to convert AdGuard rules to Safari content blocking format
 /// and manage content blocker extensions.
@@ -69,7 +70,7 @@ public enum ContentBlockerService {
     public static func reloadContentBlocker(
         withIdentifier identifier: String
     ) -> Result<Void, Error> {
-        NSLog("Start reloading the content blocker")
+        os_log(.info, "Start reloading the content blocker")
 
         let result = measure(label: "Reload safari") {
             reloadContentBlockerSynchronously(withIdentifier: identifier)
@@ -77,17 +78,22 @@ public enum ContentBlockerService {
 
         switch result {
         case .success:
-            NSLog("Content blocker reloaded successfully.")
+            os_log(.info, "Content blocker reloaded successfully.")
         case .failure(let error):
             // WKErrorDomain error 6 is a common error when the content blocker
             // cannot access the blocker list file.
             if error.localizedDescription.contains("WKErrorDomain error 6") {
-                NSLog(
-                    "Failed to reload content blocker due to access issue "
-                        + "to the blocker list file: \(error.localizedDescription)"
+                os_log(
+                    .error,
+                    "Failed to reload content blocker, could not access blocker list file: %@",
+                    error.localizedDescription
                 )
             } else {
-                NSLog("Failed to reload content blocker: \(error.localizedDescription)")
+                os_log(
+                    .error,
+                    "Failed to reload content blocker: %@",
+                    error.localizedDescription
+                )
             }
         }
 
@@ -103,7 +109,7 @@ public enum ContentBlockerService {
     ///                      the file will be saved.
     /// - Returns: The number of entries in the JSON array.
     public static func saveContentBlocker(jsonRules: String, groupIdentifier: String) -> Int {
-        NSLog("Saving content blocker rules")
+        os_log(.info, "Saving content blocker rules")
 
         do {
             guard let jsonData = jsonRules.data(using: .utf8) else {
@@ -119,7 +125,11 @@ public enum ContentBlockerService {
 
             return rules?.count ?? 0
         } catch {
-            NSLog("Failed to decode JSON: \(error.localizedDescription)")
+            os_log(
+                .error,
+                "Failed to decode content blocker JSON: %@",
+                error.localizedDescription
+            )
         }
 
         return 0
@@ -147,7 +157,11 @@ public enum ContentBlockerService {
                     // Build the engine and serialize it.
                     _ = try webExtension.buildFilterEngine(rules: advancedRulesText)
                 } catch {
-                    NSLog("Failed to build and save engine: \(error.localizedDescription)")
+                    os_log(
+                        .error,
+                        "Failed to build and save the filtering engine: %@",
+                        error.localizedDescription
+                    )
                 }
             }
         }
@@ -230,7 +244,8 @@ extension ContentBlockerService {
                 forSecurityApplicationGroupIdentifier: groupIdentifier
             )
         else {
-            NSLog("Failed to access App Group container.")
+            os_log(.error, "Failed to access the App Group container")
+
             return
         }
 
@@ -239,7 +254,11 @@ extension ContentBlockerService {
         do {
             try contents.data(using: .utf8)?.write(to: sharedFileURL)
         } catch {
-            NSLog("Failed to save blockerList.json: \(error.localizedDescription)")
+            os_log(
+                .error,
+                "Failed to save blockerList.json to the App Group container: %@",
+                error.localizedDescription
+            )
         }
     }
 
@@ -296,7 +315,12 @@ extension ContentBlockerService {
             // 6. Zip creation complete
             return archive.data
         } catch {
-            NSLog("Error while creating ZIP archive: \(error.localizedDescription)")
+            os_log(
+                .error,
+                "Error while creating a ZIP archive with rules: %@",
+                error.localizedDescription
+            )
+
             return nil
         }
     }

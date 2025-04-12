@@ -151,7 +151,7 @@ public enum WebExtensionRequestHandler {
         }
 
         os_log(
-            .default,
+            .info,
             "Received message from browser.runtime.sendNativeMessage: %@ (profile: %@)",
             String(describing: message),
             profile?.uuidString ?? "none"
