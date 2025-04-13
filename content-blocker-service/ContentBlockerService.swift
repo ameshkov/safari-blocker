@@ -166,7 +166,7 @@ public enum ContentBlockerService {
             }
         }
 
-        return result.safariRulesCount
+        return result.safariRulesCount + result.advancedRulesCount
     }
 }
 

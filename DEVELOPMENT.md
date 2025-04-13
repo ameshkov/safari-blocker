@@ -55,8 +55,7 @@ macOS and iOS apps that can be used to debug AdGuard rules in Safari.
 
 ## Code Organization
 
-This project is a Safari content blocking app and it consists of the following
-parts.
+This project is a Safari content blocking app and it consists of the following parts.
 
 ### `content-blocker-service`
 

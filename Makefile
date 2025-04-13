@@ -14,6 +14,8 @@ XCODEBUILD_ARGS_IOS = -project safari-blocker.xcodeproj -scheme safari-blocker-i
 init:
 	git config core.hooksPath ./scripts/hooks
 
+# Building
+
 swift-build: swift-macos-build swift-ios-build
 
 swift-macos-build:
@@ -30,7 +32,9 @@ js-build-webext:
 js-build-appext:
 	$(PNPM_APPEXT) install && $(PNPM_APPEXT) run build
 
-lint: md-lint swift-lint swiftformat-lint webext-lint appext-lint
+# Linting
+
+lint: md-lint swift-lint js-lint
 
 md-lint:
 	npx markdownlint .
@@ -50,6 +54,8 @@ webext-lint:
 
 appext-lint:
 	$(PNPM_APPEXT) install && $(PNPM_APPEXT) run lint
+
+# Swiftlint analyze
 
 swiftlint-analyze: swiftlint-macos-analyze swiftlint-ios-analyze
 

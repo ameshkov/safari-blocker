@@ -99,6 +99,7 @@ indentation_width:
 
 line_length:
   ignores_urls: true
+  ignores_multiline_strings: true
 
 multiline_arguments:
   first_argument_location: next_line

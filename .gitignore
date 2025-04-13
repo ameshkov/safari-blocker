@@ -4,7 +4,7 @@
 # Ignore safari-converter-lib
 safari-converter-lib
 
-# Ignore .windsurfrules and .cursorrules
+# Ignore smart IDEs rules files
 .windsurfrules
 .cursorrules
 
