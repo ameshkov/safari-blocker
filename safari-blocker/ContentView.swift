@@ -6,15 +6,9 @@
 //
 
 import SwiftUI
-import Combine
 import content_blocker_service
 
 let CONTENT_BLOCKER_ID = "dev.adguard.safari-blocker.content-blocker"
-
-let GROUP_ID: String = {
-    let teamIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"]! as! String
-    return "\(teamIdentifierPrefix)group.dev.adguard.safari-blocker"
-}()
 
 enum RuleType: String, CaseIterable, Identifiable {
     case adGuardFiltering = "AdGuard filtering rules"
@@ -50,7 +44,7 @@ struct ContentView: View {
     init() {
         userInput = ContentBlockerService.readDefaultFilterList()
     }
-    
+
     var body: some View {
         VStack {
             if isLoading {
@@ -65,20 +59,20 @@ struct ContentView: View {
                     Image("AppIconImage")
                         .resizable()
                         .frame(width: 24, height: 24)
-                    
+
                     Text("Safari Content Blocker")
                         .font(.headline)
                         .multilineTextAlignment(.leading)
-                    
+
                     Spacer()
                 }
-                
+
                 HStack {
                     Text("Status: \(statusDescription)")
                         .font(.subheadline)
                         .multilineTextAlignment(.leading)
                         .foregroundColor(error ? Color.red : Color.primary)
-                    
+
                     Spacer()
                 }.padding(.bottom, 5)
 
@@ -97,7 +91,7 @@ struct ContentView: View {
                     Text(editorLabel)
                         .multilineTextAlignment(.leading)
                         .font(.caption)
-                    
+
                     Spacer()
                 }
 
@@ -106,9 +100,9 @@ struct ContentView: View {
                     .background(Color.white)
                     .border(Color.gray, width: 1)
                     .autocorrectionDisabled(true)
-                
+
                 Spacer()
-                
+
                 HStack {
                     Button(action: prepareContentBlocker) {
                         Text("Reload filter")
@@ -116,7 +110,9 @@ struct ContentView: View {
                     .buttonStyle(.borderedProminent)
                     .keyboardShortcut("s", modifiers: .command)
 
-                    if selectedRuleType == .adGuardFiltering || selectedRuleType == .adGuardFilterListsURLs {
+                    if selectedRuleType == .adGuardFiltering
+                        || selectedRuleType == .adGuardFilterListsURLs
+                    {
                         Button(action: exportContentBlocker) {
                             Text("Export content blocker...")
                         }
@@ -125,26 +121,30 @@ struct ContentView: View {
 
                     Spacer()
                 }
-                
+
                 HStack {
                     Text("Elapsed on conversion: \(elapsedConversion)")
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
-                    
+
                     Spacer()
                 }.padding(.top, 5)
-                
+
                 HStack {
                     Text("Elapsed on loading into Safari: \(elapsedLoad)")
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
-                    
+
                     Spacer()
                 }
-                
+
                 HStack {
-                    Text("You need to enable Safari Extension now. It may be required to enable unsigned extensions in Safari Developer options")
-                        .font(.footnote)
+                    Text(
+                        "You need to enable Safari Extension now. "
+                            + "It may be required to enable unsigned extensions "
+                            + "in Safari Developer options"
+                    )
+                    .font(.footnote)
                     Spacer()
                 }.padding(.top, 5)
             }
@@ -163,20 +163,19 @@ struct ContentView: View {
         case .adGuardFiltering:
             return inputContent
         case .adGuardFilterListsURLs:
-            let urls = inputContent.split(separator: "\n").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            let urls = inputContent.split(separator: "\n").map {
+                $0.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
 
             var concatenatedContent = ""
             for urlString in urls {
                 guard let url = URL(string: urlString) else {
                     return nil
                 }
-                let content = try? downloadContent(from: url)
-                if content == nil {
-                    return nil
+                if let content = try? downloadContent(from: url) {
+                    concatenatedContent.append(content)
+                    concatenatedContent.append("\n")
                 }
-
-                concatenatedContent.append(content!)
-                concatenatedContent.append("\n")
             }
 
             return concatenatedContent
@@ -195,7 +194,11 @@ struct ContentView: View {
     private func downloadContent(from url: URL) throws -> String {
         let data = try Data(contentsOf: url)
 
-        return String(data: data, encoding: .utf8)!
+        if let str = String(data: data, encoding: .utf8) {
+            return str
+        }
+
+        return "Failed to download \(url)"
     }
 
     private func exportContentBlocker() {
@@ -203,7 +206,6 @@ struct ContentView: View {
             self.isLoading = true
             self.statusDescription = "Converting content blocking rules"
             var elapsedConversion = "5.23s"
-            var convertedCount = 0
 
             if ProcessInfo.processInfo.isRunningInPreview {
                 Thread.sleep(forTimeInterval: 1)
@@ -211,9 +213,7 @@ struct ContentView: View {
                 let start = Date()
 
                 let content = getContent() ?? ""
-                let conversionResult = ContentBlockerService.convertRules(rules: content)
-
-                convertedCount = conversionResult.convertedCount
+                let archiveData = ContentBlockerService.exportConversionResult(rules: content)
 
                 let endConversion = Date()
                 elapsedConversion = String(format: "%.2fs", endConversion.timeIntervalSince(start))
@@ -221,12 +221,13 @@ struct ContentView: View {
                 DispatchQueue.main.async {
                     let savePanel = NSSavePanel()
                     savePanel.nameFieldStringValue = "content-blocker"
-                    savePanel.allowedContentTypes = [.json]
+                    savePanel.allowedContentTypes = [.zip]
 
                     savePanel.begin { result in
                         if result == .OK, let url = savePanel.url {
                             do {
-                                try conversionResult.json.write(to: url, atomically: true, encoding: .utf8)
+                                try archiveData?.write(to: url)
+
                                 print("File saved to \(url)")
                             } catch {
                                 print("Error saving file: \(error)")
@@ -240,7 +241,7 @@ struct ContentView: View {
                 self.isLoading = false
                 self.elapsedConversion = elapsedConversion
                 self.elapsedLoad = "0s"
-                self.statusDescription = "Exported \(convertedCount) rules"
+                self.statusDescription = "Exported rules"
             }
         }
     }
@@ -248,36 +249,46 @@ struct ContentView: View {
     private func prepareContentBlocker() {
         self.isLoading = true
         self.statusDescription = "Converting content blocking rules"
-        
+
         DispatchQueue.global().async {
             var elapsedConversion = "5.23s"
             var elapsedLoad = "1.52s"
             var convertedCount = 5
             var result: Result<Void, Error> = .success(())
-            
+
             if ProcessInfo.processInfo.isRunningInPreview {
                 Thread.sleep(forTimeInterval: 1)
             } else {
                 let start = Date()
-                
+
                 let content = getContent() ?? ""
-                let json = selectedRuleType == .safariContentBlocker || selectedRuleType == .safariContentBlockerURL
+                let json =
+                    selectedRuleType == .safariContentBlocker
+                    || selectedRuleType == .safariContentBlockerURL
 
                 if json {
-                    convertedCount = ContentBlockerService.saveContentBlocker(jsonRules: content, groupIdentifier: GROUP_ID)
+                    convertedCount = ContentBlockerService.saveContentBlocker(
+                        jsonRules: content,
+                        groupIdentifier: GroupIdentifier.shared.value
+                    )
                 } else {
-                    convertedCount = ContentBlockerService.convertFilter(rules: content, groupIdentifier: GROUP_ID)
+                    convertedCount = ContentBlockerService.convertFilter(
+                        rules: content,
+                        groupIdentifier: GroupIdentifier.shared.value
+                    )
                 }
-                
+
                 let endConversion = Date()
                 elapsedConversion = String(format: "%.2fs", endConversion.timeIntervalSince(start))
-                
+
                 DispatchQueue.main.async {
                     self.statusDescription = "Loading content blocker to Safari"
                 }
 
-                result = ContentBlockerService.reloadContentBlocker(withIdentifier: CONTENT_BLOCKER_ID)
-                
+                result = ContentBlockerService.reloadContentBlocker(
+                    withIdentifier: CONTENT_BLOCKER_ID
+                )
+
                 let endLoad = Date()
                 elapsedLoad = String(format: "%.2fs", endLoad.timeIntervalSince(endConversion))
             }
@@ -286,13 +297,15 @@ struct ContentView: View {
                 self.isLoading = false
                 self.elapsedConversion = elapsedConversion
                 self.elapsedLoad = elapsedLoad
-                
+
                 switch result {
                 case .success:
-                    self.statusDescription = "Loaded \(convertedCount) \(convertedCount == 1 ? "rule" : "rules") to Safari"
+                    self.statusDescription =
+                        "Loaded \(convertedCount) \(convertedCount == 1 ? "rule" : "rules") to Safari"
                     self.error = false
                 case .failure(let error):
-                    self.statusDescription = "Failed to load rules due to \(error.localizedDescription)"
+                    self.statusDescription =
+                        "Failed to load rules due to \(error.localizedDescription)"
                     self.error = true
                 }
             }

@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+env:
+  XCODE_VERSION: "latest-stable"
+  NODE_VERSION: "23"
+  PNPM_VERSION: "10"
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      # Setup environment
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Get swift version
+        run: swift --version
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Install markdownlint
+        run: npm install -g markdownlint-cli
+
+      - name: Setup Mint
+        uses: irgaly/setup-mint@v1
+
+      - name: Add Mint bin to PATH
+        run: |
+          echo "$HOME/.mint/bin" >> $GITHUB_PATH
+
+      - name: Install xcbeautify
+        run: |
+          mint install cpisciotta/xcbeautify
+
+      - name: Install SwiftLint
+        run: |
+          mint install realm/SwiftLint
+
+      # Checkout and run lint&build commands
+      - uses: actions/checkout@v4
+
+      # Prepare the dependency repo
+      - name: Prepare dependency repo
+        run: |
+          git clone https://github.com/ameshkov/SafariConverterLib.git safari-converter-lib
+          cd safari-converter-lib
+          git checkout converter-v3-newengine
+          cd Extension
+          pnpm install
+          pnpm build
+
+      - name: Lint
+        run: make lint
+
+      - name: Build JavaScript
+        run: make js-build

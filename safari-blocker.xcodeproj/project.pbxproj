@@ -13,7 +13,15 @@
 		D70B171C2D08D3A2000A827C /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
 		D70B171D2D08D3A2000A827C /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D70B17E82D11939C000A827C /* web-extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D70B17CF2D11939C000A827C /* web-extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D73B13A72D08888C00939E68 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D73B13A62D08888900939E68 /* README.md */; };
+		D71085832D4A7AC200F1E1CF /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D71085822D4A7AC200F1E1CF /* ZIPFoundation */; };
+		D710858A2D4A8D4700F1E1CF /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
+		D710858B2D4A8D4700F1E1CF /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D710890A2D4CBD0600F1E1CF /* app-extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D71088F82D4CBD0500F1E1CF /* app-extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D71089112D4E90D800F1E1CF /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
+		D71089122D4E90D800F1E1CF /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D73756D42DA8EF3300067207 /* web-extension-ios.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D73756BC2DA8EF2E00067207 /* web-extension-ios.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D73757482DA8F25400067207 /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
+		D73757492DA8F25400067207 /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D73B13E42D08910F00939E68 /* content-blocker-ios.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D73B14052D08923600939E68 /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
 		D73B14062D08923600939E68 /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -44,6 +52,41 @@
 			proxyType = 1;
 			remoteGlobalIDString = D70B17CE2D11939C000A827C;
 			remoteInfo = "web-extension";
+		};
+		D710858C2D4A8D4700F1E1CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D768F59F2D084B7F007F39D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D73B13EF2D08923600939E68;
+			remoteInfo = "content-blocker-service";
+		};
+		D71089082D4CBD0600F1E1CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D768F59F2D084B7F007F39D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D71088F72D4CBD0500F1E1CF;
+			remoteInfo = "app-extension";
+		};
+		D71089132D4E90D800F1E1CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D768F59F2D084B7F007F39D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D73B13EF2D08923600939E68;
+			remoteInfo = "content-blocker-service";
+		};
+		D73756D22DA8EF3300067207 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D768F59F2D084B7F007F39D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D73756BB2DA8EF2E00067207;
+			remoteInfo = "web-extension-ios";
+		};
+		D737574A2DA8F25400067207 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D768F59F2D084B7F007F39D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D73B13EF2D08923600939E68;
+			remoteInfo = "content-blocker-service";
 		};
 		D73B13E22D08910F00939E68 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -87,6 +130,39 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D710858E2D4A8D4700F1E1CF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D710858B2D4A8D4700F1E1CF /* content_blocker_service.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D71089152D4E90D800F1E1CF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D71089122D4E90D800F1E1CF /* content_blocker_service.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D737574C2DA8F25500067207 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D73757492DA8F25400067207 /* content_blocker_service.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D73B13E92D08910F00939E68 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -94,6 +170,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				D73B13E42D08910F00939E68 /* content-blocker-ios.appex in Embed Foundation Extensions */,
+				D73756D42DA8EF3300067207 /* web-extension-ios.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +215,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				D70B17172D08D39A000A827C /* content-blocker.appex in Embed Foundation Extensions */,
+				D710890A2D4CBD0600F1E1CF /* app-extension.appex in Embed Foundation Extensions */,
 				D70B17E82D11939C000A827C /* web-extension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -148,6 +226,14 @@
 /* Begin PBXFileReference section */
 		D70B170C2D08D39A000A827C /* content-blocker.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "content-blocker.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D70B17CF2D11939C000A827C /* web-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "web-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D71088F82D4CBD0500F1E1CF /* app-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "app-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D73756BC2DA8EF2E00067207 /* web-extension-ios.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "web-extension-ios.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D73757C52DA90D2D00067207 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D73757C82DA90DBA00067207 /* .markdownlint.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = .markdownlint.json; sourceTree = "<group>"; };
+		D73757C92DA90DC900067207 /* .markdownlintignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .markdownlintignore; sourceTree = "<group>"; };
+		D73757CA2DA90DD500067207 /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
+		D73758082DA92AF000067207 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		D7376E2E2DAAA11100067207 /* DEVELOPMENT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPMENT.md; sourceTree = "<group>"; };
 		D73B13A62D08888900939E68 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D73B13AC2D08902C00939E68 /* safari-blocker-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "safari-blocker-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B13DB2D08910F00939E68 /* content-blocker-ios.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "content-blocker-ios.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,19 +250,33 @@
 			);
 			target = D70B170B2D08D39A000A827C /* content-blocker */;
 		};
-		D70B172C2D08F146000A827C /* Exceptions for "safari-blocker" folder in "safari-blocker" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = D768F5A62D084B7F007F39D5 /* safari-blocker */;
-		};
 		D70B17EC2D11939C000A827C /* Exceptions for "web-extension" folder in "web-extension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
 			target = D70B17CE2D11939C000A827C /* web-extension */;
+		};
+		D710890E2D4CBD0600F1E1CF /* Exceptions for "app-extension" folder in "app-extension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D71088F72D4CBD0500F1E1CF /* app-extension */;
+		};
+		D73756D82DA8EF3300067207 /* Exceptions for "web-extension-ios" folder in "web-extension-ios" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D73756BB2DA8EF2E00067207 /* web-extension-ios */;
+		};
+		D7376E2D2DA9492F00067207 /* Exceptions for "safari-blocker" folder in "safari-blocker" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D768F5A62D084B7F007F39D5 /* safari-blocker */;
 		};
 		D73B13E52D08910F00939E68 /* Exceptions for "content-blocker-ios" folder in "content-blocker-ios" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -191,13 +291,6 @@
 				content_blocker_service.h,
 			);
 			target = D73B13EF2D08923600939E68 /* content-blocker-service */;
-		};
-		D73B14292D0899C700939E68 /* Exceptions for "filters" folder in "safari-blocker-ios" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				filter.txt,
-			);
-			target = D73B13AB2D08902C00939E68 /* safari-blocker-ios */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -217,16 +310,40 @@
 			);
 			explicitFolders = (
 				Resources/_locales,
-				Resources/images,
+				Resources/assets,
+				Resources/pages,
 			);
 			path = "web-extension";
 			sourceTree = "<group>";
 		};
-		D73B138E2D086D1400939E68 /* filters */ = {
+		D71088F92D4CBD0500F1E1CF /* app-extension */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D73B14292D0899C700939E68 /* Exceptions for "filters" folder in "safari-blocker-ios" target */,
+				D710890E2D4CBD0600F1E1CF /* Exceptions for "app-extension" folder in "app-extension" target */,
 			);
+			path = "app-extension";
+			sourceTree = "<group>";
+		};
+		D73756BD2DA8EF2E00067207 /* web-extension-ios */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D73756D82DA8EF3300067207 /* Exceptions for "web-extension-ios" folder in "web-extension-ios" target */,
+			);
+			explicitFolders = (
+				Resources/_locales,
+				Resources/assets,
+				Resources/pages,
+			);
+			path = "web-extension-ios";
+			sourceTree = "<group>";
+		};
+		D73757CC2DA9273300067207 /* scripts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		D73B138E2D086D1400939E68 /* filters */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
 			path = filters;
 			sourceTree = "<group>";
 		};
@@ -254,14 +371,9 @@
 		D768F5A92D084B7F007F39D5 /* safari-blocker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D70B172C2D08F146000A827C /* Exceptions for "safari-blocker" folder in "safari-blocker" target */,
+				D7376E2D2DA9492F00067207 /* Exceptions for "safari-blocker" folder in "safari-blocker" target */,
 			);
 			path = "safari-blocker";
-			sourceTree = "<group>";
-		};
-		D7BB679A2D084C1100B8A793 /* content-blocker */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "content-blocker";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -280,6 +392,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D710858A2D4A8D4700F1E1CF /* content_blocker_service.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D71088F52D4CBD0500F1E1CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D71089112D4E90D800F1E1CF /* content_blocker_service.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D73756B92DA8EF2E00067207 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D73757482DA8F25400067207 /* content_blocker_service.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D70B16DA2D08D29A000A827C /* ContentBlockerConverter in Frameworks */,
+				D71085832D4A7AC200F1E1CF /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,15 +451,23 @@
 		D768F59E2D084B7F007F39D5 = {
 			isa = PBXGroup;
 			children = (
-				D73B13A62D08888900939E68 /* README.md */,
-				D73B138E2D086D1400939E68 /* filters */,
 				D768F5A92D084B7F007F39D5 /* safari-blocker */,
-				D7BB679A2D084C1100B8A793 /* content-blocker */,
 				D73B13AD2D08902C00939E68 /* safari-blocker-ios */,
-				D73B13DC2D08910F00939E68 /* content-blocker-ios */,
-				D73B13F12D08923600939E68 /* content-blocker-service */,
 				D70B170E2D08D39A000A827C /* content-blocker */,
+				D73B13DC2D08910F00939E68 /* content-blocker-ios */,
+				D71088F92D4CBD0500F1E1CF /* app-extension */,
 				D70B17D02D11939C000A827C /* web-extension */,
+				D73756BD2DA8EF2E00067207 /* web-extension-ios */,
+				D73B13F12D08923600939E68 /* content-blocker-service */,
+				D73B138E2D086D1400939E68 /* filters */,
+				D73757CC2DA9273300067207 /* scripts */,
+				D73757C92DA90DC900067207 /* .markdownlintignore */,
+				D73757C82DA90DBA00067207 /* .markdownlint.json */,
+				D73757CA2DA90DD500067207 /* .swift-format */,
+				D73758082DA92AF000067207 /* .swiftlint.yml */,
+				D73757C52DA90D2D00067207 /* Makefile */,
+				D73B13A62D08888900939E68 /* README.md */,
+				D7376E2E2DAAA11100067207 /* DEVELOPMENT.md */,
 				D7BB67972D084C1100B8A793 /* Frameworks */,
 				D768F5A82D084B7F007F39D5 /* Products */,
 			);
@@ -344,6 +482,8 @@
 				D73B13F02D08923600939E68 /* content_blocker_service.framework */,
 				D70B170C2D08D39A000A827C /* content-blocker.appex */,
 				D70B17CF2D11939C000A827C /* web-extension.appex */,
+				D71088F82D4CBD0500F1E1CF /* app-extension.appex */,
+				D73756BC2DA8EF2E00067207 /* web-extension-ios.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -400,10 +540,12 @@
 				D70B17CB2D11939C000A827C /* Sources */,
 				D70B17CC2D11939C000A827C /* Frameworks */,
 				D70B17CD2D11939C000A827C /* Resources */,
+				D710858E2D4A8D4700F1E1CF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D710858D2D4A8D4700F1E1CF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				D70B17D02D11939C000A827C /* web-extension */,
@@ -413,6 +555,54 @@
 			);
 			productName = "web-extension";
 			productReference = D70B17CF2D11939C000A827C /* web-extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		D71088F72D4CBD0500F1E1CF /* app-extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D710890D2D4CBD0600F1E1CF /* Build configuration list for PBXNativeTarget "app-extension" */;
+			buildPhases = (
+				D71088F42D4CBD0500F1E1CF /* Sources */,
+				D71088F52D4CBD0500F1E1CF /* Frameworks */,
+				D71088F62D4CBD0500F1E1CF /* Resources */,
+				D71089152D4E90D800F1E1CF /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D71089142D4E90D800F1E1CF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D71088F92D4CBD0500F1E1CF /* app-extension */,
+			);
+			name = "app-extension";
+			packageProductDependencies = (
+			);
+			productName = "app-extension";
+			productReference = D71088F82D4CBD0500F1E1CF /* app-extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		D73756BB2DA8EF2E00067207 /* web-extension-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D73756D52DA8EF3300067207 /* Build configuration list for PBXNativeTarget "web-extension-ios" */;
+			buildPhases = (
+				D73756B82DA8EF2E00067207 /* Sources */,
+				D73756B92DA8EF2E00067207 /* Frameworks */,
+				D73756BA2DA8EF2E00067207 /* Resources */,
+				D737574C2DA8F25500067207 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D737574B2DA8F25400067207 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D73756BD2DA8EF2E00067207 /* web-extension-ios */,
+			);
+			name = "web-extension-ios";
+			packageProductDependencies = (
+			);
+			productName = "web-extension-ios";
+			productReference = D73756BC2DA8EF2E00067207 /* web-extension-ios.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		D73B13AB2D08902C00939E68 /* safari-blocker-ios */ = {
@@ -430,8 +620,10 @@
 			dependencies = (
 				D73B13E32D08910F00939E68 /* PBXTargetDependency */,
 				D73B14162D08944200939E68 /* PBXTargetDependency */,
+				D73756D32DA8EF3300067207 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				D73B138E2D086D1400939E68 /* filters */,
 				D73B13AD2D08902C00939E68 /* safari-blocker-ios */,
 			);
 			name = "safari-blocker-ios";
@@ -484,6 +676,7 @@
 			name = "content-blocker-service";
 			packageProductDependencies = (
 				D70B16D92D08D29A000A827C /* ContentBlockerConverter */,
+				D71085822D4A7AC200F1E1CF /* ZIPFoundation */,
 			);
 			productName = "content-blocker-service";
 			productReference = D73B13F02D08923600939E68 /* content_blocker_service.framework */;
@@ -505,6 +698,7 @@
 				D73B14042D08923600939E68 /* PBXTargetDependency */,
 				D70B17162D08D39A000A827C /* PBXTargetDependency */,
 				D70B17E72D11939C000A827C /* PBXTargetDependency */,
+				D71089092D4CBD0600F1E1CF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				D73B138E2D086D1400939E68 /* filters */,
@@ -524,14 +718,20 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1600;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					D70B170B2D08D39A000A827C = {
 						CreatedOnToolsVersion = 16.0;
 					};
 					D70B17CE2D11939C000A827C = {
 						CreatedOnToolsVersion = 16.0;
+					};
+					D71088F72D4CBD0500F1E1CF = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					D73756BB2DA8EF2E00067207 = {
+						CreatedOnToolsVersion = 16.2;
 					};
 					D73B13AB2D08902C00939E68 = {
 						CreatedOnToolsVersion = 16.0;
@@ -558,6 +758,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D70B16D82D08D29A000A827C /* XCLocalSwiftPackageReference "safari-converter-lib" */,
+				D71085812D4A7AC200F1E1CF /* XCRemoteSwiftPackageReference "ZipFoundation" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D768F5A82D084B7F007F39D5 /* Products */;
@@ -569,6 +770,8 @@
 				D70B170B2D08D39A000A827C /* content-blocker */,
 				D73B13DA2D08910F00939E68 /* content-blocker-ios */,
 				D70B17CE2D11939C000A827C /* web-extension */,
+				D73756BB2DA8EF2E00067207 /* web-extension-ios */,
+				D71088F72D4CBD0500F1E1CF /* app-extension */,
 				D73B13EF2D08923600939E68 /* content-blocker-service */,
 			);
 		};
@@ -583,6 +786,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D70B17CD2D11939C000A827C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D71088F62D4CBD0500F1E1CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D73756BA2DA8EF2E00067207 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -614,7 +831,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D73B13A72D08888C00939E68 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +845,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D70B17CB2D11939C000A827C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D71088F42D4CBD0500F1E1CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D73756B82DA8EF2E00067207 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -681,6 +911,31 @@
 			target = D70B17CE2D11939C000A827C /* web-extension */;
 			targetProxy = D70B17E62D11939C000A827C /* PBXContainerItemProxy */;
 		};
+		D710858D2D4A8D4700F1E1CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D73B13EF2D08923600939E68 /* content-blocker-service */;
+			targetProxy = D710858C2D4A8D4700F1E1CF /* PBXContainerItemProxy */;
+		};
+		D71089092D4CBD0600F1E1CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D71088F72D4CBD0500F1E1CF /* app-extension */;
+			targetProxy = D71089082D4CBD0600F1E1CF /* PBXContainerItemProxy */;
+		};
+		D71089142D4E90D800F1E1CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D73B13EF2D08923600939E68 /* content-blocker-service */;
+			targetProxy = D71089132D4E90D800F1E1CF /* PBXContainerItemProxy */;
+		};
+		D73756D32DA8EF3300067207 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D73756BB2DA8EF2E00067207 /* web-extension-ios */;
+			targetProxy = D73756D22DA8EF3300067207 /* PBXContainerItemProxy */;
+		};
+		D737574B2DA8F25400067207 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D73B13EF2D08923600939E68 /* content-blocker-service */;
+			targetProxy = D737574A2DA8F25400067207 /* PBXContainerItemProxy */;
+		};
 		D73B13E32D08910F00939E68 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D73B13DA2D08910F00939E68 /* content-blocker-ios */;
@@ -710,6 +965,7 @@
 				CODE_SIGN_ENTITLEMENTS = "content-blocker/content_blocker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "content-blocker/Info.plist";
@@ -736,6 +992,7 @@
 				CODE_SIGN_ENTITLEMENTS = "content-blocker/content_blocker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "content-blocker/Info.plist";
@@ -762,6 +1019,7 @@
 				CODE_SIGN_ENTITLEMENTS = "web-extension/web_extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -773,7 +1031,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -793,6 +1051,7 @@
 				CODE_SIGN_ENTITLEMENTS = "web-extension/web_extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -804,7 +1063,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -815,6 +1074,135 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D710890B2D4CBD0600F1E1CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "app-extension/app_extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 4EXD6AB86D;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "app-extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "App Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.app-extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		D710890C2D4CBD0600F1E1CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "app-extension/app_extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 4EXD6AB86D;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "app-extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "App Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.app-extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D73756D62DA8EF3300067207 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "web-extension-ios/web-extension-ios.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4EXD6AB86D;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "web-extension-ios/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Web Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker-ios.web-extension-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D73756D72DA8EF3300067207 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "web-extension-ios/web-extension-ios.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4EXD6AB86D;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "web-extension-ios/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Web Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker-ios.web-extension-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -888,7 +1276,6 @@
 		D73B13E72D08910F00939E68 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_ENTITLEMENTS = "content-blocker-ios/content-blocker-ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -917,7 +1304,6 @@
 		D73B13E82D08910F00939E68 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_ENTITLEMENTS = "content-blocker-ios/content-blocker-ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -949,8 +1335,10 @@
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -993,8 +1381,10 @@
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1066,6 +1456,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1129,6 +1520,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1160,6 +1552,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"safari-blocker/Preview Content\"";
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_PREVIEWS = YES;
@@ -1190,6 +1583,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"safari-blocker/Preview Content\"";
 				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_PREVIEWS = YES;
@@ -1227,6 +1621,24 @@
 			buildConfigurations = (
 				D70B17E92D11939C000A827C /* Debug */,
 				D70B17EA2D11939C000A827C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D710890D2D4CBD0600F1E1CF /* Build configuration list for PBXNativeTarget "app-extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D710890B2D4CBD0600F1E1CF /* Debug */,
+				D710890C2D4CBD0600F1E1CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D73756D52DA8EF3300067207 /* Build configuration list for PBXNativeTarget "web-extension-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D73756D62DA8EF3300067207 /* Debug */,
+				D73756D72DA8EF3300067207 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1285,10 +1697,26 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		D71085812D4A7AC200F1E1CF /* XCRemoteSwiftPackageReference "ZipFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZipFoundation";
+			requirement = {
+				kind = exactVersion;
+				version = 0.9.19;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		D70B16D92D08D29A000A827C /* ContentBlockerConverter */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ContentBlockerConverter;
+		};
+		D71085822D4A7AC200F1E1CF /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D71085812D4A7AC200F1E1CF /* XCRemoteSwiftPackageReference "ZipFoundation" */;
+			productName = ZIPFoundation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

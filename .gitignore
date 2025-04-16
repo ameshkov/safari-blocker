@@ -1,7 +1,16 @@
+# macOS
+.DS_Store
+
 # Ignore safari-converter-lib
 safari-converter-lib
 
-.DS_Store
+# Ignore smart IDEs rules files
+.windsurfrules
+.cursorrules
+
+# Ignore compiler logs (used for swiftlint analyze)
+compiler-macos.log
+compiler-ios.log
 
 # Xcode
 #

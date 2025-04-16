@@ -7,10 +7,8 @@
 
 import SwiftUI
 import content_blocker_service
-import Combine
 
 let CONTENT_BLOCKER_ID = "dev.adguard.safari-blocker-ios.content-blocker-ios"
-let GROUP_ID = "group.dev.adguard.safari-blocker"
 
 enum RuleType: String, CaseIterable, Identifiable {
     case adGuardFiltering = "AdGuard filtering rules"
@@ -46,7 +44,7 @@ struct ContentView: View {
     init() {
         userInput = ContentBlockerService.readDefaultFilterList()
     }
-    
+
     var body: some View {
         VStack {
             if isLoading {
@@ -60,25 +58,25 @@ struct ContentView: View {
 
             if !isLoading {
                 ScrollView {
-                    VStack(alignment:.leading) {
+                    VStack(alignment: .leading) {
                         HStack {
                             Image("AppIconImage")
                                 .resizable()
                                 .frame(width: 24, height: 24)
-                            
+
                             Text("Safari Content Blocker")
                                 .font(.headline)
                                 .multilineTextAlignment(.leading)
-                            
+
                             Spacer()
                         }
-                        
+
                         HStack {
                             Text("Status: \(statusDescription)")
                                 .font(.subheadline)
                                 .multilineTextAlignment(.leading)
                                 .foregroundColor(error ? Color.red : Color.primary)
-                            
+
                             Spacer()
                         }.padding(.bottom, 5)
 
@@ -97,49 +95,51 @@ struct ContentView: View {
                             Text(editorLabel)
                                 .multilineTextAlignment(.leading)
                                 .font(.caption)
-                            
+
                             Spacer()
                         }
-                        
+
                         TextEditor(text: $userInput)
                             .font(.body)
                             .background(Color.white)
                             .border(Color.gray, width: 1)
                             .autocorrectionDisabled(true)
-                            .frame(height:250)
-                        
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
+                            .frame(height: 250)
+
                         HStack {
                             Button(action: prepareContentBlocker) {
                                 Text("Reload filter")
                             }
                             .buttonStyle(.borderedProminent)
                             .keyboardShortcut("s", modifiers: .command)
-                            
+
                             Spacer()
                         }
-                        
+
                         HStack {
                             Text("Elapsed on conversion: \(elapsedConversion)")
                                 .font(.footnote)
                                 .multilineTextAlignment(.leading)
-                            
+
                             Spacer()
                         }.padding(.top, 5)
-                        
+
                         HStack {
                             Text("Elapsed on loading into Safari: \(elapsedLoad)")
                                 .font(.footnote)
                                 .multilineTextAlignment(.leading)
-                            
+
                             Spacer()
                         }
-                        
+
                         HStack {
                             Text("You need to enable Safari Extension now")
                                 .font(.footnote)
                             Spacer()
                         }.padding(.top, 5)
-                        
+
                         Spacer()
                     }
                     .padding()
@@ -150,7 +150,7 @@ struct ContentView: View {
             prepareContentBlocker()
         }
     }
-    
+
     private func getContent() -> String? {
         let inputContent = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
 
@@ -158,20 +158,19 @@ struct ContentView: View {
         case .adGuardFiltering:
             return inputContent
         case .adGuardFilterListsURLs:
-            let urls = inputContent.split(separator: "\n").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            let urls = inputContent.split(separator: "\n").map {
+                $0.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
 
             var concatenatedContent = ""
             for urlString in urls {
                 guard let url = URL(string: urlString) else {
                     return nil
                 }
-                let content = try? downloadContent(from: url)
-                if content == nil {
-                    return nil
+                if let content = try? downloadContent(from: url) {
+                    concatenatedContent.append(content)
+                    concatenatedContent.append("\n")
                 }
-
-                concatenatedContent.append(content!)
-                concatenatedContent.append("\n")
             }
 
             return concatenatedContent
@@ -190,7 +189,11 @@ struct ContentView: View {
     private func downloadContent(from url: URL) throws -> String {
         let data = try Data(contentsOf: url)
 
-        return String(data: data, encoding: .utf8)!
+        if let str = String(data: data, encoding: .utf8) {
+            return str
+        }
+
+        return "Failed to download \(url)"
     }
 
     private func prepareContentBlocker() {
@@ -209,12 +212,20 @@ struct ContentView: View {
                 let start = Date()
 
                 let content = getContent() ?? ""
-                let json = selectedRuleType == .safariContentBlocker || selectedRuleType == .safariContentBlockerURL
+                let json =
+                    selectedRuleType == .safariContentBlocker
+                    || selectedRuleType == .safariContentBlockerURL
 
                 if json {
-                    convertedCount = ContentBlockerService.saveContentBlocker(jsonRules: content, groupIdentifier: GROUP_ID)
+                    convertedCount = ContentBlockerService.saveContentBlocker(
+                        jsonRules: content,
+                        groupIdentifier: GroupIdentifier.shared.value
+                    )
                 } else {
-                    convertedCount = ContentBlockerService.convertFilter(rules: content, groupIdentifier: GROUP_ID)
+                    convertedCount = ContentBlockerService.convertFilter(
+                        rules: content,
+                        groupIdentifier: GroupIdentifier.shared.value
+                    )
                 }
 
                 let endConversion = Date()
@@ -224,7 +235,9 @@ struct ContentView: View {
                     self.statusDescription = "Loading content blocker to Safari"
                 }
 
-                result = ContentBlockerService.reloadContentBlocker(withIdentifier: CONTENT_BLOCKER_ID)
+                result = ContentBlockerService.reloadContentBlocker(
+                    withIdentifier: CONTENT_BLOCKER_ID
+                )
 
                 let endLoad = Date()
                 elapsedLoad = String(format: "%.2fs", endLoad.timeIntervalSince(endConversion))
@@ -237,42 +250,16 @@ struct ContentView: View {
 
                 switch result {
                 case .success:
-                    self.statusDescription = "Loaded \(convertedCount) \(convertedCount == 1 ? "rule" : "rules") to Safari"
+                    self.statusDescription =
+                        "Loaded \(convertedCount) \(convertedCount == 1 ? "rule" : "rules") to Safari"
                     self.error = false
                 case .failure(let error):
-                    self.statusDescription = "Failed to load rules due to \(error.localizedDescription)"
+                    self.statusDescription =
+                        "Failed to load rules due to \(error.localizedDescription)"
                     self.error = true
                 }
             }
         }
-    }
-}
-
-class UserInputValidationModel: ObservableObject {
-    @Published var message: String = ""
-
-    private var cancellables = Set<AnyCancellable>()
-    private let inputSubject = PassthroughSubject<String, Never>()
-    
-    init() {
-        inputSubject
-            .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
-            .sink { [weak self] txt in
-                let trimmedInput = txt.trimmingCharacters(in: .whitespacesAndNewlines)
-                
-                if trimmedInput.hasPrefix("[") &&
-                    trimmedInput.hasSuffix("]") &&
-                    trimmedInput.contains("{") {
-                    self?.message = "JSON detected, the rules will not be converted"
-                } else {
-                    self?.message = "AdGuard rules detected, the rules will be converted to Safari syntax"
-                }
-            }
-            .store(in: &cancellables)
-    }
-
-    func validate(input: String) {
-        inputSubject.send(input)
     }
 }
 
