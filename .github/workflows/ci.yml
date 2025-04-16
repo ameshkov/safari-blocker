@@ -70,8 +70,3 @@ jobs:
 
       - name: Build JavaScript
         run: make js-build
-
-      # Uncomment when SafariConverterLib V3 is pushed to Github and it can
-      # be cloned & used to build.
-      - name: Swiftlint Analyze
-        run: make swiftlint-analyze
