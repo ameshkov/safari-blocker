@@ -7,11 +7,21 @@ a Safari content blocker.
 
 [converter]: https://github.com/AdguardTeam/SafariConverterLib
 
+<p align="center">
+  <img src="https://cdn.adtidy.org/website/github.com/safari-blocker/safari-blocker.png?mw=1200" width="800" alt="safari-blocker"/>
+</p>
+
 ## Prepare
+
+> [!WARNING]
+> Note, that in this example we're linking directly with SafariConverterLib
+> instead of using it as a library (npm dependency + proper Swift dependency).
+> Don't do that in production, just add normal dependencies.
 
 1. XCode is required to build it.
 2. Run `git clone https://github.com/AdguardTeam/SafariConverterLib.git safari-converter-lib` to clone the [SafariConverterLib][converter] project.
-3. Edit the file `filters/filter.txt` and put the rules you'd like to test
+3. Run `cd safari-converter-lib/Extension && pnpm install && pnpm build`.
+4. Edit the file `filters/filter.txt` and put the rules you'd like to test
    there.
 
 ### macOS app
