@@ -55,6 +55,16 @@ jobs:
       # Checkout and run lint&build commands
       - uses: actions/checkout@v4
 
+      # Prepare the dependency repo
+      - name: Prepare dependency repo
+        run: |
+          git clone https://github.com/ameshkov/SafariConverterLib.git safari-converter-lib
+          cd safari-converter-lib
+          git checkout converter-v3-newengine
+          cd Extension
+          pnpm install
+          pnpm build
+
       - name: Lint
         run: make lint
 
@@ -63,5 +73,5 @@ jobs:
 
       # Uncomment when SafariConverterLib V3 is pushed to Github and it can
       # be cloned & used to build.
-      # - name: Swiftlint Analyze
-      #   run: make swiftlint-analyze
+      - name: Swiftlint Analyze
+        run: make swiftlint-analyze
