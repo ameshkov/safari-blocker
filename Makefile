@@ -60,11 +60,15 @@ appext-lint:
 swiftlint-analyze: swiftlint-macos-analyze swiftlint-ios-analyze
 
 swiftlint-macos-analyze:
-	xcodebuild clean build $(XCODEBUILD_ARGS_MACOS) > compiler-macos.log
+	xcodebuild clean build \
+		$(XCODEBUILD_ARGS_MACOS) > compiler-macos.log \
+		|| (cat compiler-macos.log && false)
 	swiftlint analyze --strict --quiet --compiler-log-path=compiler-macos.log
 	rm compiler-macos.log
 
 swiftlint-ios-analyze:
-	xcodebuild clean build $(XCODEBUILD_ARGS_IOS) > compiler-ios.log
+	xcodebuild clean build \
+		$(XCODEBUILD_ARGS_IOS) > compiler-ios.log \
+		|| (cat compiler-ios.log && false)
 	swiftlint analyze --strict --quiet --compiler-log-path=compiler-ios.log
 	rm compiler-ios.log
