@@ -9,7 +9,7 @@
  */
 
 import browser from 'webextension-polyfill';
-import { type Configuration, ContentScript } from 'safari-extension';
+import { type Configuration, ContentScript } from '@adguard/safari-extension';
 
 import { log, initLogger } from './logger';
 import { setupDelayedEventDispatcher } from './delayedEventDispatcher';

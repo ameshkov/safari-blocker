@@ -2,7 +2,7 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * AppExtension v1.0.0 (build date: Fri, 11 Apr 2025 10:58:13 GMT)
+ * AppExtension v1.0.0 (build date: Thu, 17 Apr 2025 16:22:34 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -11,7 +11,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   'use strict';
 
   /*
-   * SafariExtension v3.0.0 (build date: Wed, 09 Apr 2025 07:59:48 GMT)
+   * SafariExtension v3.0.0-alpha.1 (build date: Wed, 16 Apr 2025 16:22:05 GMT)
    * (c) 2025 Adguard Software Ltd.
    * Released under the GPL-3.0 license
    * https://github.com/AdguardTeam/SafariConverterLib/tree/master/Extension
@@ -25373,7 +25373,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     // Clear the buffer regardless of the logging level.
     pendingLogs$1 = [];
   }
-  const version = "3.0.0";
+  const version = "3.0.0-alpha.1";
 
   /**
    * @file Contains the implementation of the content script.
@@ -25381,8 +25381,8 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   /**
    * Executes code in the context of the page via new script tag and text content.
    *
-   * @param {string} code String of scripts to be executed.
-   * @returns {boolean} Returns true if code was executed, otherwise returns false.
+   * @param code String of scripts to be executed.
+   * @returns Returns true if code was executed, otherwise returns false.
    */
   const executeScriptsViaTextContent = code => {
     const scriptTag = document.createElement('script');
@@ -25400,8 +25400,8 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
    * Executes code in the context of page via new script tag and blob. We use
    * this way as a fallback if we fail to inject via textContent.
    *
-   * @param {string} code String of scripts to be executed
-   * @returns {boolean} Returns true if code was executed, otherwise returns false.
+   * @param code String of scripts to be executed
+   * @returns Returns true if code was executed, otherwise returns false.
    */
   const executeScriptsViaBlob = code => {
     const blob = new Blob([code], {
@@ -25423,7 +25423,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
    * Execute scripts in a page context and cleanup itself when execution
    * completes.
    *
-   * @param {string[]} scripts Array of scripts to execute.
+   * @param scripts Array of scripts to execute.
    */
   const executeScripts = function () {
     let scripts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -25442,7 +25442,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   /**
    * Applies JS injections.
    *
-   * @param {string[]} scripts Array with JS scripts.
+   * @param scripts Array with JS scripts.
    */
   const applyScripts = scripts => {
     if (!scripts || scripts.length === 0) {
@@ -25454,7 +25454,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
    * Protects specified style element from changes to the current document
    * Add a mutation observer, which is adds our rules again if it was removed
    *
-   * @param {HTMLElement} protectStyleEl protected style element.
+   * @param protectStyleEl protected style element.
    */
   const protectStyleElementContent = protectStyleEl => {
     const {
@@ -25503,8 +25503,8 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   /**
    * Makes sure that we're dealing with CSS rules (selector + style)
    *
-   * @param {string[]} css Array of CSS selectors (for hiding elemets) or full CSS rules.
-   * @returns {string[]} Array of CSS rules.
+   * @param css Array of CSS selectors (for hiding elemets) or full CSS rules.
+   * @returns Array of CSS rules.
    */
   const toCSSRules = css => {
     return css.filter(s => s.length > 0).map(s => s.trim()).map(s => {
@@ -25514,7 +25514,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   /**
    * Applies css stylesheet.
    *
-   * @param {string[]} css Array of CSS rules to apply.
+   * @param css Array of CSS rules to apply.
    */
   const applyCss = css => {
     if (!css || !css.length) {
@@ -25538,7 +25538,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   /**
    * Applies Extended Css stylesheet.
    *
-   * @param {string[]} extendedCss Array with ExtendedCss rules.
+   * @param extendedCss Array with ExtendedCss rules.
    */
   const applyExtendedCss = extendedCss => {
     if (!extendedCss || !extendedCss.length) {
@@ -25557,9 +25557,9 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   /**
    * Converts scriptlet to the code that can be executed.
    *
-   * @param {Scriptlet} scriptlet Scriptlet data (name and arguments)
-   * @param {boolean} verbose Whether to log verbose output
-   * @returns {string} Scriptlet code
+   * @param scriptlet Scriptlet data (name and arguments)
+   * @param verbose Whether to log verbose output
+   * @returns Scriptlet code
    */
   const getScriptletCode = (scriptlet, verbose) => {
     try {
@@ -25579,8 +25579,8 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   /**
    * Applies scriptlets.
    *
-   * @param {Scriptlet[]} scriptlets Array with scriptlets data.
-   * @param {boolean} verbose Whether to log verbose output.
+   * @param scriptlets Array with scriptlets data.
+   * @param verbose Whether to log verbose output.
    */
   const applyScriptlets = (scriptlets, verbose) => {
     if (!scriptlets || !scriptlets.length) {

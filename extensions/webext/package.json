@@ -39,6 +39,6 @@
   },
   "dependencies": {
     "@types/webextension-polyfill": "^0.12.1",
-    "safari-extension": "file:../../safari-converter-lib/Extension"
+    "@adguard/safari-extension": "file:../../safari-converter-lib/Extension"
   }
 }
