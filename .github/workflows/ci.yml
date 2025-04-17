@@ -58,10 +58,8 @@ jobs:
       # Prepare the dependency repo
       - name: Prepare dependency repo
         run: |
-          git clone https://github.com/ameshkov/SafariConverterLib.git safari-converter-lib
-          cd safari-converter-lib
-          git checkout converter-v3-newengine
-          cd Extension
+          git clone https://github.com/AdguardTeam/SafariConverterLib.git safari-converter-lib
+          cd safari-converter-lib/Extension
           pnpm install
           pnpm build
 
