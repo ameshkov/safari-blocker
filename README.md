@@ -19,10 +19,21 @@ a Safari content blocker.
 > Don't do that in production, just add normal dependencies.
 
 1. XCode is required to build it.
-2. Run `git clone https://github.com/AdguardTeam/SafariConverterLib.git safari-converter-lib` to clone the [SafariConverterLib][converter] project.
-3. Run `cd safari-converter-lib/Extension && pnpm install && pnpm build`.
-4. Edit the file `filters/filter.txt` and put the rules you'd like to test
+2. Edit the file `filters/filter.txt` and put the rules you'd like to test
    there.
+
+If you're using the `local` branch and link with [SafariConverterLib][converter]
+directly, please do the following:
+
+1. Checkout the `local` branch: `git checkout local`
+2. Clone the [SafariConverterLib][converter] project to `/safari-converter-lib`:
+
+   ```sh
+   git clone https://github.com/AdguardTeam/SafariConverterLib.git safari-converter-lib
+   ```
+
+3. Run `cd safari-converter-lib/Extension && pnpm install && pnpm build` to
+   build the extension.
 
 ### macOS app
 
