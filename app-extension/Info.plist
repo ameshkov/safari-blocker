@@ -10,6 +10,10 @@
 		<string>com.apple.Safari.extension</string>
 		<key>NSExtensionPrincipalClass</key>
 		<string>$(PRODUCT_MODULE_NAME).SafariExtensionHandler</string>
+		<key>SFSafariAssociatedContentBlockers</key>
+		<array>
+			<string>dev.ameshkov.safari-blocker.content-blocker</string>
+		</array>
 		<key>SFSafariContentScript</key>
 		<array>
 			<dict>
@@ -33,10 +37,6 @@
 			<key>Level</key>
 			<string>All</string>
 		</dict>
-        <key>SFSafariAssociatedContentBlockers</key>
-        <array>
-            <string>dev.adguard.safari-blocker.content-blocker</string>
-        </array>
 	</dict>
 	<key>NSHumanReadableDescription</key>
 	<string>App extension for advanced rules</string>

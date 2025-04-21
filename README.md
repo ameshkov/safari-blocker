@@ -18,8 +18,11 @@ a Safari content blocker.
 > instead of using it as a library (npm dependency + proper Swift dependency).
 > Don't do that in production, just add normal dependencies.
 
-1. XCode is required to build it.
-2. Edit the file `filters/filter.txt` and put the rules you'd like to test
+1. XCode 16.3 or newer is required to build it.
+2. Change "Development Team" in the Project settings.
+3. Change bundle IDs of each target and app groups, i.e. replace all
+   occurrencies in all files: `dev.ameshkov` -> `dev.yourname`.
+4. Edit the file `filters/filter.txt` and put the rules you'd like to test
    there.
 
 If you're using the `local` branch and link with [SafariConverterLib][converter]
@@ -70,7 +73,7 @@ Run `make init` to setup pre-commit hooks.
 
 ### Building
 
-Use XCode to build and run the apps.
+Use XCode 16.3 or newer to build and run the apps.
 
 - `safari-blocker` - the macOS version.
 - `safari-blocker-ios` - the iOS version.
