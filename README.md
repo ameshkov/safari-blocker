@@ -21,7 +21,7 @@ a Safari content blocker.
 1. XCode 16.3 or newer is required to build it.
 2. Change "Development Team" in the Project settings.
 3. Change bundle IDs of each target and app groups, i.e. replace all
-   occurrencies in all files: `dev.ameshkov` -> `dev.yourname`.
+   occurrences in all files: `dev.ameshkov` -> `dev.yourname`.
 4. Edit the file `filters/filter.txt` and put the rules you'd like to test
    there.
 
