@@ -1,5 +1,5 @@
 {
-  "originHash" : "a7e33a22f4f96e0b1497190cb981fd922a12ab9e81ee537021eee4fa288dce50",
+  "originHash" : "564d0a2f49ab8d2c97f48f6edeb63161b397a7e882c1cca56ed464754285b9e3",
   "pins" : [
     {
       "identity" : "punycodeswift",
@@ -7,6 +7,15 @@
       "location" : "https://github.com/gumob/PunycodeSwift.git",
       "state" : {
         "revision" : "30a462bdb4398ea835a3585472229e0d74b36ba5",
+        "version" : "3.0.0"
+      }
+    },
+    {
+      "identity" : "safariconverterlib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AdguardTeam/SafariConverterLib",
+      "state" : {
+        "revision" : "db0270762cb8c72e8293688aefcd37146c82e4df",
         "version" : "3.0.0"
       }
     },
@@ -24,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ameshkov/swift-psl",
       "state" : {
-        "revision" : "d2b6072f2b4dd393d9f0e8c4dcf70aa5ac67b832",
-        "version" : "1.1.3"
+        "revision" : "cd398791a0eb3b8611a21081720306ba3f89fb28",
+        "version" : "1.1.13"
       }
     },
     {

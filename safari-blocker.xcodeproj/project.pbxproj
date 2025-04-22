@@ -29,6 +29,7 @@
 		D73B14142D08944200939E68 /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D73B142A2D089A1F00939E68 /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
 		D73B142B2D089A1F00939E68 /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D7D092052DB1687F004D5D07 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = D7D092042DB1687F004D5D07 /* ContentBlockerConverter */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -434,6 +435,7 @@
 			files = (
 				D70B16DA2D08D29A000A827C /* ContentBlockerConverter in Frameworks */,
 				D71085832D4A7AC200F1E1CF /* ZIPFoundation in Frameworks */,
+				D7D092052DB1687F004D5D07 /* ContentBlockerConverter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,6 +679,7 @@
 			packageProductDependencies = (
 				D70B16D92D08D29A000A827C /* ContentBlockerConverter */,
 				D71085822D4A7AC200F1E1CF /* ZIPFoundation */,
+				D7D092042DB1687F004D5D07 /* ContentBlockerConverter */,
 			);
 			productName = "content-blocker-service";
 			productReference = D73B13F02D08923600939E68 /* content_blocker_service.framework */;
@@ -719,7 +722,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					D70B170B2D08D39A000A827C = {
 						CreatedOnToolsVersion = 16.0;
@@ -757,8 +760,8 @@
 			mainGroup = D768F59E2D084B7F007F39D5;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				D70B16D82D08D29A000A827C /* XCLocalSwiftPackageReference "safari-converter-lib" */,
 				D71085812D4A7AC200F1E1CF /* XCRemoteSwiftPackageReference "ZipFoundation" */,
+				D7D092032DB1687F004D5D07 /* XCRemoteSwiftPackageReference "SafariConverterLib" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D768F5A82D084B7F007F39D5 /* Products */;
@@ -966,7 +969,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "content-blocker/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Content Blocker";
@@ -978,8 +980,9 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.content-blocker";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker.content-blocker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -993,7 +996,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "content-blocker/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Content Blocker";
@@ -1005,8 +1007,9 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.content-blocker";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker.content-blocker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1020,7 +1023,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "web-extension/Info.plist";
@@ -1037,8 +1039,9 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.web-extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker.web-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1052,7 +1055,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "web-extension/Info.plist";
@@ -1069,8 +1071,9 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.web-extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker.web-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1084,7 +1087,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "app-extension/Info.plist";
@@ -1101,8 +1103,9 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.app-extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker.app-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1116,7 +1119,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "app-extension/Info.plist";
@@ -1133,8 +1135,9 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker.app-extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker.app-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1147,7 +1150,6 @@
 				CODE_SIGN_ENTITLEMENTS = "web-extension-ios/web-extension-ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "web-extension-ios/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Web Extension";
@@ -1163,7 +1165,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker-ios.web-extension-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker-ios.web-extension-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1179,7 +1181,6 @@
 				CODE_SIGN_ENTITLEMENTS = "web-extension-ios/web-extension-ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "web-extension-ios/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Web Extension";
@@ -1195,7 +1196,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker-ios.web-extension-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker-ios.web-extension-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1215,7 +1216,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"safari-blocker-ios/Preview Content\"";
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Content Blocker";
@@ -1230,7 +1230,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1248,7 +1248,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"safari-blocker-ios/Preview Content\"";
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Safari Content Blocker";
@@ -1263,7 +1262,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1279,7 +1278,6 @@
 				CODE_SIGN_ENTITLEMENTS = "content-blocker-ios/content-blocker-ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "content-blocker-ios/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Content Blocker";
@@ -1291,7 +1289,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker-ios.content-blocker-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker-ios.content-blocker-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1307,7 +1305,6 @@
 				CODE_SIGN_ENTITLEMENTS = "content-blocker-ios/content-blocker-ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "content-blocker-ios/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Content Blocker";
@@ -1319,7 +1316,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker-ios.content-blocker-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker-ios.content-blocker-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1340,7 +1337,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1361,7 +1357,7 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker-ios.content-blocker-service";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker-ios.content-blocker-service";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
@@ -1386,7 +1382,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1407,7 +1402,7 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker-ios.content-blocker-service";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker-ios.content-blocker-service";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
@@ -1458,6 +1453,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1522,6 +1518,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1549,12 +1546,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "safari-blocker/safari_blocker.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"safari-blocker/Preview Content\"";
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "safari-blocker/Info.plist";
@@ -1566,8 +1563,9 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1580,12 +1578,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "safari-blocker/safari_blocker.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"safari-blocker/Preview Content\"";
-				DEVELOPMENT_TEAM = 4EXD6AB86D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "safari-blocker/Info.plist";
@@ -1597,8 +1595,9 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.adguard.safari-blocker";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.ameshkov.safari-blocker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1690,13 +1689,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		D70B16D82D08D29A000A827C /* XCLocalSwiftPackageReference "safari-converter-lib" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "safari-converter-lib";
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		D71085812D4A7AC200F1E1CF /* XCRemoteSwiftPackageReference "ZipFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1704,6 +1696,14 @@
 			requirement = {
 				kind = exactVersion;
 				version = 0.9.19;
+			};
+		};
+		D7D092032DB1687F004D5D07 /* XCRemoteSwiftPackageReference "SafariConverterLib" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AdguardTeam/SafariConverterLib";
+			requirement = {
+				kind = exactVersion;
+				version = 3.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1717,6 +1717,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D71085812D4A7AC200F1E1CF /* XCRemoteSwiftPackageReference "ZipFoundation" */;
 			productName = ZIPFoundation;
+		};
+		D7D092042DB1687F004D5D07 /* ContentBlockerConverter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D7D092032DB1687F004D5D07 /* XCRemoteSwiftPackageReference "SafariConverterLib" */;
+			productName = ContentBlockerConverter;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -8,7 +8,7 @@
 import SwiftUI
 import content_blocker_service
 
-let CONTENT_BLOCKER_ID = "dev.adguard.safari-blocker.content-blocker"
+let CONTENT_BLOCKER_ID = "dev.ameshkov.safari-blocker.content-blocker"
 
 enum RuleType: String, CaseIterable, Identifiable {
     case adGuardFiltering = "AdGuard filtering rules"

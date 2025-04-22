@@ -6,7 +6,7 @@
  * to handle DOM events and sends a rule request message to the extension.
  */
 
-import { type Configuration, ContentScript } from 'safari-extension';
+import { type Configuration, ContentScript } from '@adguard/safari-extension';
 
 import { setupDelayedEventDispatcher } from './delayedEventDispatcher';
 import { log, initLogger } from './logger';

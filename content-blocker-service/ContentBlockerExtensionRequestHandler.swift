@@ -88,7 +88,7 @@ public enum ContentBlockerExtensionRequestHandler {
     /// - Returns: An NSError object with the specified parameters.
     private static func createError(code: Int, message: String) -> NSError {
         return NSError(
-            domain: "dev.adguard.safari-blocker",
+            domain: "dev.ameshkov.safari-blocker",
             code: code,
             userInfo: [NSLocalizedDescriptionKey: message]
         )

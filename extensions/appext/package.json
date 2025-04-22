@@ -35,6 +35,6 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "safari-extension": "file:../../safari-converter-lib/Extension"
+    "@adguard/safari-extension": "3.0.0"
   }
 }

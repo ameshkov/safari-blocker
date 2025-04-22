@@ -7,7 +7,7 @@
  */
 
 import browser from 'webextension-polyfill';
-import { type Configuration } from 'safari-extension';
+import { type Configuration } from '@adguard/safari-extension';
 
 import { type Message, type ResponseMessage } from '../common/message';
 

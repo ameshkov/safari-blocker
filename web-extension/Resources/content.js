@@ -2,7 +2,7 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * WebExtension v1.0.0 (build date: Fri, 11 Apr 2025 10:58:07 GMT)
+ * WebExtension v1.0.0 (build date: Thu, 17 Apr 2025 16:47:49 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -11,7 +11,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   'use strict';
 
   /*
-   * SafariExtension v3.0.0 (build date: Wed, 09 Apr 2025 07:59:48 GMT)
+   * SafariExtension v3.0.0 (build date: Thu, 17 Apr 2025 16:44:26 GMT)
    * (c) 2025 Adguard Software Ltd.
    * Released under the GPL-3.0 license
    * https://github.com/AdguardTeam/SafariConverterLib/tree/master/Extension
