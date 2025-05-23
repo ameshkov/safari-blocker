@@ -19,39 +19,7 @@ macOS and iOS apps that can be used to debug AdGuard rules in Safari.
 
 ## Build Instructions
 
-- `make lint` - runs all linters.
-
-    You can also run individual linters:
-
-    - `make md-lint` - runs markdown linter.
-    - `make swift-lint` - runs swift linters ([SwiftLint][swiftlint] and
-      [swift-format][swift-format]).
-    - `make js-lint` - lints JS extensions code.
-
-- `make js-build` - builds app extension and web extension (JS code).
-
-  You can also run individual build commands:
-
-    - `make js-build-webext` - builds web extension.
-    - `make js-build-appext` - builds app extension.
-
-- `make swift-build` - uses `xcodebuild` to build the apps.
-
-  You can also run individual build commands:
-
-    - `make swift-macos-build` - builds macOS apps.
-    - `make swift-ios-build` - builds iOS apps.
-
-- `make swiftlint-analyze` - runs SwiftLint analyze. Note that this is a
-  heavy operation that includes building the apps.
-
-  You can also run individual commands:
-
-    - `make swiftlint-macos-analyze` - runs SwiftLint analyze for macOS app.
-    - `make swiftlint-ios-analyze` - runs SwiftLint analyze for iOS app.
-
-[swift-format]: https://github.com/swiftlang/swift-format
-[swiftlint]: https://github.com/realm/SwiftLint
+Read the [Makefile](./Makefile) for build instructions.
 
 ## Code Organization
 
