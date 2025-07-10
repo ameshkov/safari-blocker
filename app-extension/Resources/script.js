@@ -2,7 +2,7 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * AppExtension v1.0.0 (build date: Thu, 17 Apr 2025 16:47:56 GMT)
+ * AppExtension v1.0.0 (build date: Thu, 10 Jul 2025 10:54:27 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -11,7 +11,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   'use strict';
 
   /*
-   * SafariExtension v3.0.0 (build date: Thu, 17 Apr 2025 16:44:26 GMT)
+   * SafariExtension v3.0.1 (build date: Thu, 10 Jul 2025 10:34:31 GMT)
    * (c) 2025 Adguard Software Ltd.
    * Released under the GPL-3.0 license
    * https://github.com/AdguardTeam/SafariConverterLib/tree/master/Extension
@@ -25373,7 +25373,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     // Clear the buffer regardless of the logging level.
     pendingLogs$1 = [];
   }
-  const version = "3.0.0";
+  const version = "3.0.1";
 
   /**
    * @file Contains the implementation of the content script.

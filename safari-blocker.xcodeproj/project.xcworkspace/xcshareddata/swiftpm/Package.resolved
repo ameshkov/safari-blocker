@@ -1,5 +1,5 @@
 {
-  "originHash" : "564d0a2f49ab8d2c97f48f6edeb63161b397a7e882c1cca56ed464754285b9e3",
+  "originHash" : "7c347ad64a48621fbdab36540b09ef4f1d7c6092db3906b0ae3ad83e62fee280",
   "pins" : [
     {
       "identity" : "punycodeswift",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/AdguardTeam/SafariConverterLib",
       "state" : {
-        "revision" : "db0270762cb8c72e8293688aefcd37146c82e4df",
-        "version" : "3.0.0"
+        "revision" : "fc8dfbb0e1faadb512a3761ed63b3ce80703ed3b",
+        "version" : "3.0.1"
       }
     },
     {

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@adguard/safari-extension':
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 3.0.1
+        version: 3.0.1
       '@types/webextension-polyfill':
         specifier: ^0.12.1
         version: 0.12.3
@@ -89,8 +89,8 @@ packages:
     resolution: {integrity: sha512-TsHZ20oUWhbtrzQ4w70B96oHkGBIUZg2FdMfkq4StGfLmXQb+kI7fQb6BtXP2D0bvraIHMq6/mtKExglDJ9vsg==}
     engines: {node: '>=16'}
 
-  '@adguard/safari-extension@3.0.0':
-    resolution: {integrity: sha512-Gl2Qw/WIRt9EK2BK9E4Fh2ibWSzM9GvxvlGmiADdkCMZ/HRH74oPnRALIA0Ravi+rZp3cdpnX8ItzoqlgCdUhA==}
+  '@adguard/safari-extension@3.0.1':
+    resolution: {integrity: sha512-OFT9NnvdXpF8z1erd4AmNQTebHQVu23PvycFwOlKNTHPiGZMgNvXkvjto4kJwhAMbxq07F6NSBPHMBuLM8PFFg==}
 
   '@adguard/scriptlets@2.1.7':
     resolution: {integrity: sha512-ETU6hJ3EuR1efh0ktzZU2/+J70jXN2YX/LGU4ALLlQ5uhyf1g23PnZ1EzivlHGBzKxEHmYIPlK0w7uTKsHdeAg==}
@@ -2116,7 +2116,7 @@ snapshots:
 
   '@adguard/extended-css@2.1.1': {}
 
-  '@adguard/safari-extension@3.0.0':
+  '@adguard/safari-extension@3.0.1':
     dependencies:
       '@adguard/extended-css': 2.1.1
       '@adguard/scriptlets': 2.1.7

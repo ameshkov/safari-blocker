@@ -1,5 +1,5 @@
 /*
- * WebExtension v1.0.0 (build date: Thu, 17 Apr 2025 16:47:49 GMT)
+ * WebExtension v1.0.0 (build date: Thu, 10 Jul 2025 10:54:20 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
