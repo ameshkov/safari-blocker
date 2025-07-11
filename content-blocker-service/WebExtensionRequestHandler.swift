@@ -103,6 +103,7 @@ public enum WebExtensionRequestHandler {
         }
 
         payload["scriptlets"] = scriptlets
+        payload["engineTimestamp"] = configuration.engineTimestamp
 
         return payload
     }
