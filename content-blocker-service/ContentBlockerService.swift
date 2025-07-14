@@ -149,20 +149,18 @@ public enum ContentBlockerService {
             saveBlockerListFile(contents: result.safariRulesJSON, groupIdentifier: groupIdentifier)
         }
 
-        if let advancedRulesText = result.advancedRulesText {
-            measure(label: "Building and saving engine") {
-                do {
-                    let webExtension = try WebExtension.shared(groupID: groupIdentifier)
+        measure(label: "Building and saving engine") {
+            do {
+                let webExtension = try WebExtension.shared(groupID: groupIdentifier)
 
-                    // Build the engine and serialize it.
-                    _ = try webExtension.buildFilterEngine(rules: advancedRulesText)
-                } catch {
-                    os_log(
-                        .error,
-                        "Failed to build and save the filtering engine: %@",
-                        error.localizedDescription
-                    )
-                }
+                // Build the engine and serialize it.
+                _ = try webExtension.buildFilterEngine(rules: result.advancedRulesText ?? "")
+            } catch {
+                os_log(
+                    .error,
+                    "Failed to build and save the filtering engine: %@",
+                    error.localizedDescription
+                )
             }
         }
 

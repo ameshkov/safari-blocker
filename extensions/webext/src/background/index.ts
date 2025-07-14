@@ -11,18 +11,28 @@ import { type Configuration } from '@adguard/safari-extension';
 
 import { type Message, type ResponseMessage } from '../common/message';
 
-// Global variable to track the engine timestamp.
-// This value is used to invalidate the cache when the underlying engine
-// is updated.
+/**
+ * Global variable to track the engine timestamp.
+ * This value is used to invalidate the cache when the underlying engine
+ * is updated.
+ */
 let engineTimestamp = 0;
 
-// Cache to store the rules for a given URL. The key is a URL (string) and
-// the value is a ResponseMessage. Caching responses allows us to respond to
-// content script requests quickly while also updating the cache in the
-// background.
+/**
+ * Cache to store the rules for a given URL. The key is a URL (string) and
+ * the value is a ResponseMessage. Caching responses allows us to respond to
+ * content script requests quickly while also updating the cache in the
+ * background.
+ */
 const cache = new Map<string, ResponseMessage>();
 
-// Returns a cache key for the given URL and top-level URL.
+/**
+ * Returns a cache key for the given URL and top-level URL.
+ *
+ * @param url - Page URL for which the rules are requested.
+ * @param topUrl - Top-level page URL (to distinguish between frames)
+ * @returns The cache key.
+ */
 const cacheKey = (url: string, topUrl: string | null) => `${url}#${topUrl ?? ''}`;
 
 /**
@@ -75,8 +85,15 @@ browser.runtime.onMessage.addListener(async (request: unknown, sender: unknown) 
 
     // Extract the URL from the sender data.
     const senderData = sender as { url: string, frameId: number, tab: { url: string } };
-    const { url } = senderData;
+    let { url } = senderData;
     const topUrl = senderData.frameId === 0 ? null : senderData.tab.url;
+
+    if (!url.startsWith('http') && topUrl) {
+        // Handle the case of non-HTTP iframes, i.e. frames created by JS.
+        // For instance, frames can be created as 'about:blank' or 'data:text/html'
+        url = topUrl;
+    }
+
     const key = cacheKey(url, topUrl);
 
     // If there is already a cached response for this URL:

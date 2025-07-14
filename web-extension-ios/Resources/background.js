@@ -1,5 +1,5 @@
 /*
- * WebExtension v1.0.0 (build date: Thu, 10 Jul 2025 10:54:20 GMT)
+ * WebExtension v1.0.1 (build date: Mon, 14 Jul 2025 16:16:11 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -14,16 +14,22 @@
    * communicates with a native messaging host, and uses a cache mechanism
    * to serve responses quickly while updating them in the background.
    */
-  // Global variable to track the engine timestamp.
-  // This value is used to invalidate the cache when the underlying engine
-  // is updated.
+  /**
+   * Global variable to track the engine timestamp.
+   * This value is used to invalidate the cache when the underlying engine
+   * is updated.
+   */
   let engineTimestamp = 0;
-  // Cache to store the rules for a given URL. The key is a URL (string) and
-  // the value is a ResponseMessage. Caching responses allows us to respond to
-  // content script requests quickly while also updating the cache in the
-  // background.
+  /**
+   * Cache to store the rules for a given URL. The key is a URL (string) and
+   * the value is a ResponseMessage. Caching responses allows us to respond to
+   * content script requests quickly while also updating the cache in the
+   * background.
+   */
   const cache = new Map();
-  // Returns a cache key for the given URL and top-level URL.
+  /**
+   * Returns a cache key for the given URL and top-level URL.
+   */
   const cacheKey = (url, topUrl) => `${url}#${topUrl ?? ''}`;
   /**
    * Makes a native messaging request to obtain rules for the given message.
@@ -68,10 +74,13 @@
     const message = request;
     // Extract the URL from the sender data.
     const senderData = sender;
-    const {
-      url
-    } = senderData;
+    var url = senderData.url;
     const topUrl = senderData.frameId === 0 ? null : senderData.tab.url;
+    if (!url.startsWith('http') && topUrl) {
+      // Handle the case of non-HTTP iframes, i.e. frames created by JS.
+      // For instance, frames can be created as 'about:blank' or 'data:text/html'
+      url = topUrl;
+    }
     const key = cacheKey(url, topUrl);
     // If there is already a cached response for this URL:
     if (cache.has(key)) {
