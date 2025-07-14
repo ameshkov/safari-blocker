@@ -144,6 +144,8 @@ function getTopUrl(): string | null {
 /**
  * Returns URL of the current page. If we're in an about:blank iframe, handles
  * it and returns the URL of the top page.
+ *
+ * @returns {string} The URL of the current page.
  */
 function getUrl(): string {
     let url = window.location.href;
