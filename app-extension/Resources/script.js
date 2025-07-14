@@ -2,7 +2,7 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * AppExtension v1.0.1 (build date: Mon, 14 Jul 2025 16:16:16 GMT)
+ * AppExtension v1.0.2 (build date: Mon, 14 Jul 2025 17:05:08 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -22083,10 +22083,24 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       return 'https://third-party-domain.com/';
     }
   }
+  /**
+   * Returns URL of the current page. If we're in an about:blank iframe, handles
+   * it and returns the URL of the top page.
+   */
+  function getUrl() {
+    let url = window.location.href;
+    const topUrl = getTopUrl();
+    if (!url.startsWith('http') && topUrl) {
+      // Handle the case of non-HTTP iframes, i.e. frames created by JS.
+      // For instance, frames can be created as 'about:blank' or 'data:text/html'
+      url = topUrl;
+    }
+    return url;
+  }
   // Prepare the message to request configuration rules for the current page.
   const message = {
     requestId,
-    url: window.location.href,
+    url: getUrl(),
     topUrl: getTopUrl(),
     requestedAt: new Date().getTime()
   };

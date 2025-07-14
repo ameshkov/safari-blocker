@@ -146,13 +146,6 @@ const main = async () => {
             new ContentScript(configuration).run(verbose, '[AdGuard Sample Web Extension]');
             log('ContentScript applied');
         }
-
-        // TODO(ameshkov): TEMPORARY
-        if (window.location.href === 'about:blank' && document.readyState === 'complete') {
-            document.addEventListener('load', () => {
-                new ContentScript(configuration).run(verbose, '[AdGuard Sample Web Extension]');
-            });
-        }
     }
 
     // After processing, cancel any pending delayed event dispatch and process

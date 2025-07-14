@@ -141,10 +141,27 @@ function getTopUrl(): string | null {
     }
 }
 
+/**
+ * Returns URL of the current page. If we're in an about:blank iframe, handles
+ * it and returns the URL of the top page.
+ */
+function getUrl(): string {
+    let url = window.location.href;
+    const topUrl = getTopUrl();
+
+    if (!url.startsWith('http') && topUrl) {
+        // Handle the case of non-HTTP iframes, i.e. frames created by JS.
+        // For instance, frames can be created as 'about:blank' or 'data:text/html'
+        url = topUrl;
+    }
+
+    return url;
+}
+
 // Prepare the message to request configuration rules for the current page.
 const message: RequestRulesRequestMessage = {
     requestId,
-    url: window.location.href,
+    url: getUrl(),
     topUrl: getTopUrl(),
     requestedAt: new Date().getTime(),
 };

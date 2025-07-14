@@ -2,7 +2,7 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * WebExtension v1.0.1 (build date: Mon, 14 Jul 2025 16:16:11 GMT)
+ * WebExtension v1.0.2 (build date: Mon, 14 Jul 2025 17:05:03 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -22134,12 +22134,6 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
         // Instantiate and run the content script with the provided configuration.
         new ContentScript(configuration).run(verbose, '[AdGuard Sample Web Extension]');
         log('ContentScript applied');
-      }
-      // TODO(ameshkov): TEMPORARY
-      if (window.location.href === 'about:blank' && document.readyState === 'complete') {
-        document.addEventListener('load', () => {
-          new ContentScript(configuration).run(verbose, '[AdGuard Sample Web Extension]');
-        });
       }
     }
     // After processing, cancel any pending delayed event dispatch and process

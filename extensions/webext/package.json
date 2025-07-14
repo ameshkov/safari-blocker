@@ -1,6 +1,6 @@
 {
   "name": "webext",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Web extension sample",
   "scripts": {
     "build": "pnpm clean && pnpm build:rollup && pnpm build:publish:mac && pnpm build:publish:ios",

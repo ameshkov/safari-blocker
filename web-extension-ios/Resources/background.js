@@ -1,5 +1,5 @@
 /*
- * WebExtension v1.0.1 (build date: Mon, 14 Jul 2025 16:16:11 GMT)
+ * WebExtension v1.0.2 (build date: Mon, 14 Jul 2025 17:05:03 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -29,6 +29,10 @@
   const cache = new Map();
   /**
    * Returns a cache key for the given URL and top-level URL.
+   *
+   * @param url - Page URL for which the rules are requested.
+   * @param topUrl - Top-level page URL (to distinguish between frames)
+   * @returns The cache key.
    */
   const cacheKey = (url, topUrl) => `${url}#${topUrl ?? ''}`;
   /**
@@ -74,7 +78,9 @@
     const message = request;
     // Extract the URL from the sender data.
     const senderData = sender;
-    var url = senderData.url;
+    let {
+      url
+    } = senderData;
     const topUrl = senderData.frameId === 0 ? null : senderData.tab.url;
     if (!url.startsWith('http') && topUrl) {
       // Handle the case of non-HTTP iframes, i.e. frames created by JS.
