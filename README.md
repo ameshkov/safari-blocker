@@ -27,8 +27,7 @@ a Safari content blocker.
 
 ### Using local SafariConverterLib
 
-If you want to use local version of [SafariConverterLib][converter], please do
-the following:
+If you want to use local version of [SafariConverterLib][converter], please do the following:
 
 1. Clone the [SafariConverterLib][converter] project to `/safari-converter-lib`:
 
@@ -46,6 +45,8 @@ the following:
    ```
 
 3. Run `make js-build` to rebuild the extensions.
+
+4. Open XCode, open `safari-blocker` project, go to `Package dependencies`, remove `ContentBlockerConverter` package and add its local version instead. Add the library to target `content-blocker-service`.
 
 [extensions/appext/package.json]: ./extensions/appext/package.json
 [extensions/webext/package.json]: ./extensions/webext/package.json
