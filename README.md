@@ -13,11 +13,6 @@ a Safari content blocker.
 
 ## Prepare
 
-> [!WARNING]
-> Note, that in this example we're linking directly with SafariConverterLib
-> instead of using it as a library (npm dependency + proper Swift dependency).
-> Don't do that in production, just add normal dependencies.
-
 1. XCode 16.3 or newer is required to build it.
 2. Change "Development Team" in the Project settings.
 3. Change bundle IDs of each target and app groups, i.e. replace all
