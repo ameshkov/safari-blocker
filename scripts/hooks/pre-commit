@@ -68,6 +68,20 @@ if [ "$temp_todos" != '' ]; then
     prompt
 fi
 
+# Block commit if AdguardTeam/SafariConverterLib is missing from Package.resolved
+if ! grep -q 'github.com/AdguardTeam/SafariConverterLib' safari-blocker.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved; then
+    printf '\033[0;31mERROR:\033[0m github.com/AdguardTeam/SafariConverterLib is missing from Package.resolved!\n'
+    exit 1
+fi
+
+# Block commit if any file: dependency is present in package.json files
+for pkg in extensions/appext/package.json extensions/webext/package.json; do
+    if grep -q '"file:' "$pkg"; then
+        printf '\033[0;31mERROR:\033[0m "file:" dependencies found in %s!\n' "$pkg"
+        exit 1
+    fi
+done
+
 if [ "$(git diff --cached --name-only -- '*.md' || :)" != '' ]; then
     make md-lint
 fi

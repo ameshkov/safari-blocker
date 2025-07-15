@@ -25,18 +25,30 @@ a Safari content blocker.
 4. Edit the file `filters/filter.txt` and put the rules you'd like to test
    there.
 
-If you're using the `local` branch and link with [SafariConverterLib][converter]
-directly, please do the following:
+### Using local SafariConverterLib
 
-1. Checkout the `local` branch: `git checkout local`
-2. Clone the [SafariConverterLib][converter] project to `/safari-converter-lib`:
+If you want to use local version of [SafariConverterLib][converter], please do
+the following:
+
+1. Clone the [SafariConverterLib][converter] project to `/safari-converter-lib`:
 
    ```sh
    git clone https://github.com/AdguardTeam/SafariConverterLib.git safari-converter-lib
    ```
 
-3. Run `cd safari-converter-lib/Extension && pnpm install && pnpm build` to
-   build the extension.
+2. Change path to converter JS library in [extensions/appext/package.json] and
+   in [extensions/webext/package.json]:
+
+   ```json
+   "dependencies": {
+      "@adguard/safari-extension": "file:../../safari-converter-lib/Extension"
+   }
+   ```
+
+3. Run `make js-build` to rebuild the extensions.
+
+[extensions/appext/package.json]: ./extensions/appext/package.json
+[extensions/webext/package.json]: ./extensions/webext/package.json
 
 ### macOS app
 
