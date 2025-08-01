@@ -29,7 +29,8 @@
 		D73B14142D08944200939E68 /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D73B142A2D089A1F00939E68 /* content_blocker_service.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; };
 		D73B142B2D089A1F00939E68 /* content_blocker_service.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D73B13F02D08923600939E68 /* content_blocker_service.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D7D092052DB1687F004D5D07 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = D7D092042DB1687F004D5D07 /* ContentBlockerConverter */; };
+		D7482D642E3CF9290040A919 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = D7482D632E3CF9290040A919 /* ContentBlockerConverter */; };
+		D7CF54B42E2FFEE2004C16C7 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = D7CF54B32E2FFEE2004C16C7 /* ContentBlockerConverter */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -433,9 +434,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7482D642E3CF9290040A919 /* ContentBlockerConverter in Frameworks */,
 				D70B16DA2D08D29A000A827C /* ContentBlockerConverter in Frameworks */,
 				D71085832D4A7AC200F1E1CF /* ZIPFoundation in Frameworks */,
-				D7D092052DB1687F004D5D07 /* ContentBlockerConverter in Frameworks */,
+				D7CF54B42E2FFEE2004C16C7 /* ContentBlockerConverter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,7 +681,8 @@
 			packageProductDependencies = (
 				D70B16D92D08D29A000A827C /* ContentBlockerConverter */,
 				D71085822D4A7AC200F1E1CF /* ZIPFoundation */,
-				D7D092042DB1687F004D5D07 /* ContentBlockerConverter */,
+				D7CF54B32E2FFEE2004C16C7 /* ContentBlockerConverter */,
+				D7482D632E3CF9290040A919 /* ContentBlockerConverter */,
 			);
 			productName = "content-blocker-service";
 			productReference = D73B13F02D08923600939E68 /* content_blocker_service.framework */;
@@ -761,7 +764,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D71085812D4A7AC200F1E1CF /* XCRemoteSwiftPackageReference "ZipFoundation" */,
-				D7D092032DB1687F004D5D07 /* XCRemoteSwiftPackageReference "SafariConverterLib" */,
+				D7482D622E3CF9290040A919 /* XCRemoteSwiftPackageReference "SafariConverterLib" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D768F5A82D084B7F007F39D5 /* Products */;
@@ -1698,12 +1701,12 @@
 				version = 0.9.19;
 			};
 		};
-		D7D092032DB1687F004D5D07 /* XCRemoteSwiftPackageReference "SafariConverterLib" */ = {
+		D7482D622E3CF9290040A919 /* XCRemoteSwiftPackageReference "SafariConverterLib" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AdguardTeam/SafariConverterLib";
 			requirement = {
 				kind = exactVersion;
-				version = 3.1.0;
+				version = 4.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1718,9 +1721,13 @@
 			package = D71085812D4A7AC200F1E1CF /* XCRemoteSwiftPackageReference "ZipFoundation" */;
 			productName = ZIPFoundation;
 		};
-		D7D092042DB1687F004D5D07 /* ContentBlockerConverter */ = {
+		D7482D632E3CF9290040A919 /* ContentBlockerConverter */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D7D092032DB1687F004D5D07 /* XCRemoteSwiftPackageReference "SafariConverterLib" */;
+			package = D7482D622E3CF9290040A919 /* XCRemoteSwiftPackageReference "SafariConverterLib" */;
+			productName = ContentBlockerConverter;
+		};
+		D7CF54B32E2FFEE2004C16C7 /* ContentBlockerConverter */ = {
+			isa = XCSwiftPackageProductDependency;
 			productName = ContentBlockerConverter;
 		};
 /* End XCSwiftPackageProductDependency section */

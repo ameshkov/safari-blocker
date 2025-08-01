@@ -9,11 +9,8 @@ importers:
   .:
     dependencies:
       '@adguard/safari-extension':
-        specifier: 3.1.0
-        version: 3.1.0
-      '@types/webextension-polyfill':
-        specifier: ^0.12.1
-        version: 0.12.3
+        specifier: 4.0.1
+        version: 4.0.1
     devDependencies:
       '@babel/core':
         specifier: ^7.22.8
@@ -33,6 +30,9 @@ importers:
       '@rollup/plugin-typescript':
         specifier: ^11.1.4
         version: 11.1.6(rollup@3.29.5)(tslib@2.8.1)(typescript@5.8.3)
+      '@types/webextension-polyfill':
+        specifier: ^0.12.3
+        version: 0.12.3
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.0.0
         version: 7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)
@@ -42,6 +42,9 @@ importers:
       eslint:
         specifier: ^8.57.0
         version: 8.57.1
+      eslint-config-airbnb-base:
+        specifier: ^15.0.0
+        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1))(eslint@8.57.1)
       eslint-config-airbnb-typescript:
         specifier: ^18.0.0
         version: 18.0.0(@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.8.3))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1))(eslint@8.57.1)
@@ -89,8 +92,8 @@ packages:
     resolution: {integrity: sha512-TsHZ20oUWhbtrzQ4w70B96oHkGBIUZg2FdMfkq4StGfLmXQb+kI7fQb6BtXP2D0bvraIHMq6/mtKExglDJ9vsg==}
     engines: {node: '>=16'}
 
-  '@adguard/safari-extension@3.1.0':
-    resolution: {integrity: sha512-rbbYOE0wLPO0mov60gJwUXKdXArlsEIqCU4pFDmi3DFM9yQcIvUfzlkGkuKu2K5N+bAIYHyHhidpmCauGHeqMA==}
+  '@adguard/safari-extension@4.0.1':
+    resolution: {integrity: sha512-KpMuQIIf9oH1wLe2ZIWOsDv638KeTwWFDXAcbwFU+1MuCzgxhqeLtmx0EwWZVvMHffiRiD+YnU6mHUmgcpHapA==}
 
   '@adguard/scriptlets@2.2.8':
     resolution: {integrity: sha512-V6d6akdFgRTHu6m6Q4E/j3v54xjRIntOUcoNLY+Wd/ch2BOGb6cmXGig/T767aoR5c5S1HkJq8LC6KDe9HqHGA==}
@@ -2119,7 +2122,7 @@ snapshots:
 
   '@adguard/extended-css@2.1.1': {}
 
-  '@adguard/safari-extension@3.1.0':
+  '@adguard/safari-extension@4.0.1':
     dependencies:
       '@adguard/extended-css': 2.1.1
       '@adguard/scriptlets': 2.2.8

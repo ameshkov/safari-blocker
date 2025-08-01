@@ -34,8 +34,6 @@ public enum WebExtensionRequestHandler {
             return
         }
 
-        let nativeStart = Int64(Date().timeIntervalSince1970 * 1000)
-
         let payload = message?["payload"] as? [String: Any] ?? [:]
         if let urlString = payload["url"] as? String {
             if let url = URL(string: urlString) {
@@ -61,16 +59,6 @@ public enum WebExtensionRequestHandler {
                 }
             }
         }
-
-        if var trace = message?["trace"] as? [String: Int64] {
-            trace["nativeStart"] = nativeStart
-            trace["nativeEnd"] = Int64(Date().timeIntervalSince1970 * 1000)
-            message?["trace"] = trace  // Reassign the modified dictionary back
-        }
-
-        // Enable verbose logging in the content script.
-        // In the real app `verbose` flag should only be true for debugging purposes.
-        message?["verbose"] = true
 
         if let safeMessage = message {
             let response = createResponse(with: safeMessage)

@@ -48,13 +48,14 @@ content blocking rules to web pages.
 
 The algorithm consists of the following stages:
 
-- Content script requests the background script for the rules to apply to the
-  current page.
+- Content script notifies the background script that it's ready..
 - Background script looks up the rules in a local cache and if nothing found
   there it requests the rules from the native extension host.
 - Native extension host prepares a set of rules for the page and passes them
   back to the background script.
-- Background script returns the rules to the content script.
+- Background script applies these rules to the page (if possible) using
+  `BackgroundScript` object provided by [SafariConverterLib][safariconverterlib].
+- If not possible, background script returns the rules to the content script.
 - Content script uses `ContentScript` object provided by
   [SafariConverterLib][safariconverterlib] to apply the rules.
 

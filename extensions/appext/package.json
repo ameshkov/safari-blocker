@@ -1,6 +1,6 @@
 {
   "name": "appext",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "App extension sample",
   "scripts": {
     "build": "pnpm clean && pnpm build:rollup && pnpm build:publish",
@@ -35,6 +35,6 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@adguard/safari-extension": "3.1.0"
+    "@adguard/safari-extension": "4.0.1"
   }
 }

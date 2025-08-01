@@ -1,151 +1,76 @@
 /**
  * @file Content script for the WebExtension.
  *
- * This script runs in the context of a web page, and it's responsible for:
- * - Requesting necessary configuration (rules) from the background script.
- * - Initializing the content script by applying those configurations.
- * - Managing event dispatching with a slight delay to capture important page
- * events.
+ * This script runs in the context of a frame, and it's responsible for:
+ * - Notifying the background script that the frame is available.
+ * - Exposing content script to other scripts in the ISOLATED world, so that
+ *   they were used by scripts injected by `browser.scripting.executeScript`.
+ * - Delaying page load events to give time to injected scripts to initialize.
  */
 
 import browser from 'webextension-polyfill';
-import { type Configuration, ContentScript } from '@adguard/safari-extension';
-
-import { log, initLogger } from './logger';
-import { setupDelayedEventDispatcher } from './delayedEventDispatcher';
 import {
-    type TraceStage,
-    type Message,
-    type ResponseMessage,
-    MessageType,
-} from '../common/message';
+    ContentScript,
+    setLogger,
+    ConsoleLogger,
+    LoggingLevel,
+    setupDelayedEventDispatcher,
+    type Configuration,
+} from '@adguard/safari-extension';
 
-// Log that the content script process has started.
-log('Content script is starting...');
+import { type Message, MessageType } from '../common/message';
+
+// Initialize the logger to be used by the `@adguard/safari-extension`.
+// Change logging level to Debug if you need to see more details.
+const log = new ConsoleLogger('[AdGuard Sample Web Extension]', LoggingLevel.Info);
+setLogger(log);
 
 // Initialize the delayed event dispatcher. This may intercept DOMContentLoaded
-// and load events. The delay of 100ms is used as a buffer to capture critical
+// and load events. The delay of 1000ms is used as a buffer to capture critical
 // initial events while waiting for the rules response.
-const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(100);
+const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(1000);
 
-/**
- * Creates a trace object with the current time.
- *
- * The trace object is used to record timestamps at various stages of the
- * messaging process:
- * - contentStart: When the content script starts.
- * - contentEnd: When the content script finishes processing the message response.
- * - backgroundStart: When the background script starts processing.
- * - backgroundEnd: When the background script completes processing.
- * - nativeStart: When a native process (if any) starts.
- * - nativeEnd: When the native process completes processing.
- *
- * @returns The trace object used for logging message processing timings.
- */
-const createTrace = (): Record<TraceStage, number> => {
-    return {
-        contentStart: new Date().getTime(),
-        contentEnd: 0,
-        backgroundStart: 0,
-        backgroundEnd: 0,
-        nativeStart: 0,
-        nativeEnd: 0,
-    };
-};
-
-/**
- * Prints trace information to the console.
- *
- * @param {Record<TraceStage, number>} trace - The trace object.
- */
-const printTrace = (trace: Record<TraceStage, number>) => {
-    const elapsed = trace.contentEnd - trace.contentStart;
-    const elapsedContentToBackground = trace.backgroundStart - trace.contentStart;
-    const elapsedBackgroundToNative = trace.nativeStart - trace.backgroundStart;
-    const elapsedNative = trace.nativeEnd - trace.nativeStart;
-    const elapsedNativeToBackground = trace.nativeEnd - trace.backgroundEnd;
-    const elapsedBackgroundToContent = trace.contentEnd - trace.backgroundEnd;
-
-    // Log the elapsed timings in a structured format.
-    log('Elapsed on messaging: ', {
-        'Total elapsed': elapsed,
-        'Content->Background': elapsedContentToBackground,
-        'Background->Native': elapsedBackgroundToNative,
-        'Native inside': elapsedNative,
-        'Native->Background': elapsedNativeToBackground,
-        'Background->Content': elapsedBackgroundToContent,
-    });
-};
-
-/**
- * Sends a message to request configuration/rules from the background script.
- *
- * This function creates a messaging request including:
- * - A type indicating that rules are requested.
- * - A trace object containing the start time.
- * - The current page URL as part of the payload.
- *
- * After sending the message, the function waits for a response and updates the
- * trace information. It then configures the logger based on the verbosity
- * setting provided in the response.
- *
- * @returns The response message containing the configuration and updated trace.
- */
-const requestRules = async (): Promise<ResponseMessage> => {
-    // Create a message with the type RequestRules and attach the current URL
-    // and trace info.
-    const message: Message = {
-        type: MessageType.RequestRules,
-        trace: createTrace(),
-        payload: {},
-    };
-
-    // Send the message to the background script and await the response.
-    const response = await browser.runtime.sendMessage(message);
-
-    // Cast the response to a ResponseMessage to access its specific properties.
-    const responseMessage = response as ResponseMessage;
-    // Update the trace to mark the end of the content script processing.
-    responseMessage.trace.contentEnd = new Date().getTime();
-
-    // Initialize the logger:
-    // - If verbose logging is enabled, use console logging.
-    // - Otherwise, discard the logs to reduce console noise.
-    if (responseMessage.verbose) {
-        initLogger('log', '[AdGuard Sample Web Extension]');
-    } else {
-        initLogger('discard', '');
+// Declare global window object with `adguard` property so that we could
+// expose ContentScript to other scripts in the ISOLATED world, this way
+// it can be called by scripts injected by `browser.scripting.executeScript`.
+declare global {
+    interface Window {
+        adguard: {
+            contentScript: ContentScript;
+        };
     }
-
-    // Print trace timing details to the console.
-    printTrace(responseMessage.trace);
-
-    return responseMessage;
-};
+}
 
 /**
  * Main entry point function for the content script.
  *
  * This function:
- * 1. Requests configuration (rules) from the background script.
- * 2. Checks and applies the configuration if available.
- * 3. Instantiates and runs the ContentScript to apply filtering or modifications.
- * 4. Cancels any delayed events and flushes captured events.
+ * 1. Exposes `adguard.contentScript` to other scripts in the ISOLATED world.
+ * 2. Notifies the background page of the page that is loading. Background page
+ *    will handle this event and insert necessary CSS and JS to this frame.
+ * 3. When the background page responds, cancels any delayed events and flushes
+ *    captured events.
  */
 const main = async () => {
-    // Request rules/configuration from background
-    const responseMessage = await requestRules();
+    // First of all, make sure that the content script is exposed to the
+    // scripts that will be called by background script.
+    window.adguard = {
+        contentScript: new ContentScript(),
+    };
 
-    if (responseMessage) {
-        // Extract the payload from the response, which contains the configuration.
-        const { payload, verbose } = responseMessage;
-        const configuration = payload as Configuration;
+    const message: Message = {
+        type: MessageType.InitContentScript,
+    };
 
-        if (configuration) {
-            // Instantiate and run the content script with the provided configuration.
-            new ContentScript(configuration).run(verbose, '[AdGuard Sample Web Extension]');
-            log('ContentScript applied');
-        }
+    // Send the message to the background script and await the response.
+    const response = await browser.runtime.sendMessage(message) as Message | undefined;
+
+    // If the background page returned payload with configuration, it means
+    // that it cannot apply it on its own and commands the content script
+    // to do that.
+    if (response?.payload) {
+        const configuration = response.payload as Configuration;
+        window.adguard.contentScript.applyConfiguration(configuration);
     }
 
     // After processing, cancel any pending delayed event dispatch and process
@@ -155,5 +80,5 @@ const main = async () => {
 
 // Execute the main function and catch any runtime errors.
 main().catch((error) => {
-    log('Error in content script: ', error);
+    log.error('Error in content script: ', error);
 });

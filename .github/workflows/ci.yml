@@ -5,13 +5,13 @@ on:
   pull_request:
 
 env:
-  XCODE_VERSION: "latest-stable"
+  XCODE_VERSION: "16.3"
   NODE_VERSION: "23"
   PNPM_VERSION: "10"
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
       # Setup environment

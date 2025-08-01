@@ -2,7 +2,7 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * AppExtension v1.0.2 (build date: Mon, 14 Jul 2025 17:05:08 GMT)
+ * AppExtension v1.0.2 (build date: Fri, 01 Aug 2025 16:19:34 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -10,12 +10,6 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 (function () {
   'use strict';
 
-  /*
-   * SafariExtension v3.1.0 (build date: Fri, 11 Jul 2025 16:55:42 GMT)
-   * (c) 2025 Adguard Software Ltd.
-   * Released under the GPL-3.0 license
-   * https://github.com/AdguardTeam/SafariConverterLib/tree/master/Extension
-   */
   /**
    * @adguard/extended-css - v2.1.1 - Thu Dec 19 2024
    * https://github.com/AdguardTeam/ExtendedCss#homepage
@@ -11620,7 +11614,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       console.log(e);
     }
   }
-  function log$1(source, args) {
+  function log$2(source, args) {
     var flag = "done";
     var uniqueIdentifier = source.uniqueId + source.name + "_" + (Array.isArray(args) ? args.join("_") : "");
     if (source.uniqueId) {
@@ -21292,8 +21286,8 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     "ubo-addEventListener-logger": logAddEventListener,
     "ubo-aell": logAddEventListener,
     "log-eval": logEval,
-    log: log$1,
-    "abp-log": log$1,
+    log: log$2,
+    "abp-log": log$2,
     "log-on-stack-trace": logOnStackTrace,
     "m3u-prune": m3uPrune,
     "m3u-prune.js": m3uPrune,
@@ -21529,78 +21523,153 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     getScriptletFunction: getScriptletFunction
   };
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  // currentLevel holds the active logging level.
-  // It remains null until the logger is explicitly initialized.
-  let currentLevel$1 = null;
-  // logPrefix holds the configurable prefix for all log messages.
-  let logPrefix$1 = '';
-  // pendingLogs stores log messages that are buffered until the logger is
-  // initialized. Each pending log is stored as an array so that it can be
-  // re-spread into `console.log`.
-  let pendingLogs$1 = [];
-  /**
-   * Logs messages with an ISO 8601 timestamp and a configurable prefix.
-   *
-   * This function accepts a variable number of parameters to mirror the interface
-   * of `console.log`.
-   *
-   * Behavior:
-   * - If the logger is not yet initialized (currentLevel is null), the log entry
-   *   is buffered.
-   * - If the logger is initialized with the 'log' level, the message is
-   *   immediately output to the console with the configured prefix.
-   * - If the logger is initialized with the 'discard' level, the log entry is
-   *   ignored.
-   *
-   * @param args - The log message and additional parameters.
+  /*
+   * SafariExtension v4.0.1 (build date: Fri, 01 Aug 2025 16:11:54 GMT)
+   * (c) 2025 Adguard Software Ltd.
+   * Released under the GPL-3.0 license
+   * https://github.com/AdguardTeam/SafariConverterLib/tree/master/Extension
    */
-  function log$2() {
-    const timestamp = `[${new Date().toISOString()}]`;
-    for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      args[_key3] = arguments[_key3];
+
+  /* eslint-disable no-console */
+  /* eslint-disable class-methods-use-this */
+  /* eslint-disable max-classes-per-file */
+  /**
+   * @file Defines the logger interface and its default implementation.
+   */
+  /**
+   * Logging level.
+   */
+  var LoggingLevel;
+  (function (LoggingLevel) {
+    LoggingLevel[LoggingLevel["Debug"] = 2] = "Debug";
+    LoggingLevel[LoggingLevel["Info"] = 1] = "Info";
+    LoggingLevel[LoggingLevel["Error"] = 0] = "Error";
+  })(LoggingLevel || (LoggingLevel = {}));
+  const getTimestamp = () => `[${new Date().toISOString()}]`;
+  /**
+   * Console logger implementation.
+   */
+  class ConsoleLogger {
+    /**
+     * Creates a new console logger.
+     *
+     * @param prefix Prefix to add to the log messages.
+     * @param level Logging level.
+     */
+    constructor(prefix, level) {
+      _defineProperty2(this, "prefix", '[Safari Extension]');
+      _defineProperty2(this, "loggingLevel", LoggingLevel.Info);
+      this.prefix = prefix;
+      this.loggingLevel = level;
     }
-    if (currentLevel$1 === null) {
-      // Buffer the message until the logger is initialized.
-      pendingLogs$1.push([timestamp, ...args]);
-    } else if (currentLevel$1 === 'log') {
-      // Output the timestamp, prefix, and the log message.
-      // eslint-disable-next-line no-console
-      console.log(timestamp, logPrefix$1, ...args);
+    get level() {
+      return this.loggingLevel;
     }
-    // If currentLevel is 'discard', the log entry is ignored.
+    set level(level) {
+      this.loggingLevel = level;
+    }
+    debug() {
+      if (this.loggingLevel >= LoggingLevel.Debug) {
+        for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+          args[_key3] = arguments[_key3];
+        }
+        console.debug(getTimestamp(), this.prefix, ...args);
+      }
+    }
+    info() {
+      if (this.loggingLevel >= LoggingLevel.Info) {
+        for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+          args[_key4] = arguments[_key4];
+        }
+        console.info(getTimestamp(), this.prefix, ...args);
+      }
+    }
+    error() {
+      if (this.loggingLevel >= LoggingLevel.Error) {
+        for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+          args[_key5] = arguments[_key5];
+        }
+        console.error(getTimestamp(), this.prefix, ...args);
+      }
+    }
   }
   /**
-   * Initializes the logger by setting the logging behavior and the message
-   * prefix.
-   *
-   * After initialization, future log messages behave according to the specified
-   * logging level:
-   *
-   * - 'log': Future messages are immediately output to the console with the
-   *          configured prefix, and any buffered messages are flushed.
-   * - 'discard': Both buffered and future log messages are dropped.
-   *
-   * @param level - The logging level to set:
-   *   - 'log' to output log messages.
-   *   - 'discard' to ignore log messages.
-   * @param prefix - The configurable prefix to be added to every log message.
+   * Logger that does not print anything.
    */
-  function initLogger$1(level, prefix) {
-    logPrefix$1 = prefix;
-    currentLevel$1 = level;
-    if (currentLevel$1 === 'log') {
-      // Flush all buffered log messages to the console using the configured
-      // prefix.
-      pendingLogs$1.forEach(entry => {
-        // eslint-disable-next-line no-console
-        console.log(entry[0], logPrefix$1, ...entry.slice(1));
-      });
+  class NullLogger {
+    constructor() {
+      _defineProperty2(this, "level", LoggingLevel.Debug);
     }
-    // Clear the buffer regardless of the logging level.
-    pendingLogs$1 = [];
+    debug() {
+      // Do nothing.
+    }
+    info() {
+      // Do nothing.
+    }
+    error() {
+      // Do nothing.
+    }
   }
-  const version = "3.1.0";
+  /**
+   * Default logger. Can be redefined by the library user.
+   */
+  let internalLogger = new NullLogger();
+  /**
+   * Proxy logger that delegates all calls to the internal logger.
+   * This internal logger can be redefined by the library user
+   * via `setLogger`.
+   */
+  class ProxyLogger {
+    get level() {
+      return internalLogger.level;
+    }
+    set level(level) {
+      internalLogger.level = level;
+    }
+    debug() {
+      internalLogger.debug(...arguments);
+    }
+    info() {
+      internalLogger.info(...arguments);
+    }
+    error() {
+      internalLogger.error(...arguments);
+    }
+  }
+  /**
+   * Sets the logger to use.
+   *
+   * @param logger to use.
+   */
+  const setLogger = logger => {
+    internalLogger = logger;
+  };
+  /**
+   * Logger instance that will be used inside the library (and can be actually
+   * used outside the library too). It delegates all calls to the internal logger
+   * that can be redefined via `setLogger`.
+   */
+  const log$1 = new ProxyLogger();
+  const version = "4.0.1";
+
+  /**
+   * @file Contains common constants and helper functions.
+   */
+  /**
+   * Name of the engine used to run scriptlets.
+   */
+  const SCRIPTLET_ENGINE_NAME = 'safari-extension';
+  /**
+   * Makes sure that we're dealing with CSS rules (selector + style)
+   *
+   * @param css Array of CSS selectors (for hiding elements) or full CSS rules.
+   * @returns Array of CSS rules.
+   */
+  const toCSSRules = css => {
+    return css.map(s => s.trim()).filter(s => s.length > 0).map(s => {
+      return s.at(-1) !== '}' ? `${s} {display:none!important;}` : s;
+    });
+  };
 
   /**
    * @file Contains the implementation of the content script.
@@ -21662,20 +21731,9 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     const code = scripts.join('\r\n');
     if (!executeScriptsViaTextContent(code)) {
       if (!executeScriptsViaBlob(code)) {
-        log$2('Failed to execute scripts');
+        log$1.error('Failed to execute scripts');
       }
     }
-  };
-  /**
-   * Applies JS injections.
-   *
-   * @param {string[]} scripts Array with JS scripts.
-   */
-  const applyScripts = scripts => {
-    if (!scripts || scripts.length === 0) {
-      return;
-    }
-    executeScripts(scripts);
   };
   /**
    * Protects specified style element from changes to the current document
@@ -21728,60 +21786,6 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     });
   };
   /**
-   * Makes sure that we're dealing with CSS rules (selector + style)
-   *
-   * @param {string[]} css Array of CSS selectors (for hiding elemets) or full CSS rules.
-   * @returns {string[]} Array of CSS rules.
-   */
-  const toCSSRules = css => {
-    return css.filter(s => s.length > 0).map(s => s.trim()).map(s => {
-      return s[s.length - 1] !== '}' ? `${s} {display:none!important;}` : s;
-    });
-  };
-  /**
-   * Applies css stylesheet.
-   *
-   * @param {string[]} css Array of CSS rules to apply.
-   */
-  const applyCss = css => {
-    if (!css || !css.length) {
-      return;
-    }
-    try {
-      const styleElement = document.createElement('style');
-      styleElement.setAttribute('type', 'text/css');
-      (document.head || document.documentElement).appendChild(styleElement);
-      if (styleElement.sheet) {
-        const cssRules = toCSSRules(css);
-        for (const style of cssRules) {
-          styleElement.sheet.insertRule(style);
-        }
-      }
-      protectStyleElementContent(styleElement);
-    } catch (e) {
-      log$2('Failed to apply CSS', e);
-    }
-  };
-  /**
-   * Applies Extended Css stylesheet.
-   *
-   * @param {string[]} extendedCss Array with ExtendedCss rules.
-   */
-  const applyExtendedCss = extendedCss => {
-    if (!extendedCss || !extendedCss.length) {
-      return;
-    }
-    try {
-      const cssRules = toCSSRules(extendedCss);
-      const extCss = new ExtendedCss({
-        cssRules
-      });
-      extCss.apply();
-    } catch (e) {
-      log$2('Failed to apply extended CSS', e);
-    }
-  };
-  /**
    * Converts scriptlet to the code that can be executed.
    *
    * @param {Scriptlet} scriptlet Scriptlet data (name and arguments)
@@ -21791,7 +21795,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   const getScriptletCode = (scriptlet, verbose) => {
     try {
       const scriptletSource = {
-        engine: 'safari-extension',
+        engine: SCRIPTLET_ENGINE_NAME,
         name: scriptlet.name,
         args: scriptlet.args,
         version: version,
@@ -21799,125 +21803,119 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       };
       return scriptlets.invoke(scriptletSource);
     } catch (e) {
-      log$2(`Failed to get scriptlet code ${scriptlet.name}`, e);
+      log$1.error('Failed to get scriptlet code', scriptlet.name, e);
     }
     return '';
   };
+  // Disable class-methods-use-this rule for the following code since it needs
+  // to implement particular interface.
+  /* eslint-disable class-methods-use-this  */
   /**
-   * Applies scriptlets.
+   * Content script object. The way this object is used is different and
+   * depends on whether this code is used from Safari App Extension or from
+   * Safari Web Extension.
    *
-   * @param {Scriptlet[]} scriptlets Array with scriptlets data.
-   * @param {boolean} verbose Whether to log verbose output.
-   */
-  const applyScriptlets = (scriptlets, verbose) => {
-    if (!scriptlets || !scriptlets.length) {
-      return;
-    }
-    const getCode = scriptlet => getScriptletCode(scriptlet, verbose);
-    const scripts = scriptlets.map(getCode);
-    executeScripts(scripts);
-  };
-  /**
-   * Content script that applies all the rules from the configuration.
+   * In the case of Safari App Extension, this object is used from within
+   * the content script, i.e. it is used to apply the configuration to the web
+   * page.
+   *
+   * In the case of Safari Web Extension, `BackgroundScript` relies on the
+   * functions of this object to run scripts and insert extended CSS into the
+   * web page, i.e. it expects that there will be a global `adguard.contentScript`
+   * object in the `ISOLATED` world that implements this interface.
    */
   class ContentScript {
-    constructor(configuration) {
-      _defineProperty2(this, "configuration", void 0);
-      this.configuration = configuration;
+    /**
+     * Applies the configuration to the web page. This method is supposed to be
+     * run from the extension's content script (ISOLATED world) and it is only
+     * supposed to be used by Safari App Extension.
+     *
+     * @param configuration Configuration to apply.
+     * @param verbose Whether to log verbose output.
+     */
+    applyConfiguration(configuration) {
+      let verbose = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      this.insertCss(configuration.css);
+      this.insertExtendedCss(configuration.extendedCss);
+      this.runScriptlets(configuration.scriptlets, verbose);
+      this.runScripts(configuration.js);
     }
     /**
-     * Runs the content script on the page.
+     * Inserts specified CSS rules to the page.
      *
-     * @param verbose Whether to log verbose output.
-     * @param prefix Prefix for log messages.
+     * @param css Array of CSS rules to apply. Can be a selector
      */
-    run() {
-      let verbose = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-      let prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '[AdGuard Extension]';
-      if (verbose) {
-        initLogger$1('log', prefix);
-      } else {
-        initLogger$1('discard', '');
+    insertCss(css) {
+      if (!css || !css.length) {
+        return;
       }
-      log$2('Starting content script execution...');
-      applyCss(this.configuration.css);
-      applyExtendedCss(this.configuration.extendedCss);
-      applyScriptlets(this.configuration.scriptlets, verbose);
-      applyScripts(this.configuration.js);
-      log$2('Finished content script execution');
+      try {
+        const styleElement = document.createElement('style');
+        styleElement.setAttribute('type', 'text/css');
+        (document.head || document.documentElement).appendChild(styleElement);
+        if (styleElement.sheet) {
+          const cssRules = toCSSRules(css);
+          for (const style of cssRules) {
+            styleElement.sheet.insertRule(style);
+          }
+        }
+        protectStyleElementContent(styleElement);
+      } catch (e) {
+        log$1.error('Failed to insert CSS', e);
+      }
     }
-  }
-
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  // currentLevel holds the active logging level.
-  // It remains null until the logger is explicitly initialized.
-  let currentLevel = null;
-  // logPrefix holds the configurable prefix for all log messages.
-  let logPrefix = '';
-  // pendingLogs stores log messages that are buffered until the logger is
-  // initialized. Each pending log is stored as an array so that it can be
-  // re-spread into `console.log`.
-  let pendingLogs = [];
-  /**
-   * Logs messages with an ISO 8601 timestamp and a configurable prefix.
-   *
-   * This function accepts a variable number of parameters to mirror the interface
-   * of `console.log`.
-   *
-   * Behavior:
-   * - If the logger is not yet initialized (currentLevel is null), the log entry
-   *   is buffered.
-   * - If the logger is initialized with the 'log' level, the message is
-   *   immediately output to the console with the configured prefix.
-   * - If the logger is initialized with the 'discard' level, the log entry is
-   *   ignored.
-   *
-   * @param args - The log message and additional parameters.
-   */
-  function log() {
-    const timestamp = `[${new Date().toISOString()}]`;
-    for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      args[_key4] = arguments[_key4];
+    /**
+     * Applies Extended Css stylesheet.
+     *
+     * @param {string[]} extendedCss Array with ExtendedCss rules.
+     */
+    insertExtendedCss(extendedCss) {
+      if (!extendedCss || !extendedCss.length) {
+        return;
+      }
+      try {
+        const cssRules = toCSSRules(extendedCss);
+        const extCss = new ExtendedCss({
+          cssRules
+        });
+        extCss.apply();
+      } catch (e) {
+        log$1.error('Failed to insert extended CSS', e);
+      }
     }
-    if (currentLevel === null) {
-      // Buffer the message until the logger is initialized.
-      pendingLogs.push([timestamp, ...args]);
-    } else if (currentLevel === 'log') {
-      // Output the timestamp, prefix, and the log message.
-      // eslint-disable-next-line no-console
-      console.log(timestamp, logPrefix, ...args);
+    /**
+     * Runs scripts in the web page. This method is supposed to be run from the
+     * extension's content script (ISOLATED world).
+     *
+     * In the case of Safari Web Extension this method is exposed via
+     * `adguard.contentScript` global object in `ISOLATED` world.
+     *
+     * @param scripts Array of scripts to run.
+     */
+    runScripts(scripts) {
+      if (!scripts || scripts.length === 0) {
+        return;
+      }
+      executeScripts(scripts);
     }
-    // If currentLevel is 'discard', the log entry is ignored.
-  }
-  /**
-   * Initializes the logger by setting the logging behavior and the message
-   * prefix.
-   *
-   * After initialization, future log messages behave according to the specified
-   * logging level:
-   *
-   * - 'log': Future messages are immediately output to the console with the
-   *          configured prefix, and any buffered messages are flushed.
-   * - 'discard': Both buffered and future log messages are dropped.
-   *
-   * @param level - The logging level to set:
-   *   - 'log' to output log messages.
-   *   - 'discard' to ignore log messages.
-   * @param prefix - The configurable prefix to be added to every log message.
-   */
-  function initLogger(level, prefix) {
-    logPrefix = prefix;
-    currentLevel = level;
-    if (currentLevel === 'log') {
-      // Flush all buffered log messages to the console using the configured
-      // prefix.
-      pendingLogs.forEach(entry => {
-        // eslint-disable-next-line no-console
-        console.log(entry[0], logPrefix, ...entry.slice(1));
-      });
+    /**
+     * Runs scriptlets in the web page. This method is supposed to be run from
+     * the extension's content script (ISOLATED world).
+     *
+     * In the case of Safari Web Extension this method is exposed via
+     * `adguard.contentScript` global object in `ISOLATED` world.
+     *
+     * @param scriptlets Array of scriptlets to run.
+     * @param verbose Whether to log verbose output.
+     */
+    runScriptlets(scriptlets, verbose) {
+      if (!scriptlets || !scriptlets.length) {
+        return;
+      }
+      const getCode = scriptlet => getScriptletCode(scriptlet, verbose);
+      const scripts = scriptlets.map(getCode);
+      executeScripts(scripts);
     }
-    // Clear the buffer regardless of the logging level.
-    pendingLogs = [];
   }
 
   /**
@@ -21927,13 +21925,18 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
    * The interceptors delay the events until either a response is received or the
    * timeout expires. If the events have already fired, no interceptors are added.
    *
-   * @param timeout - Timeout in milliseconds after which the events are forced
-   *                  (if not already handled).
+   * In Safari extensions running scripts and scriptlets has a slight delay and
+   * the page scripts may already do their work. By delaying DOMContentLoaded and
+   * load we try to delay the execution of page scripts so that the extension's
+   * scriptlets work as expected.
+   *
+   * @param timeoutMs - Timeout in milliseconds after which the events are forced
+   *                  (if not already handled). Default is 1000ms.
    * @returns A function which, when invoked, cancels the timeout and dispatches
    *         (or removes) the interceptors.
    */
   function setupDelayedEventDispatcher() {
-    let timeout = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100;
+    let timeoutMs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
     const interceptors = [];
     const events = [{
       name: 'DOMContentLoaded',
@@ -21960,7 +21963,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
           // Prevent immediate propagation.
           event.stopImmediatePropagation();
           interceptor.intercepted = true;
-          log(`${ev.name} event has been intercepted.`);
+          log$1.debug('Event has been intercepted:', ev.name);
         }
       };
       interceptors.push(interceptor);
@@ -21970,7 +21973,10 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     });
     let dispatched = false;
     const dispatchEvents = trigger => {
-      if (dispatched) return;
+      if (dispatched) {
+        // The events were already dispatched, do nothing.
+        return;
+      }
       dispatched = true;
       interceptors.forEach(interceptor => {
         // Remove the interceptor listener.
@@ -21982,16 +21988,16 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
           const newEvent = new Event(interceptor.name, interceptor.options);
           interceptor.target.dispatchEvent(newEvent);
           const targetName = interceptor.target === document ? 'document' : 'window';
-          log(`${interceptor.name} event re-dispatched due to ${trigger} on ${targetName}.`);
+          log$1.debug(`${interceptor.name} event re-dispatched due to ${trigger} on ${targetName}.`);
         } else {
-          log(`Interceptor for ${interceptor.name} removed due to ${trigger}.`);
+          log$1.debug(`Interceptor for ${interceptor.name} removed due to ${trigger}.`);
         }
       });
     };
     // Set a timer to automatically dispatch the events after the timeout.
     const timer = setTimeout(() => {
       dispatchEvents('timeout');
-    }, timeout);
+    }, timeoutMs);
     // Return a function to cancel the timer and dispatch events immediately.
     return () => {
       clearTimeout(timer);
@@ -22006,15 +22012,21 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
    * for messages from the Safari extension. It uses a delayed dispatcher
    * to handle DOM events and sends a rule request message to the extension.
    */
-  log('Content script is starting...');
+  // Initialize the logger to be used by the `@adguard/safari-extension`.
+  // Change logging level to Debug if you need to see more details.
+  const log = new ConsoleLogger('[AdGuard Sample App Extension]', LoggingLevel.Info);
+  setLogger(log);
+  log.debug('Content script is starting...');
   // Initialize the delayed event dispatcher. This may intercept DOMContentLoaded
-  // and load events. The delay of 100ms is used as a buffer to capture critical
+  // and load events. The delay of 1000ms is used as a buffer to capture critical
   // initial events while waiting for the rules response.
-  const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(100);
+  const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(1000);
   // Generate a pseudo-unique request ID for properly tracing the response to the
   // request that was sent by this instance of a SFSafariContentScript.
   // We will only accept responses to this specific request.
   const requestId = Math.random().toString(36);
+  // Track when the request to the background was made.
+  const startTime = Date.now();
   /**
    * Callback function to handle response messages from the Safari extension.
    *
@@ -22032,32 +22044,23 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
    * extension.
    */
   const handleMessage = event => {
-    log('Received message: ', event);
+    log.debug('Received message: ', event);
     // Cast the received event message to our expected
     // RequestRulesResponseMessage type.
     const message = event.message;
     if ((message === null || message === void 0 ? void 0 : message.requestId) !== requestId) {
-      log('Received response for a different request ID: ', message === null || message === void 0 ? void 0 : message.requestId);
+      log.debug('Received response for a different request ID: ', message === null || message === void 0 ? void 0 : message.requestId);
       return;
     }
     // If the configuration payload exists, run the ContentScript with it.
     if (message !== null && message !== void 0 && message.payload) {
       const configuration = message.payload;
-      new ContentScript(configuration).run();
-      log('ContentScript applied');
-    }
-    // Compute the elapsed time since the rules request was initiated.
-    const elapsed = new Date().getTime() - ((message === null || message === void 0 ? void 0 : message.requestedAt) ?? 0);
-    log('Elapsed on messaging: ', elapsed);
-    // Initialize the logger using the verbose flag from the response:
-    // If verbose, use a prefix; otherwise, disable logging.
-    if (message !== null && message !== void 0 && message.verbose) {
-      initLogger('log', '[AdGuard Sample App Extension]');
-    } else {
-      initLogger('discard', '');
+      new ContentScript().applyConfiguration(configuration);
     }
     // Cancel the pending delayed event dispatch and process any queued events.
     cancelDelayedDispatchAndDispatch();
+    const elapsed = Date.now() - startTime;
+    log.debug('Finished processing response, elapsed time: ', elapsed);
   };
   /**
    * Returns the top-level URL of the current page or null if we're not
@@ -22077,7 +22080,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       }
       return window.top.location.href;
     } catch (ex) {
-      log('Failed to get top URL: ', ex);
+      log.error('Failed to get top URL: ', ex);
       // Return a random third-party domain as this error signals us
       // that we're in a third-party frame.
       return 'https://third-party-domain.com/';
@@ -22086,6 +22089,8 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   /**
    * Returns URL of the current page. If we're in an about:blank iframe, handles
    * it and returns the URL of the top page.
+   *
+   * @returns {string} The URL of the current page.
    */
   function getUrl() {
     let url = window.location.href;
@@ -22101,8 +22106,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   const message = {
     requestId,
     url: getUrl(),
-    topUrl: getTopUrl(),
-    requestedAt: new Date().getTime()
+    topUrl: getTopUrl()
   };
   // Dispatch the "requestRules" message to the Safari extension.
   safari.extension.dispatchMessage('requestRules', message);
