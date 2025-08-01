@@ -37,7 +37,6 @@ public class SafariExtensionHandler: SFSafariExtensionHandler {
             let requestId = userInfo?["requestId"] as? String ?? ""
             let urlString = userInfo?["url"] as? String ?? ""
             let topUrlString = userInfo?["topUrl"] as? String
-            let requestedAt = userInfo?["requestedAt"] as? Int ?? 0
 
             // Convert the string into a URL. If valid, attempt to look up its
             // configuration.
@@ -64,11 +63,6 @@ public class SafariExtensionHandler: SFSafariExtensionHandler {
                         let responseUserInfo: [String: Any] = [
                             "requestId": requestId,
                             "payload": payload,
-                            "requestedAt": requestedAt,
-                            // Enable verbose logging in the content script.
-                            // In the real app `verbose` flag should only be true
-                            // for debugging purposes.
-                            "verbose": true,
                         ]
 
                         page.dispatchMessageToScript(

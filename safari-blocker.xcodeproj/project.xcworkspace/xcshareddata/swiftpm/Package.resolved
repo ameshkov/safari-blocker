@@ -1,5 +1,5 @@
 {
-  "originHash" : "7c347ad64a48621fbdab36540b09ef4f1d7c6092db3906b0ae3ad83e62fee280",
+  "originHash" : "564d0a2f49ab8d2c97f48f6edeb63161b397a7e882c1cca56ed464754285b9e3",
   "pins" : [
     {
       "identity" : "punycodeswift",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/AdguardTeam/SafariConverterLib",
       "state" : {
-        "revision" : "e620daf3a764d9cc7b9c443dc208b7ba1ce97889",
-        "version" : "3.1.0"
+        "revision" : "08c4228ee834814ee9aefd3d44e12f62c8bbb840",
+        "version" : "4.0.0"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ameshkov/swift-psl",
       "state" : {
-        "revision" : "cd398791a0eb3b8611a21081720306ba3f89fb28",
-        "version" : "1.1.13"
+        "revision" : "d53f461a033fff1f6af21e2af2c1896e35941d09",
+        "version" : "1.1.47"
       }
     },
     {

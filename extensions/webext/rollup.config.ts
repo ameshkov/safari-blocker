@@ -1,5 +1,5 @@
 /**
- * @file Rollup configurations for generating CSSTokenizer builds.
+ * @file Rollup configurations for generating WebExtension builds.
  *
  * ! Please ALWAYS use the "pnpm build" command for building
  * ! Running Rollup directly will not enough, the build script
@@ -127,7 +127,8 @@ const contentJS = {
         {
             file: path.join(distDirLocation, 'content.js'),
             format: 'iife',
-            exports: 'auto',
+            name: 'adguard',
+            exports: 'named',
             sourcemap: false,
             banner: BANNER,
             globals: {

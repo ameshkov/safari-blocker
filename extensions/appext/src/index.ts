@@ -6,10 +6,19 @@
  * to handle DOM events and sends a rule request message to the extension.
  */
 
-import { type Configuration, ContentScript } from '@adguard/safari-extension';
+import {
+    type Configuration,
+    ContentScript,
+    setupDelayedEventDispatcher,
+    setLogger,
+    ConsoleLogger,
+    LoggingLevel,
+} from '@adguard/safari-extension';
 
-import { setupDelayedEventDispatcher } from './delayedEventDispatcher';
-import { log, initLogger } from './logger';
+// Initialize the logger to be used by the `@adguard/safari-extension`.
+// Change logging level to Debug if you need to see more details.
+const log = new ConsoleLogger('[AdGuard Sample App Extension]', LoggingLevel.Info);
+setLogger(log);
 
 /**
  * Defines the shape of the message requesting rules from the extension backend.
@@ -31,8 +40,6 @@ interface RequestRulesRequestMessage {
     url: string;
     // The top-level URL of the page that requested rules.
     topUrl: string | null;
-    // The timestamp of the request.
-    requestedAt: number;
 }
 
 /**
@@ -44,23 +51,22 @@ interface RequestRulesResponseMessage {
     // The configuration payload. If provided, it is used to initialize the
     // content script.
     payload: Configuration | undefined;
-    // Flag to indicate whether verbose logging should be enabled.
-    verbose: boolean | undefined;
-    // Timestamp when the request was made.
-    requestedAt: number;
 }
 
-log('Content script is starting...');
+log.debug('Content script is starting...');
 
 // Initialize the delayed event dispatcher. This may intercept DOMContentLoaded
-// and load events. The delay of 100ms is used as a buffer to capture critical
+// and load events. The delay of 1000ms is used as a buffer to capture critical
 // initial events while waiting for the rules response.
-const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(100);
+const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(1000);
 
 // Generate a pseudo-unique request ID for properly tracing the response to the
 // request that was sent by this instance of a SFSafariContentScript.
 // We will only accept responses to this specific request.
 const requestId = Math.random().toString(36);
+
+// Track when the request to the background was made.
+const startTime = Date.now();
 
 /**
  * Callback function to handle response messages from the Safari extension.
@@ -79,38 +85,29 @@ const requestId = Math.random().toString(36);
  * extension.
  */
 const handleMessage = (event: SafariExtensionMessageEvent) => {
-    log('Received message: ', event);
+    log.debug('Received message: ', event);
 
     // Cast the received event message to our expected
     // RequestRulesResponseMessage type.
     const message = event.message as RequestRulesResponseMessage;
 
     if (message?.requestId !== requestId) {
-        log('Received response for a different request ID: ', message?.requestId);
+        log.debug('Received response for a different request ID: ', message?.requestId);
+
         return;
     }
 
     // If the configuration payload exists, run the ContentScript with it.
     if (message?.payload) {
         const configuration = message.payload as Configuration;
-        new ContentScript(configuration).run();
-        log('ContentScript applied');
-    }
-
-    // Compute the elapsed time since the rules request was initiated.
-    const elapsed = new Date().getTime() - (message?.requestedAt ?? 0);
-    log('Elapsed on messaging: ', elapsed);
-
-    // Initialize the logger using the verbose flag from the response:
-    // If verbose, use a prefix; otherwise, disable logging.
-    if (message?.verbose) {
-        initLogger('log', '[AdGuard Sample App Extension]');
-    } else {
-        initLogger('discard', '');
+        new ContentScript().applyConfiguration(configuration);
     }
 
     // Cancel the pending delayed event dispatch and process any queued events.
     cancelDelayedDispatchAndDispatch();
+
+    const elapsed = Date.now() - startTime;
+    log.debug('Finished processing response, elapsed time: ', elapsed);
 };
 
 /**
@@ -133,7 +130,7 @@ function getTopUrl(): string | null {
 
         return window.top.location.href;
     } catch (ex) {
-        log('Failed to get top URL: ', ex);
+        log.error('Failed to get top URL: ', ex);
 
         // Return a random third-party domain as this error signals us
         // that we're in a third-party frame.
@@ -165,7 +162,6 @@ const message: RequestRulesRequestMessage = {
     requestId,
     url: getUrl(),
     topUrl: getTopUrl(),
-    requestedAt: new Date().getTime(),
 };
 
 // Dispatch the "requestRules" message to the Safari extension.

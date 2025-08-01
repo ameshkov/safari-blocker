@@ -35,6 +35,6 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@adguard/safari-extension": "3.1.0"
+    "@adguard/safari-extension": "4.0.0"
   }
 }
