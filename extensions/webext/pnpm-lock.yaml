@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@adguard/safari-extension':
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.0.1
+        version: 4.0.1
     devDependencies:
       '@babel/core':
         specifier: ^7.22.8
@@ -92,8 +92,8 @@ packages:
     resolution: {integrity: sha512-TsHZ20oUWhbtrzQ4w70B96oHkGBIUZg2FdMfkq4StGfLmXQb+kI7fQb6BtXP2D0bvraIHMq6/mtKExglDJ9vsg==}
     engines: {node: '>=16'}
 
-  '@adguard/safari-extension@4.0.0':
-    resolution: {integrity: sha512-mBR6UZp4jKxYrF/hg+i7WTb7fnKxi8hLVHD7ypltihwJCQYwZuMyMZFUjg4ngkVURKPB2GYAFPNsc3oE+I36aA==}
+  '@adguard/safari-extension@4.0.1':
+    resolution: {integrity: sha512-KpMuQIIf9oH1wLe2ZIWOsDv638KeTwWFDXAcbwFU+1MuCzgxhqeLtmx0EwWZVvMHffiRiD+YnU6mHUmgcpHapA==}
 
   '@adguard/scriptlets@2.2.8':
     resolution: {integrity: sha512-V6d6akdFgRTHu6m6Q4E/j3v54xjRIntOUcoNLY+Wd/ch2BOGb6cmXGig/T767aoR5c5S1HkJq8LC6KDe9HqHGA==}
@@ -2122,7 +2122,7 @@ snapshots:
 
   '@adguard/extended-css@2.1.1': {}
 
-  '@adguard/safari-extension@4.0.0':
+  '@adguard/safari-extension@4.0.1':
     dependencies:
       '@adguard/extended-css': 2.1.1
       '@adguard/scriptlets': 2.2.8

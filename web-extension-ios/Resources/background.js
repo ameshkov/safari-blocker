@@ -2,7 +2,7 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * WebExtension v1.0.2 (build date: Fri, 01 Aug 2025 13:30:31 GMT)
+ * WebExtension v1.0.2 (build date: Fri, 01 Aug 2025 16:19:16 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -15974,7 +15974,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   };
 
   /*
-   * SafariExtension v4.0.0 (build date: Fri, 01 Aug 2025 12:59:28 GMT)
+   * SafariExtension v4.0.1 (build date: Fri, 01 Aug 2025 16:11:54 GMT)
    * (c) 2025 Adguard Software Ltd.
    * Released under the GPL-3.0 license
    * https://github.com/AdguardTeam/SafariConverterLib/tree/master/Extension
@@ -16100,7 +16100,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
    * that can be redefined via `setLogger`.
    */
   const log$1 = new ProxyLogger();
-  const version = "4.0.0";
+  const version = "4.0.1";
 
   /**
    * @file Contains common constants and helper functions.
@@ -16121,15 +16121,6 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     });
   };
   /* eslint-enable class-methods-use-this */
-
-  /**
-   * @file Defines the types for the content script.
-   */
-  /**
-   * Default export for backward compatibility.
-   * This represents the global adguard object structure.
-   */
-  const adguard = {};
 
   /**
    * @file Exports `BackgroundScript` object that it supposed to be used by
@@ -16298,7 +16289,12 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
         },
         func: function () {
           let scripts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-          adguard.contentScript.runScripts(scripts);
+          try {
+            adguard.contentScript.runScripts(scripts);
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error('Failed to run scripts, make sure adguard.contentScript is available', e);
+          }
         },
         args: [scriptTexts],
         world: 'ISOLATED',
@@ -16326,7 +16322,12 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
         },
         func: function () {
           let extCss = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-          adguard.contentScript.insertExtendedCss(extCss);
+          try {
+            adguard.contentScript.insertExtendedCss(extCss);
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error('Failed to insert extended CSS, make sure adguard.contentScript is available', e);
+          }
         },
         args: [extendedCss],
         world: 'ISOLATED',
