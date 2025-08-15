@@ -2,7 +2,7 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * WebExtension v1.0.4 (build date: Sat, 09 Aug 2025 13:03:33 GMT)
+ * WebExtension v1.0.4 (build date: Fri, 15 Aug 2025 06:15:41 GMT)
  * (c) 2025 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
@@ -3949,16 +3949,38 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       return r;
     }
     function getPrunePath(t) {
+      var r = ".[=].";
       if ("string" == typeof t && void 0 !== t && "" !== t) {
-        return t.split(/(?<!\.\[=\]\.\/(?:[^/]|\\.)*)\s+/).map(function (t) {
-          var e = t.split(".[=]."),
-            r = e[0],
-            a = e[1];
-          return void 0 !== a ? ("true" === a ? a = true : "false" === a ? a = false : a.startsWith("/") ? a = toRegExp(a) : "string" == typeof a && /^\d+$/.test(a) && (a = parseFloat(a)), {
-            path: r,
-            value: a
+        var e = function (t) {
+          for (var e = [], n = "", i = 0, a = false, s = false; i < t.length;) {
+            var u = t[i];
+            if (a) n += u, "\\" === u ? s = !s : ("/" !== u || s || (a = false), s = false), i += 1;else {
+              if (" " === u || "\n" === u || "\t" === u || "\r" === u || "\f" === u || "\v" === u) {
+                for (; i < t.length && /\s/.test(t[i]);) i += 1;
+                "" !== n && (e.push(n), n = "");
+                continue;
+              }
+              if (t.startsWith(r, i)) {
+                if (n += r, "/" === t[i += 5]) {
+                  a = true, s = false, n += "/", i += 1;
+                  continue;
+                }
+                continue;
+              }
+              n += u, i += 1;
+            }
+          }
+          return "" !== n && e.push(n), e;
+        }(t);
+        return e.map(function (t) {
+          var e = t.split(r),
+            n = e[0],
+            i = e[1];
+          return void 0 !== i ? ("true" === i ? i = true : "false" === i ? i = false : i.startsWith("/") ? i = toRegExp(i) : "string" == typeof i && /^\d+$/.test(i) && (i = parseFloat(i)), {
+            path: n,
+            value: i
           }) : {
-            path: r
+            path: n
           };
         });
       }
@@ -4932,16 +4954,38 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       return r;
     }
     function getPrunePath(t) {
+      var r = ".[=].";
       if ("string" == typeof t && void 0 !== t && "" !== t) {
-        return t.split(/(?<!\.\[=\]\.\/(?:[^/]|\\.)*)\s+/).map(function (t) {
-          var e = t.split(".[=]."),
-            r = e[0],
-            a = e[1];
-          return void 0 !== a ? ("true" === a ? a = true : "false" === a ? a = false : a.startsWith("/") ? a = toRegExp(a) : "string" == typeof a && /^\d+$/.test(a) && (a = parseFloat(a)), {
-            path: r,
-            value: a
+        var e = function (t) {
+          for (var e = [], n = "", i = 0, a = false, s = false; i < t.length;) {
+            var u = t[i];
+            if (a) n += u, "\\" === u ? s = !s : ("/" !== u || s || (a = false), s = false), i += 1;else {
+              if (" " === u || "\n" === u || "\t" === u || "\r" === u || "\f" === u || "\v" === u) {
+                for (; i < t.length && /\s/.test(t[i]);) i += 1;
+                "" !== n && (e.push(n), n = "");
+                continue;
+              }
+              if (t.startsWith(r, i)) {
+                if (n += r, "/" === t[i += 5]) {
+                  a = true, s = false, n += "/", i += 1;
+                  continue;
+                }
+                continue;
+              }
+              n += u, i += 1;
+            }
+          }
+          return "" !== n && e.push(n), e;
+        }(t);
+        return e.map(function (t) {
+          var e = t.split(r),
+            n = e[0],
+            i = e[1];
+          return void 0 !== i ? ("true" === i ? i = true : "false" === i ? i = false : i.startsWith("/") ? i = toRegExp(i) : "string" == typeof i && /^\d+$/.test(i) && (i = parseFloat(i)), {
+            path: n,
+            value: i
           }) : {
-            path: r
+            path: n
           };
         });
       }
@@ -5213,16 +5257,38 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       return r;
     }
     function getPrunePath(t) {
+      var r = ".[=].";
       if ("string" == typeof t && void 0 !== t && "" !== t) {
-        return t.split(/(?<!\.\[=\]\.\/(?:[^/]|\\.)*)\s+/).map(function (t) {
-          var e = t.split(".[=]."),
-            r = e[0],
-            a = e[1];
-          return void 0 !== a ? ("true" === a ? a = true : "false" === a ? a = false : a.startsWith("/") ? a = toRegExp(a) : "string" == typeof a && /^\d+$/.test(a) && (a = parseFloat(a)), {
-            path: r,
-            value: a
+        var e = function (t) {
+          for (var e = [], n = "", i = 0, a = false, s = false; i < t.length;) {
+            var u = t[i];
+            if (a) n += u, "\\" === u ? s = !s : ("/" !== u || s || (a = false), s = false), i += 1;else {
+              if (" " === u || "\n" === u || "\t" === u || "\r" === u || "\f" === u || "\v" === u) {
+                for (; i < t.length && /\s/.test(t[i]);) i += 1;
+                "" !== n && (e.push(n), n = "");
+                continue;
+              }
+              if (t.startsWith(r, i)) {
+                if (n += r, "/" === t[i += 5]) {
+                  a = true, s = false, n += "/", i += 1;
+                  continue;
+                }
+                continue;
+              }
+              n += u, i += 1;
+            }
+          }
+          return "" !== n && e.push(n), e;
+        }(t);
+        return e.map(function (t) {
+          var e = t.split(r),
+            n = e[0],
+            i = e[1];
+          return void 0 !== i ? ("true" === i ? i = true : "false" === i ? i = false : i.startsWith("/") ? i = toRegExp(i) : "string" == typeof i && /^\d+$/.test(i) && (i = parseFloat(i)), {
+            path: n,
+            value: i
           }) : {
-            path: r
+            path: n
           };
         });
       }
@@ -5777,16 +5843,38 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       return r;
     }
     function getPrunePath(t) {
+      var r = ".[=].";
       if ("string" == typeof t && void 0 !== t && "" !== t) {
-        return t.split(/(?<!\.\[=\]\.\/(?:[^/]|\\.)*)\s+/).map(function (t) {
-          var e = t.split(".[=]."),
-            r = e[0],
-            a = e[1];
-          return void 0 !== a ? ("true" === a ? a = true : "false" === a ? a = false : a.startsWith("/") ? a = toRegExp(a) : "string" == typeof a && /^\d+$/.test(a) && (a = parseFloat(a)), {
-            path: r,
-            value: a
+        var e = function (t) {
+          for (var e = [], n = "", i = 0, a = false, s = false; i < t.length;) {
+            var u = t[i];
+            if (a) n += u, "\\" === u ? s = !s : ("/" !== u || s || (a = false), s = false), i += 1;else {
+              if (" " === u || "\n" === u || "\t" === u || "\r" === u || "\f" === u || "\v" === u) {
+                for (; i < t.length && /\s/.test(t[i]);) i += 1;
+                "" !== n && (e.push(n), n = "");
+                continue;
+              }
+              if (t.startsWith(r, i)) {
+                if (n += r, "/" === t[i += 5]) {
+                  a = true, s = false, n += "/", i += 1;
+                  continue;
+                }
+                continue;
+              }
+              n += u, i += 1;
+            }
+          }
+          return "" !== n && e.push(n), e;
+        }(t);
+        return e.map(function (t) {
+          var e = t.split(r),
+            n = e[0],
+            i = e[1];
+          return void 0 !== i ? ("true" === i ? i = true : "false" === i ? i = false : i.startsWith("/") ? i = toRegExp(i) : "string" == typeof i && /^\d+$/.test(i) && (i = parseFloat(i)), {
+            path: n,
+            value: i
           }) : {
-            path: r
+            path: n
           };
         });
       }
@@ -7939,14 +8027,12 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
             origSrcDescriptor.set.call(this, urlValue);
             return true;
           }
-          if (policy && urlValue instanceof TrustedScriptURL) {
-            var trustedSrc = policy.createScriptURL(urlValue);
-            origSrcDescriptor.set.call(this, trustedSrc);
-            hit(source);
-            return;
+          var mockData = srcMockData[nodeName];
+          if (typeof TrustedScriptURL !== "undefined" && policy !== null && policy !== void 0 && policy.isSupported && urlValue instanceof TrustedScriptURL) {
+            mockData = policy.createScriptURL(mockData);
           }
           setMatchedAttribute(this);
-          origSrcDescriptor.set.call(this, srcMockData[nodeName]);
+          origSrcDescriptor.set.call(this, mockData);
           hit(source);
         }
       });
@@ -10491,14 +10577,14 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
         handleExistingNodes(e, d, o);
       }) : d(t);
     }
-    function replaceNodeText(e, t, r, a) {
+    function replaceNodeText(e, t, n, r) {
       var {
-        textContent: c
+        textContent: a
       } = t;
-      if (c) {
-        var n = c.replace(r, a).replace(/\\'/g, "'").replace(/\\"/g, '"');
-        if ("SCRIPT" === t.nodeName) n = getTrustedTypesApi(e).createScript(n);
-        t.textContent = n, hit(e);
+      if (a) {
+        var i = a.replace(n, r);
+        if ("SCRIPT" === t.nodeName) i = getTrustedTypesApi(e).createScript(i);
+        t.textContent = i, hit(e);
       }
     }
     function isTargetNode(e, t, n) {
@@ -12850,16 +12936,38 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       return r;
     }
     function getPrunePath(t) {
+      var r = ".[=].";
       if ("string" == typeof t && void 0 !== t && "" !== t) {
-        return t.split(/(?<!\.\[=\]\.\/(?:[^/]|\\.)*)\s+/).map(function (t) {
-          var e = t.split(".[=]."),
-            r = e[0],
-            a = e[1];
-          return void 0 !== a ? ("true" === a ? a = true : "false" === a ? a = false : a.startsWith("/") ? a = toRegExp(a) : "string" == typeof a && /^\d+$/.test(a) && (a = parseFloat(a)), {
-            path: r,
-            value: a
+        var e = function (t) {
+          for (var e = [], n = "", i = 0, a = false, s = false; i < t.length;) {
+            var u = t[i];
+            if (a) n += u, "\\" === u ? s = !s : ("/" !== u || s || (a = false), s = false), i += 1;else {
+              if (" " === u || "\n" === u || "\t" === u || "\r" === u || "\f" === u || "\v" === u) {
+                for (; i < t.length && /\s/.test(t[i]);) i += 1;
+                "" !== n && (e.push(n), n = "");
+                continue;
+              }
+              if (t.startsWith(r, i)) {
+                if (n += r, "/" === t[i += 5]) {
+                  a = true, s = false, n += "/", i += 1;
+                  continue;
+                }
+                continue;
+              }
+              n += u, i += 1;
+            }
+          }
+          return "" !== n && e.push(n), e;
+        }(t);
+        return e.map(function (t) {
+          var e = t.split(r),
+            n = e[0],
+            i = e[1];
+          return void 0 !== i ? ("true" === i ? i = true : "false" === i ? i = false : i.startsWith("/") ? i = toRegExp(i) : "string" == typeof i && /^\d+$/.test(i) && (i = parseFloat(i)), {
+            path: n,
+            value: i
           }) : {
-            path: r
+            path: n
           };
         });
       }
@@ -12981,6 +13089,479 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
       trustedPruneInboundObject.apply(this, updatedArgs);
+      if (source.uniqueId) {
+        Object.defineProperty(Window.prototype.toString, uniqueIdentifier, {
+          value: flag,
+          enumerable: false,
+          writable: false,
+          configurable: false
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  function trustedReplaceArgument(source, args) {
+    var flag = "done";
+    var uniqueIdentifier = source.uniqueId + source.name + "_" + (Array.isArray(args) ? args.join("_") : "");
+    if (source.uniqueId) {
+      if (Window.prototype.toString[uniqueIdentifier] === flag) {
+        return;
+      }
+    }
+    function trustedReplaceArgument(source, methodPath, argumentIndex, argumentValue, pattern) {
+      var stack = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
+      var verbose = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : "false";
+      if ((!methodPath || !argumentIndex || !argumentValue) && verbose === "false" || !methodPath && verbose === "true") {
+        return;
+      }
+      var SHOULD_LOG_ONLY = verbose === "true" && !argumentIndex && !argumentValue && !pattern && !stack;
+      var MARKERS = {
+        JSON: "json:",
+        REPLACE: "replace:"
+      };
+      var constantValue;
+      var replaceRegexValue = "";
+      var shouldReplaceArgument = false;
+      if (argumentValue.startsWith(MARKERS.REPLACE)) {
+        var replacementRegexPair = extractRegexAndReplacement(argumentValue);
+        if (!replacementRegexPair) {
+          logMessage(source, `Invalid argument value format: ${argumentValue}`);
+          return;
+        }
+        replaceRegexValue = replacementRegexPair.regexPart;
+        constantValue = replacementRegexPair.replacementPart;
+        shouldReplaceArgument = true;
+      } else if (argumentValue.startsWith(MARKERS.JSON)) {
+        try {
+          constantValue = JSON.parse(argumentValue.slice(MARKERS.JSON.length));
+        } catch (error) {
+          logMessage(source, `Invalid JSON argument value: ${argumentValue}`);
+          return;
+        }
+      } else {
+        var emptyArr = noopArray();
+        var emptyObj = noopObject();
+        if (argumentValue === "undefined") {
+          constantValue = undefined;
+        } else if (argumentValue === "false") {
+          constantValue = false;
+        } else if (argumentValue === "true") {
+          constantValue = true;
+        } else if (argumentValue === "null") {
+          constantValue = null;
+        } else if (argumentValue === "emptyArr") {
+          constantValue = emptyArr;
+        } else if (argumentValue === "emptyObj") {
+          constantValue = emptyObj;
+        } else if (argumentValue === "noopFunc") {
+          constantValue = noopFunc;
+        } else if (argumentValue === "noopCallbackFunc") {
+          constantValue = noopCallbackFunc;
+        } else if (argumentValue === "trueFunc") {
+          constantValue = trueFunc;
+        } else if (argumentValue === "falseFunc") {
+          constantValue = falseFunc;
+        } else if (argumentValue === "throwFunc") {
+          constantValue = throwFunc;
+        } else if (argumentValue === "noopPromiseResolve") {
+          constantValue = noopPromiseResolve;
+        } else if (argumentValue === "noopPromiseReject") {
+          constantValue = noopPromiseReject;
+        } else if (/^-?\d+$/.test(argumentValue)) {
+          constantValue = parseFloat(argumentValue);
+          if (nativeIsNaN(constantValue)) {
+            return;
+          }
+        } else {
+          constantValue = argumentValue;
+        }
+      }
+      var getPathParts = getPropertyInChain;
+      var {
+        base: base,
+        chain: chain,
+        prop: prop
+      } = getPathParts(window, methodPath);
+      if (typeof chain !== "undefined") {
+        logMessage(source, `Could not reach the end of the prop chain: ${methodPath}`);
+        return;
+      }
+      var nativeMethod = base[prop];
+      if (!nativeMethod || typeof nativeMethod !== "function") {
+        logMessage(source, `Could not retrieve the method: ${methodPath}`);
+        return;
+      }
+      var stringifyObject = function stringifyObject(obj) {
+        return JSON.stringify(obj, function (key, value) {
+          return typeof value === "function" ? value.toString() : value;
+        });
+      };
+      var createFormattedMessage = function createFormattedMessage(args) {
+        var when = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "original";
+        var formattedArgs = args.map(function (arg, index) {
+          if (typeof arg === "object" && arg !== null) {
+            try {
+              return `${index}: ${stringifyObject(arg)} // Object converted to string`;
+            } catch (e) {
+              return `${index}: ${String(arg)} // Object conversion failed`;
+            }
+          }
+          return `${index}: ${String(arg)}`;
+        });
+        var modifiedOrOriginal = when === "modified" ? "modified" : when;
+        var message = `${methodPath} ${modifiedOrOriginal} arguments:\n${formattedArgs.join(",\n")}`;
+        return message;
+      };
+      var checkArgument = function checkArgument(arg) {
+        if (stack && !matchStackTrace(stack, new Error().stack || "")) {
+          return false;
+        }
+        if (pattern) {
+          if (typeof arg === "object" && arg !== null) {
+            try {
+              var argString = stringifyObject(arg);
+              return !!argString && toRegExp(pattern).test(argString);
+            } catch (error) {
+              logMessage(source, `Failed to stringify argument: ${arg}\nError: ${error}`);
+            }
+          }
+          var argumentContent = String(arg);
+          return !!argumentContent && toRegExp(pattern).test(argumentContent);
+        }
+        return true;
+      };
+      var isMatchingSuspended = false;
+      var applyWrapper = function applyWrapper(target, thisArg, argumentsList) {
+        if (isMatchingSuspended) {
+          isMatchingSuspended = false;
+          return Reflect.apply(target, thisArg, argumentsList);
+        }
+        isMatchingSuspended = true;
+        if (verbose === "true") {
+          var formattedMessage = createFormattedMessage(argumentsList);
+          logMessage(source, formattedMessage);
+        }
+        if (SHOULD_LOG_ONLY) {
+          isMatchingSuspended = false;
+          return Reflect.apply(target, thisArg, argumentsList);
+        }
+        var argumentToReplace = argumentsList[Number(argumentIndex)];
+        var shouldSetArgument = checkArgument(argumentToReplace);
+        if (!shouldSetArgument) {
+          isMatchingSuspended = false;
+          return Reflect.apply(target, thisArg, argumentsList);
+        }
+        if (typeof argumentToReplace === "string" && shouldReplaceArgument) {
+          argumentsList[Number(argumentIndex)] = argumentToReplace.replace(replaceRegexValue, constantValue);
+        } else {
+          argumentsList[Number(argumentIndex)] = constantValue;
+        }
+        if (verbose === "true") {
+          var _formattedMessage = createFormattedMessage(argumentsList, "modified");
+          logMessage(source, _formattedMessage);
+        }
+        hit(source);
+        isMatchingSuspended = false;
+        return Reflect.apply(target, thisArg, argumentsList);
+      };
+      var constructWrapper = function constructWrapper(target, argumentsList, newTarget) {
+        if (isMatchingSuspended) {
+          isMatchingSuspended = false;
+          return Reflect.construct(target, argumentsList, newTarget);
+        }
+        isMatchingSuspended = true;
+        if (verbose === "true") {
+          var formattedMessage = createFormattedMessage(argumentsList);
+          logMessage(source, formattedMessage);
+        }
+        if (SHOULD_LOG_ONLY) {
+          isMatchingSuspended = false;
+          return Reflect.construct(target, argumentsList, newTarget);
+        }
+        var argumentToReplace = argumentsList[Number(argumentIndex)];
+        var shouldSetArgument = checkArgument(argumentToReplace);
+        if (!shouldSetArgument) {
+          isMatchingSuspended = false;
+          return Reflect.construct(target, argumentsList, newTarget);
+        }
+        if (typeof argumentToReplace === "string" && shouldReplaceArgument) {
+          argumentsList[Number(argumentIndex)] = argumentToReplace.replace(replaceRegexValue, constantValue);
+        } else {
+          argumentsList[Number(argumentIndex)] = constantValue;
+        }
+        if (verbose === "true") {
+          var _formattedMessage2 = createFormattedMessage(argumentsList, "modified");
+          logMessage(source, _formattedMessage2);
+        }
+        hit(source);
+        isMatchingSuspended = false;
+        return Reflect.construct(target, argumentsList, newTarget);
+      };
+      var getWrapper = function getWrapper(target, propName, receiver) {
+        if (propName === "toString") {
+          return target.toString.bind(target);
+        }
+        return Reflect.get(target, propName, receiver);
+      };
+      var objectHandler = {
+        apply: applyWrapper,
+        construct: constructWrapper,
+        get: getWrapper
+      };
+      base[prop] = new Proxy(nativeMethod, objectHandler);
+    }
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine ? i += e.ruleText : (e.domainName && (i += `${e.domainName}`), e.args ? i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')` : i += `#%#//scriptlet('${e.name}')`), n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
+      }
+    }
+    function noopArray() {
+      return [];
+    }
+    function noopObject() {
+      return {};
+    }
+    function noopCallbackFunc() {
+      return noopFunc;
+    }
+    function noopFunc() {}
+    function trueFunc() {
+      return true;
+    }
+    function falseFunc() {
+      return false;
+    }
+    function throwFunc() {
+      throw new Error();
+    }
+    function noopPromiseReject() {
+      return Promise.reject();
+    }
+    function noopPromiseResolve() {
+      var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "{}",
+        t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "",
+        s = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : "basic";
+      if ("undefined" != typeof Response) {
+        var n = new Response(e, {
+          headers: {
+            "Content-Length": `${e.length}`
+          },
+          status: 200,
+          statusText: "OK"
+        });
+        return "opaque" === s ? Object.defineProperties(n, {
+          body: {
+            value: null
+          },
+          status: {
+            value: 0
+          },
+          ok: {
+            value: false
+          },
+          statusText: {
+            value: ""
+          },
+          url: {
+            value: ""
+          },
+          type: {
+            value: s
+          }
+        }) : Object.defineProperties(n, {
+          url: {
+            value: t
+          },
+          type: {
+            value: s
+          }
+        }), Promise.resolve(n);
+      }
+    }
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t)) return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t.split("\n").slice(2).map(function (e) {
+          return e.trim();
+        }).join("\n");
+      return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), getNativeRegexpTest().call(n, a);
+    }
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n) return {
+        base: e,
+        prop: r
+      };
+      var i = r.slice(0, n);
+      if (null === e) return {
+        base: e,
+        prop: i,
+        chain: r
+      };
+      var t = e[i];
+      return r = r.slice(n + 1), (e instanceof Object || "object" == typeof e) && isEmptyObject(e) || null === t ? {
+        base: e,
+        prop: i,
+        chain: r
+      } : void 0 !== t ? getPropertyInChain(t, r) : (Object.defineProperty(e, i, {
+        configurable: true
+      }), {
+        base: e,
+        prop: i,
+        chain: r
+      });
+    }
+    function extractRegexAndReplacement(e) {
+      if (e) {
+        var r = e.slice(8),
+          t = "";
+        if (r.endsWith("/g") && (r = r.slice(0, -1), t = "g"), r.startsWith("/") && r.endsWith("/")) {
+          for (var i = r.slice(1, -1), a = -1, c = 0; c < i.length; c += 1) if ("/" === i[c]) {
+            for (var f = false, n = c - 1; n >= 0 && "\\" === i[n];) f = !f, n -= 1;
+            if (!f) {
+              a = c;
+              break;
+            }
+          }
+          if (-1 !== a) {
+            var s = `/${i.slice(0, a)}/${t}`,
+              l = i.slice(a + 1);
+            if (s && "//" !== s) {
+              var g;
+              try {
+                g = toRegExp(s);
+              } catch (e) {
+                return;
+              }
+              if (g) return {
+                regexPart: g,
+                replacementPart: l
+              };
+            }
+          }
+        }
+      }
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        {
+          name: l,
+          verbose: v
+        } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u = (i = a, (n = g).startsWith(t) && n.endsWith(t) && !n.endsWith("\\/") && function (e) {
+          if (!e) return false;
+          try {
+            return new RegExp("", e), !0;
+          } catch (e) {
+            return false;
+          }
+        }(i) ? i : "");
+      if (r.startsWith(t) && r.endsWith(t) || u) return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r.replace(/\\'/g, "'").replace(/\\"/g, '"').replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return new RegExp(c);
+    }
+    function getNativeRegexpTest() {
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
+      throw new Error("RegExp.prototype.test is not a function");
+    }
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i.split("\n").slice(2).map(function (t) {
+        return t.trim();
+      }).map(function (t) {
+        var i,
+          s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+        if (s) {
+          var c,
+            l,
+            a = s[2],
+            u = s[3],
+            o = s[4];
+          if (null !== (c = a) && void 0 !== c && c.startsWith("(") && (a = a.slice(1)), null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>")) {
+            var d;
+            a = n;
+            var f = void 0 !== s[1] ? s[1].slice(0, -1) : t.slice(0, s.index).trim();
+            null !== (d = f) && void 0 !== d && d.startsWith("at") && (f = f.slice(2).trim()), i = `${f} ${a}${u}${o}`.trim();
+          } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+        } else i = t;
+        return i;
+      });
+      if (c) for (var l = 0; l < c.length; l += 1) {
+        if (isInlineScript(t) && c[l].startsWith(r) && c[l].match(toRegExp(t))) return true;
+        if (isInjectedScript(t) && c[l].startsWith(n) && c[l].match(toRegExp(t))) return true;
+      }
+      return false;
+    }
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
+    }
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
+    }
+    function backupRegExpValues() {
+      try {
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
+        }
+        return r;
+      } catch (r) {
+        return [];
+      }
+    }
+    function restoreRegExpValues(e) {
+      if (e.length) try {
+        var r = "";
+        r = 1 === e.length ? `(${e[0]})` : e.reduce(function (e, r, t) {
+          return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+        });
+        var t = new RegExp(r);
+        e.toString().replace(t, "");
+      } catch (e) {
+        var n = `Failed to restore RegExp values: ${e}`;
+        console.log(n);
+      }
+    }
+    var updatedArgs = args ? [].concat(source).concat(args) : [source];
+    try {
+      trustedReplaceArgument.apply(this, updatedArgs);
       if (source.uniqueId) {
         Object.defineProperty(Window.prototype.toString, uniqueIdentifier, {
           value: flag,
@@ -13246,12 +13827,20 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       }
     }
     function trustedReplaceNodeText(source, nodeName, textMatch, pattern, replacement) {
+      var fixQuotes = function fixQuotes(str) {
+        if (typeof str !== "string") {
+          return str;
+        }
+        return str.replace(/\\'/g, "'").replace(/\\"/g, '"');
+      };
+      var fixedPattern = fixQuotes(pattern);
+      var fixedReplacement = fixQuotes(replacement);
       var {
         selector: selector,
         nodeNameMatch: nodeNameMatch,
         textContentMatch: textContentMatch,
         patternMatch: patternMatch
-      } = parseNodeTextParams(nodeName, textMatch, pattern);
+      } = parseNodeTextParams(nodeName, textMatch, fixedPattern);
       for (var _len = arguments.length, extraArgs = new Array(_len > 5 ? _len - 5 : 0), _key = 5; _key < _len; _key++) {
         extraArgs[_key - 5] = arguments[_key];
       }
@@ -13266,7 +13855,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
                 logMessage(source, `Original text content: ${originalText}`);
               }
             }
-            replaceNodeText(source, node, patternMatch, replacement);
+            replaceNodeText(source, node, patternMatch, fixedReplacement);
             if (shouldLog) {
               var modifiedText = node.textContent;
               if (modifiedText) {
@@ -13315,14 +13904,14 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       var t = getAddedNodes(n);
       d(t);
     }
-    function replaceNodeText(e, t, r, a) {
+    function replaceNodeText(e, t, n, r) {
       var {
-        textContent: c
+        textContent: a
       } = t;
-      if (c) {
-        var n = c.replace(r, a).replace(/\\'/g, "'").replace(/\\"/g, '"');
-        if ("SCRIPT" === t.nodeName) n = getTrustedTypesApi(e).createScript(n);
-        t.textContent = n, hit(e);
+      if (a) {
+        var i = a.replace(n, r);
+        if ("SCRIPT" === t.nodeName) i = getTrustedTypesApi(e).createScript(i);
+        t.textContent = i, hit(e);
       }
     }
     function isTargetNode(e, t, n) {
@@ -15925,6 +16514,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     "trusted-create-element": trustedCreateElement,
     "trusted-dispatch-event": trustedDispatchEvent,
     "trusted-prune-inbound-object": trustedPruneInboundObject,
+    "trusted-replace-argument": trustedReplaceArgument,
     "trusted-replace-fetch-response": trustedReplaceFetchResponse,
     "trusted-replace-node-text": trustedReplaceNodeText,
     "trusted-replace-outbound-text": trustedReplaceOutboundText,
@@ -15974,7 +16564,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   };
 
   /*
-   * SafariExtension v4.0.3 (build date: Sat, 09 Aug 2025 13:01:11 GMT)
+   * SafariExtension v4.0.4 (build date: Fri, 15 Aug 2025 06:06:17 GMT)
    * (c) 2025 Adguard Software Ltd.
    * Released under the GPL-3.0 license
    * https://github.com/AdguardTeam/SafariConverterLib/tree/master/Extension
@@ -16100,7 +16690,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
    * that can be redefined via `setLogger`.
    */
   const log$1 = new ProxyLogger();
-  const version = "4.0.3";
+  const version = "4.0.4";
 
   /**
    * @file Contains common constants and helper functions.
