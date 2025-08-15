@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/AdguardTeam/SafariConverterLib",
       "state" : {
-        "revision" : "f8def82f2edc2dd6c9577de50cbeab5b19142b72",
-        "version" : "4.0.3"
+        "revision" : "17c6128ca2af185ffb245c38b4f921be891bd31a",
+        "version" : "4.0.4"
       }
     },
     {
