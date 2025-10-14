@@ -12,7 +12,7 @@
 		<string>$(PRODUCT_MODULE_NAME).SafariExtensionHandler</string>
 		<key>SFSafariAssociatedContentBlockers</key>
 		<array>
-			<string>dev.ameshkov.safari-blocker-mac.content-blocker</string>
+			<string>dev.adguard.safari-blocker-mac.content-blocker</string>
 		</array>
 		<key>SFSafariContentScript</key>
 		<array>

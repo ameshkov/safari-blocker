@@ -8,8 +8,6 @@
 import SwiftUI
 import content_blocker_service
 
-let CONTENT_BLOCKER_ID = "dev.ameshkov.safari-blocker-mac.content-blocker"
-
 enum RuleType: String, CaseIterable, Identifiable {
     case adGuardFiltering = "AdGuard filtering rules"
     case adGuardFilterListsURLs = "AdGuard filter lists URLs"
@@ -286,7 +284,7 @@ struct ContentView: View {
                 }
 
                 result = ContentBlockerService.reloadContentBlocker(
-                    withIdentifier: CONTENT_BLOCKER_ID
+                    withIdentifier: ContentBlockerIdentifier.shared.value
                 )
 
                 let endLoad = Date()

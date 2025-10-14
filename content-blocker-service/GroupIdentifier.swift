@@ -18,21 +18,32 @@ public final class GroupIdentifier {
     /// The app group identifier string used to access the shared container.
     public let value: String
 
-    /// Private initializer that sets the appropriate group identifier based on
-    /// platform.
-    ///
-    /// Before XCode 16.3 it was necessary to have different group identifiers
-    /// for macOS and iOS and have something like this:
-    ///
-    /// ```swift
-    /// if let teamIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String
-    ///     value = "\(teamIdentifierPrefix)group.dev.ameshkov.safari-blocker"
-    /// }
-    /// ```
-    ///
-    /// Starting from XCode 16.3 this is no longer necessary and we can use the
-    /// same group ID for iOS and macOS.
+    /// Initializes a new instance of the GroupIdentifier class.
     private init() {
-        value = "group.dev.ameshkov.safari-blocker"
+        // Derive the app group identifier from the bundle identifier
+        guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
+            fatalError("Unable to get bundle identifier")
+        }
+
+        // Extract the base bundle identifier (remove extension-specific suffixes)
+        // e.g., "dev.adguard.safari-blocker-mac.TEAM.content-blocker" -> "dev.adguard.safari-blocker-mac.TEAM"
+        let baseIdentifier: String
+        let suffixes = [
+            ".content-blocker",
+            ".content-blocker-ios",
+            ".web-extension",
+            ".web-extension-ios",
+            ".app-extension",
+            ".content-blocker-service",
+        ]
+
+        if let suffix = suffixes.first(where: { bundleIdentifier.hasSuffix($0) }) {
+            baseIdentifier = String(bundleIdentifier.dropLast(suffix.count))
+        } else {
+            baseIdentifier = bundleIdentifier
+        }
+
+        // Prepend "group." to form the app group identifier
+        self.value = "group." + baseIdentifier
     }
 }

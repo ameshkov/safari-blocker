@@ -1,0 +1,36 @@
+// Configuration Settings File
+//
+// The `SAMPLE_CODE_DISAMBIGUATOR` configuration is to make it easier to build
+// and run a sample code project. Once you set your project's development team,
+// you'll have a unique bundle identifier. This is because the bundle identifier
+// is derived based on the 'SAMPLE_CODE_DISAMBIGUATOR' value. Do not use this
+// approach in your own projects—it's only useful for sample code projects because
+// they are frequently downloaded and don't have a development team set.
+SAMPLE_CODE_DISAMBIGUATOR = ${DEVELOPMENT_TEAM}
+
+// Base bundle identifier prefixes
+BUNDLE_ID_PREFIX_MAC = dev.adguard.safari-blocker-mac
+BUNDLE_ID_PREFIX_MOBILE = dev.adguard.safari-blocker-mobile
+BUNDLE_ID_PREFIX_SERVICE = dev.adguard.safari-blocker
+
+// App Group identifiers
+APP_GROUP_MAC = group.dev.adguard.safari-blocker-mac.${SAMPLE_CODE_DISAMBIGUATOR}
+APP_GROUP_MOBILE = group.dev.adguard.safari-blocker-mobile.${SAMPLE_CODE_DISAMBIGUATOR}
+
+// Content Blocker identifiers
+CONTENT_BLOCKER_ID_MAC = ${BUNDLE_ID_PREFIX_MAC}.${SAMPLE_CODE_DISAMBIGUATOR}.content-blocker
+CONTENT_BLOCKER_ID_IOS = ${BUNDLE_ID_PREFIX_MOBILE}.${SAMPLE_CODE_DISAMBIGUATOR}.content-blocker-ios
+
+// Product bundle identifiers for macOS targets
+PRODUCT_BUNDLE_IDENTIFIER_SAFARI_BLOCKER_MAC = ${BUNDLE_ID_PREFIX_MAC}.${SAMPLE_CODE_DISAMBIGUATOR}
+PRODUCT_BUNDLE_IDENTIFIER_CONTENT_BLOCKER_MAC = ${BUNDLE_ID_PREFIX_MAC}.${SAMPLE_CODE_DISAMBIGUATOR}.content-blocker
+PRODUCT_BUNDLE_IDENTIFIER_WEB_EXTENSION_MAC = ${BUNDLE_ID_PREFIX_MAC}.${SAMPLE_CODE_DISAMBIGUATOR}.web-extension
+PRODUCT_BUNDLE_IDENTIFIER_APP_EXTENSION_MAC = ${BUNDLE_ID_PREFIX_MAC}.${SAMPLE_CODE_DISAMBIGUATOR}.app-extension
+
+// Product bundle identifiers for iOS targets
+PRODUCT_BUNDLE_IDENTIFIER_SAFARI_BLOCKER_IOS = ${BUNDLE_ID_PREFIX_MOBILE}.${SAMPLE_CODE_DISAMBIGUATOR}
+PRODUCT_BUNDLE_IDENTIFIER_CONTENT_BLOCKER_IOS = ${BUNDLE_ID_PREFIX_MOBILE}.${SAMPLE_CODE_DISAMBIGUATOR}.content-blocker-ios
+PRODUCT_BUNDLE_IDENTIFIER_WEB_EXTENSION_IOS = ${BUNDLE_ID_PREFIX_MOBILE}.${SAMPLE_CODE_DISAMBIGUATOR}.web-extension-ios
+
+// Product bundle identifier for shared framework
+PRODUCT_BUNDLE_IDENTIFIER_CONTENT_BLOCKER_SERVICE = ${BUNDLE_ID_PREFIX_SERVICE}.${SAMPLE_CODE_DISAMBIGUATOR}.content-blocker-service

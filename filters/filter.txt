@@ -4,3 +4,4 @@ example.net#?#.banner
 example.net#$#.altbanner { display: hidden; }
 example.net#%#console.log('hello')
 example.net#%#//scriptlet('log', 'hello', 'this', 'is', 'log')
+example.net#%#alert('1')
