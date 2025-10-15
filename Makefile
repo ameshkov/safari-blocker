@@ -55,7 +55,7 @@ swift-lint: swiftlint-lint swiftformat-lint
 
 # Runs SwiftLint linter
 swiftlint-lint:
-	swiftlint lint --strict --quiet
+	swiftlint lint --strict --quiet --config .swiftlint.yml
 
 # Runs swift-format linter
 swiftformat-lint:
