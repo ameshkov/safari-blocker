@@ -5,6 +5,8 @@ excluded:
   - ${PWD}/.build
   - ${PWD}/.swiftpm
   - ${PWD}/bamboo-specs
+  # Just for the case when the library is added locally (see ci.yml)
+  - ${PWD}/safari-converter-lib
 
 disabled_rules:
   - discarded_notification_center_observer
