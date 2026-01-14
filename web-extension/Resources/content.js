@@ -2,8 +2,8 @@ function _defineProperty2(e, r, t) { return (r = _toPropertyKey(r)) in e ? Objec
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * WebExtension v1.0.4 (build date: Fri, 15 Aug 2025 06:15:41 GMT)
- * (c) 2025 ameshkov
+ * WebExtension v1.0.4 (build date: Wed, 14 Jan 2026 14:09:53 GMT)
+ * (c) 2026 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
  */
@@ -22114,7 +22114,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
   };
 
   /*
-   * SafariExtension v4.0.4 (build date: Fri, 15 Aug 2025 06:06:17 GMT)
+   * SafariExtension v4.1.0 (build date: Tue, 23 Dec 2025 11:36:32 GMT)
    * (c) 2025 Adguard Software Ltd.
    * Released under the GPL-3.0 license
    * https://github.com/AdguardTeam/SafariConverterLib/tree/master/Extension
@@ -22240,7 +22240,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
    * that can be redefined via `setLogger`.
    */
   const log$1 = new ProxyLogger();
-  const version = "4.0.4";
+  const version = "4.1.0";
 
   /**
    * @file Contains common constants and helper functions.

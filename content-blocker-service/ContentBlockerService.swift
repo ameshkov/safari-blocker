@@ -193,7 +193,7 @@ extension ContentBlockerService {
         let result = measure(label: "Conversion") {
             ContentBlockerConverter().convertArray(
                 rules: lines,
-                safariVersion: SafariVersion(18.1),
+                safariVersion: SafariVersion.autodetect(),
                 advancedBlocking: true,
                 maxJsonSizeBytes: nil,
                 progress: nil
